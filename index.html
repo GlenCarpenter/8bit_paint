@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles/main.css">
+	<title>8bit Paint</title>
+	<style>@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');</style>
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+  </head>
+	<body>
+		<div id="banner">
+			<h1>8bit Paint</h1>
+		</div>
+		<div id="pallete-container">
+			<p>Select color:</p>
+			<div id="pallete">
+			  <div class="colorSquare" style="background-color: red;" onclick="selectColor('red')"></div>
+			  <div class="colorSquare" style="background-color: orange;" onclick="selectColor('orange')"></div>
+			  <div class="colorSquare" style="background-color: yellow;" onclick="selectColor('yellow')"></div>
+			  <div class="colorSquare" style="background-color: green;" onclick="selectColor('green')"></div>
+			  <div class="colorSquare" style="background-color: blue;" onclick="selectColor('blue')"></div>
+			  <div class="colorSquare" style="background-color: purple;" onclick="selectColor('purple')"></div>
+			  <div class="colorSquare" style="background-color: silver;" onclick="selectColor('silver')"></div>
+			  <div class="colorSquare" style="background-color: black;" onclick="selectColor('black')"></div>			  
+			</div>
+			<div id="pallete">
+			  <div class="colorSquare" style="background-color: pink;" onclick="selectColor('pink')"></div>
+			  <div class="colorSquare" style="background-color: Moccasin;" onclick="selectColor('Moccasin')"></div>
+			  <div class="colorSquare" style="background-color: LightYellow;" onclick="selectColor('LightYellow')"></div>
+			  <div class="colorSquare" style="background-color: YellowGreen;" onclick="selectColor('YellowGreen')"></div>
+			  <div class="colorSquare" style="background-color: DodgerBlue;" onclick="selectColor('DodgerBlue')"></div>
+			  <div class="colorSquare" style="background-color: Peru;" onclick="selectColor('Peru')"></div>
+			  <div class="colorSquare" style="background-color: Sienna;" onclick="selectColor('Sienna')"></div>
+			  <div class="colorSquare" style="background-color: white;" onclick="selectColor('white')"></div>
+
+			</div>
+			<div>
+			  <br>
+
+			  <div>
+				<input type="color" id="color-field" onchange="selectColor(input.val())"></input>
+				<label for="color-field">Custom color</label>
+			  </div>
+			  <button onClick="saveToJpeg()">Save to image</button>
+			  <div id="imgMessage"><h5>Right click to save!</h5></div>
+			</div>
+		</div>
+
+		<div id="colorBox">
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+			<div class="row">
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			  <div class="square"></div>
+			</div>
+		</div>
+		<br>
+	</body>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="scripts/app.js"></script>
+	<script src="scripts/html2canvas.js"></script>
+</html>
