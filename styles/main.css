@@ -38,17 +38,12 @@ input {
   cursor: pointer;
 }
 
-button {
+#btnSave {
 	margin-top: 10px;
 	padding: 5px;
 	border: 2px solid;
+	width: 200px;
 }
-
-#imgMessage {
-	display: none;
-	margin-top: 5px;
-}
-
 
 .colorSquare {
 	border: .25em solid #000;
