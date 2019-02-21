@@ -2,7 +2,6 @@ var input = $("#color-field");
 let paintColor = "#000";
 
 
-//on click change square background color to the input value
 $(".square").on("click", function(){
 	if(!$(this).hasClass("painted")){
 		$(this).css('background-color', paintColor);
