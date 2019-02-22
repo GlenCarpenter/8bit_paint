@@ -21,7 +21,7 @@ body {
     background-image: radial-gradient(Gold, FireBrick);
 }
 
-#pallete-container {
+#palleteContainer {
   margin: auto;
   margin-top: 30px;
   width: 320px;
@@ -31,7 +31,7 @@ body {
 	display: flex;
 }
 
-input {
+#colorField {
   width: 30px;
   height: 30px;
   border: none;
@@ -39,7 +39,6 @@ input {
 }
 
 #btnSave {
-	margin-top: 10px;
 	padding: 5px;
 	border: 2px solid;
 	width: 200px;
@@ -54,7 +53,6 @@ input {
 }
 
 .square {
-	border: 1px solid #000;
 	width: 25px;
     height: 25px;
 	background-color: white;
@@ -64,9 +62,21 @@ input {
   display: flex;
 }
 
+.grid {
+	border: 1px solid #000;
+	width: 23px;
+    height: 23px;
+}
+
+.gridBox {
+	width: 25px;
+	height: 25px;
+	margin: 10px 0px 10px 0px;
+}
+
 #colorBox {
   cursor: crosshair;
   border: 1px solid;
-  width: 420px;
+  width: 400px;
   margin-top: 10px;
 }
