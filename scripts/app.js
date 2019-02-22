@@ -17,6 +17,11 @@ $(document).ready(function() {
 	$('input[type=checkbox]').on('change',function(e) {
 		$('.square').toggleClass('grid');
 	});
+	
+	$('.colorSquare').on('click', function(e) {
+		$('.colorSquare').removeClass('selectedColorSquare');
+		$(this).toggleClass('selectedColorSquare');
+	});
 });
 
 function selectColor(color) {
@@ -56,4 +61,4 @@ function saveAs(uri, filename) {
         window.open(uri);
 
     }
-} 
+}

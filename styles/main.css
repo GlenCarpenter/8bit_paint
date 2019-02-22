@@ -52,6 +52,14 @@ body {
 	cursor: pointer;
 }
 
+.selectedColorSquare {
+	border: .25em solid #f1f1f1;
+	width: 30px;
+    height: 20px;
+	margin: 5px;
+	cursor: pointer;
+}
+
 .square {
 	width: 25px;
     height: 25px;
@@ -69,6 +77,7 @@ body {
 }
 
 .gridBox {
+	border: .25em solid #000;
 	width: 25px;
 	height: 25px;
 	margin: 10px 0px 10px 0px;
@@ -79,4 +88,4 @@ body {
   border: 1px solid;
   width: 400px;
   margin-top: 10px;
-} 
+}
