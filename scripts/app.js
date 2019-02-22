@@ -13,30 +13,32 @@ $(document).ready(function() {
 			$(this).removeClass("painted");
 		}
 	})
-
 	$('input[type=checkbox]').on('change',function(e) {
 		$('.square').toggleClass('grid');
 	});
-	
+
 	$('.colorSquare').on('click', function(e) {
 		$('.colorSquare').removeClass('selectedColorSquare');
 		$(this).toggleClass('selectedColorSquare');
 	});
 });
 
-function selectColor(color) {
-		paintColor = color;
-	}
-
+// Event listener for click of save button
 document.getElementById("btnSave").addEventListener("click", function() {
-
     html2canvas(document.querySelector('#colorBox')).then(function(canvas) {
-
         console.log(canvas);
         saveAs(canvas.toDataURL(), '8bit_paint.png');
     });
 });
 
+// Event listener for custom color
+document.getElementById('colorField').addEventListener("change", function(event) {
+    selectColor(this.value);
+});
+
+function selectColor(color) {
+	paintColor = color;
+}
 
 function saveAs(uri, filename) {
 
