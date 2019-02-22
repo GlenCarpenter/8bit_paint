@@ -44,6 +44,12 @@ body {
 	width: 200px;
 }
 
+#clearCanvas {
+	padding: 5px;
+	border: 2px solid;
+	width: 90px;
+}
+
 .colorSquare {
 	border: .25em solid #000;
 	width: 30px;
