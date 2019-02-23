@@ -2,17 +2,30 @@ var input = $("#color-field");
 let paintColor = "#000";
 
 $(document).ready(function() {
+	var mouseIsDown = false;
+	
+	$(document).mousedown(function() {
+		mouseIsDown = true;      // When mouse goes down, set isDown to true
+		})
+		.mouseup(function() {
+		mouseIsDown = false;    // When mouse goes up, set isDown to false
+	});
     
 //on click change square background color to the input value
-	$(".square").on("click", function(){
-		if(!$(this).hasClass("painted")){
+	$(".square").on("mouseover", function(){
+		if(mouseIsDown){
 			$(this).css('background-color', paintColor);
 			$(this).addClass("painted");
-		} else {
-			$(this).css('background-color', "#fff");
-			$(this).removeClass("painted");
 		}
 	})
+	
+	$(".square").on("click", function(){
+		if(!$(this).hasClass("painted")){
+				$(this).css('background-color', paintColor);
+				$(this).addClass("painted");
+			}
+	});
+	
 	$('input[type=checkbox]').on('change',function(e) {
 		$('.square').toggleClass('grid');
 	});
