@@ -1,6 +1,9 @@
 var input = $("#color-field");
 let paintColor = "#000";
 
+//Disable context menu on right click
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 $(document).ready(function() {
 	var mouseIsDown = false;
 	
@@ -11,15 +14,29 @@ $(document).ready(function() {
 		mouseIsDown = false;    // When mouse goes up, set isDown to false
 	});
     
-//on click change square background color to the input value
+//on click and drag, change square background color to the input value
 	$(".square").on("mouseover", function(){
 		if(mouseIsDown){
-			$(this).css('background-color', paintColor);
+			switch (event.which) {
+			case 1:
+				$(this).css('background-color', paintColor);
+				break;
+			case 3:
+				$(this).css('background-color', "#fff");
+				break;
+			}
 		}
 	})
 	
-	$(".square").on("mousedown", function(){
-			$(this).css('background-color', paintColor);
+	$('.square').mousedown(function(event) {
+		switch (event.which) {
+			case 1:
+				$(this).css('background-color', paintColor);
+				break;
+			case 3:
+				$(this).css('background-color', "#fff");
+				break;
+			}
 	});
 	
 	$('input[type=checkbox]').on('change',function(e) {
