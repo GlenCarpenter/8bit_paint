@@ -20,10 +20,8 @@ $(document).ready(function() {
 	})
 	
 	$(".square").on("click", function(){
-		if(!$(this).hasClass("painted")){
-				$(this).css('background-color', paintColor);
-				$(this).addClass("painted");
-			}
+			$(this).css('background-color', paintColor);
+			$(this).addClass("painted");
 	});
 	
 	$('input[type=checkbox]').on('change',function(e) {
