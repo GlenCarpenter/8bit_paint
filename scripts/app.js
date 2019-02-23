@@ -15,13 +15,11 @@ $(document).ready(function() {
 	$(".square").on("mouseover", function(){
 		if(mouseIsDown){
 			$(this).css('background-color', paintColor);
-			$(this).addClass("painted");
 		}
 	})
 	
 	$(".square").on("click", function(){
 			$(this).css('background-color', paintColor);
-			$(this).addClass("painted");
 	});
 	
 	$('input[type=checkbox]').on('change',function(e) {
@@ -50,7 +48,6 @@ $(document).ready(function() {
 	// Event listener for click of Clear button
 	document.getElementById("clearCanvas").addEventListener("click", function() {
 		$(".square").css('background-color', '#fff');
-		$(".square").removeClass("painted");
 	});
 });
 
