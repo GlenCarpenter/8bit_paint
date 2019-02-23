@@ -18,7 +18,7 @@ $(document).ready(function() {
 		}
 	})
 	
-	$(".square").on("click", function(){
+	$(".square").on("mousedown", function(){
 			$(this).css('background-color', paintColor);
 	});
 	
