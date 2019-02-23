@@ -39,6 +39,7 @@ $(document).ready(function() {
 	// Event listener for click of Clear button
 	document.getElementById("clearCanvas").addEventListener("click", function() {
 		$(".square").css('background-color', '#fff');
+		$(".square").removeClass("painted");
 	});
 });
 
