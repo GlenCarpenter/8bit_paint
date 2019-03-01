@@ -82,6 +82,10 @@ body {
     height: 23px;
 }
 
+.blink {
+    animation: blink 600ms;
+}
+
 .gridBox {
 	border: .25em solid #000;
 	width: 25px;
@@ -94,4 +98,10 @@ body {
   border: 1px solid;
   width: 400px;
   margin-top: 10px;
+}
+
+@keyframes blink {
+    0%   {border: 1px solid #000;}
+    50%  {border: 1px solid #f1f1f1;}
+    100% {border: 1px solid #000;}
 }

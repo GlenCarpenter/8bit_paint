@@ -20,6 +20,10 @@ $(document).ready(function() {
 			switch (event.which) {
 			case 1:
 				$(this).css('background-color', paintColor);
+				if($(this).hasClass('grid')) {
+					$(this).addClass('blink');
+					setTimeout(()=>$(this).removeClass('blink'),1000);
+				}
 				break;
 			case 3:
 				$(this).css('background-color', "#fff");
@@ -32,6 +36,10 @@ $(document).ready(function() {
 		switch (event.which) {
 			case 1:
 				$(this).css('background-color', paintColor);
+				if($(this).hasClass('grid')) {
+					$(this).addClass('blink');
+					setTimeout(()=>$(this).removeClass('blink'),1000);
+				}
 				break;
 			case 3:
 				$(this).css('background-color', "#fff");
