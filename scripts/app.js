@@ -65,6 +65,10 @@ $(document).ready(function() {
 	});
 
 	// Event listener for custom color
+	document.getElementById('colorField').addEventListener("click", function(event) {
+		selectColor(this.value);
+		$('.colorSquare').removeClass('selectedColorSquare');
+	});
 	document.getElementById('colorField').addEventListener("change", function(event) {
 		selectColor(this.value);
 		$('.colorSquare').removeClass('selectedColorSquare');
