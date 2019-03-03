@@ -66,10 +66,16 @@ body {
 	cursor: pointer;
 }
 
-.square {
+.container-square {
 	width: 25px;
-    height: 25px;
+	height: 25px;
+}
+
+.square {
+	width: 100%;
+	height: 100%;
 	background-color: white;
+	box-sizing: border-box;
 }
 
 .row {
@@ -78,12 +84,14 @@ body {
 
 .grid {
 	border: 1px solid #000;
-	width: 23px;
-    height: 23px;
 }
 
 .blink {
-    animation: blink 600ms;
+    animation: blinkColor 600ms;
+}
+
+.flash {
+	animation: flash 600ms;
 }
 
 .gridBox {
@@ -100,8 +108,14 @@ body {
   margin-top: 10px;
 }
 
-@keyframes blink {
+@keyframes blinkColor {
     0%   {border: 1px solid #000;}
     50%  {border: 1px solid #f1f1f1;}
     100% {border: 1px solid #000;}
+}
+
+@keyframes flash {
+	0%   {border: 0px;}
+	50%  {border: 1px solid #fff;}
+	100% {border: 0px;}
 }

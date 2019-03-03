@@ -23,6 +23,9 @@ $(document).ready(function() {
 				if($(this).hasClass('grid')) {
 					$(this).addClass('blink');
 					setTimeout(()=>$(this).removeClass('blink'),1000);
+				} else {
+					$(this).addClass('flash');
+					setTimeout(()=>$(this).removeClass('flash'),1000);
 				}
 				break;
 			case 3:
@@ -39,6 +42,9 @@ $(document).ready(function() {
 				if($(this).hasClass('grid')) {
 					$(this).addClass('blink');
 					setTimeout(()=>$(this).removeClass('blink'),1000);
+				} else {
+					$(this).addClass('flash');
+					setTimeout(()=>$(this).removeClass('flash'),1000);
 				}
 				break;
 			case 3:
