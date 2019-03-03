@@ -91,7 +91,7 @@ body {
 }
 
 .flash {
-	animation: flash 600ms;
+	animation: flash 300ms;
 }
 
 .gridBox {
@@ -103,7 +103,7 @@ body {
 
 #colorBox {
   cursor: crosshair;
-  border: 1px solid;
+  border: 2px solid;
   width: 400px;
   margin-top: 10px;
 }
@@ -115,7 +115,7 @@ body {
 }
 
 @keyframes flash {
-	0%   {border: 0px;}
+	0%   {border: 0px solid #fff;}
 	50%  {border: 1px solid #fff;}
-	100% {border: 0px;}
+	100% {border: 0px solid #fff;}
 }
