@@ -30,6 +30,13 @@ $(document).ready(function() {
 				break;
 			case 3:
 				$(this).css('background-color', "#fff");
+				if($(this).hasClass('grid')) {
+					$(this).addClass('blink');
+					setTimeout(()=>$(this).removeClass('blink'),1000);
+				} else {
+					$(this).addClass('flash');
+					setTimeout(()=>$(this).removeClass('flash'),1000);
+				}
 				break;
 			}
 		}
@@ -49,6 +56,13 @@ $(document).ready(function() {
 				break;
 			case 3:
 				$(this).css('background-color', "#fff");
+				if($(this).hasClass('grid')) {
+					$(this).addClass('blink');
+					setTimeout(()=>$(this).removeClass('blink'),1000);
+				} else {
+					$(this).addClass('flash');
+					setTimeout(()=>$(this).removeClass('flash'),1000);
+				}
 				break;
 			}
 	});
