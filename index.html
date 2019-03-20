@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="styles/main.css">
-	<title>8bit Paint</title>
-	<style>@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');</style>
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+		<title>8bit Paint</title>
+		<style>@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');</style>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles/main.css">
+		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
   </head>
 	<body>
+		<div id="app-container">
 		<div id="banner">
 			<h1>8bit Paint</h1>
 		</div>
@@ -33,8 +35,7 @@
 			  <div class="colorSquare" style="background-color: white;" onclick="selectColor('white')"></div>
 
 			</div>
-			<br>
-			<div>
+			<div id="colorOptions">
 			  <div>
 				<input type="color" id="colorField"></input>
 				<label for="colorField">Custom color</label>
@@ -337,7 +338,7 @@
 			  <div class="container-square"><div class="square grid"></div></div>
 			</div>
 		</div>
-		<br>
+		</div>
 	</body>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="scripts/app.js"></script>

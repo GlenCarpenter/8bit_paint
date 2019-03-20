@@ -66,6 +66,18 @@ $(document).ready(function() {
 				break;
 			}
 	});
+
+	// Mobile touches
+	$(".square").on("touchmove", function(){
+		$(this).css('background-color', paintColor);
+		if($(this).hasClass('grid')) {
+			$(this).addClass('blink');
+			setTimeout(()=>$(this).removeClass('blink'),1000);
+		} else {
+			$(this).addClass('flash');
+			setTimeout(()=>$(this).removeClass('flash'),1000);
+		}
+	});
 	
 	$('input[type=checkbox]').on('change',function(e) {
 		$('.square').toggleClass('grid');
