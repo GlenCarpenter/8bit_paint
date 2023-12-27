@@ -36,7 +36,7 @@ $(document).ready(function () {
             touchElement = document.elementFromPoint(touchX, touchY);
 
             if (touchElement) {
-              if ($(touchElement).hasClass('grid')) {
+              if ($(touchElement).hasClass('square')) {
                 $(touchElement).css('background-color', paintColor);
                 $(touchElement).addClass('blink');
                 setTimeout(() => $(touchElement).removeClass('blink'), 1000);
@@ -51,7 +51,7 @@ $(document).ready(function () {
           });
           break;
         case "mouseover":
-          if ($(this).hasClass('grid')) {
+          if ($(this).hasClass('square')) {
             $(this).css('background-color', isRightClick ? "#fff" : paintColor);
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
@@ -63,43 +63,6 @@ $(document).ready(function () {
           }
           break;
       }
-    }
-  });
-
-  $('.square').mousedown(function (event) {
-    switch (event.which) {
-      case 1:
-        $(this).css('background-color', paintColor);
-        if ($(this).hasClass('grid')) {
-          $(this).addClass('blink');
-          setTimeout(() => $(this).removeClass('blink'), 1000);
-        } else {
-          $(this).addClass('flash');
-          setTimeout(() => $(this).removeClass('flash'), 1000);
-        }
-        break;
-      case 3:
-        $(this).css('background-color', "#fff");
-        if ($(this).hasClass('grid')) {
-          $(this).addClass('blink');
-          setTimeout(() => $(this).removeClass('blink'), 1000);
-        } else {
-          $(this).addClass('flash');
-          setTimeout(() => $(this).removeClass('flash'), 1000);
-        }
-        break;
-    }
-  });
-
-  // Mobile touches
-  $(".square").on("touchmove", function () {
-    $(this).css('background-color', paintColor);
-    if ($(this).hasClass('grid')) {
-      $(this).addClass('blink');
-      setTimeout(() => $(this).removeClass('blink'), 1000);
-    } else {
-      $(this).addClass('flash');
-      setTimeout(() => $(this).removeClass('flash'), 1000);
     }
   });
 
