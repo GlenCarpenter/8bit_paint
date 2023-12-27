@@ -20,43 +20,41 @@ $(document).ready(function () {
 
   //on click and drag, change square background color to the input value
   $(".square").on("mouseover touchmove", function (e) {
+    e.preventDefault();
     if (mouseIsDown) {
       switch (e.type) {
         case 'touchmove':
           var touchElement;
           var currentRect;
+          var touch = e.originalEvent.touches[0];
+          var touchX = touch.clientX;
+          var touchY = touch.clientY;
 
-          $(".square").on("touchmove", function (e) {
-            var touch = e.originalEvent.touches[0];
-            var touchX = touch.clientX;
-            var touchY = touch.clientY;
+          if (
+            currentRect &&
+            touchX >= currentRect.left &&
+            touchX <= currentRect.right &&
+            touchY >= currentRect.top &&
+            touchY <= currentRect.bottom
+          ) {
+            return;
+          }
 
-            if (
-              currentRect &&
-              touchX >= currentRect.left &&
-              touchX <= currentRect.right &&
-              touchY >= currentRect.top &&
-              touchY <= currentRect.bottom
-            ) {
-              return;
+          touchElement = document.elementFromPoint(touchX, touchY);
+          currentRect = touchElement.getBoundingClientRect();
+          if (touchElement) {
+            if ($(touchElement).hasClass('square')) {
+              $(touchElement).css('background-color', paintColor);
+              $(touchElement).addClass('blink');
+              setTimeout(() => $(touchElement).removeClass('blink'), 1000);
             }
-
-            touchElement = document.elementFromPoint(touchX, touchY);
-            currentRect = touchElement.getBoundingClientRect();
-            if (touchElement) {
-              if ($(touchElement).hasClass('square')) {
-                $(touchElement).css('background-color', paintColor);
-                $(touchElement).addClass('blink');
-                setTimeout(() => $(touchElement).removeClass('blink'), 1000);
-              }
-              else {
-                if ($(touchElement).hasClass('container-square')) {
-                  $(touchElement).addClass('flash');
-                  setTimeout(() => $(touchElement).removeClass('flash'), 1000);
-                }
+            else {
+              if ($(touchElement).hasClass('container-square')) {
+                $(touchElement).addClass('flash');
+                setTimeout(() => $(touchElement).removeClass('flash'), 1000);
               }
             }
-          });
+          }
           break;
         case "mouseover":
           if ($(this).hasClass('square')) {
@@ -75,6 +73,7 @@ $(document).ready(function () {
   });
 
   $(".square").on("click touchstart", function (e) {
+    e.preventDefault();
     $(this).css('background-color', isRightClick ? "#fff" : paintColor);
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
