@@ -102,28 +102,25 @@ $(document).ready(function () {
   });
 
   // Event listener for click of save button
-  $("#btnSave").on("click", function () {
-    $(this).addClass('blink');
-    setTimeout(() => $(this).removeClass('blink'), 1000);
+  document.getElementById("btnSave").addEventListener("click", function () {
     html2canvas(document.querySelector('#colorBox')).then(function (canvas) {
+      console.log(canvas);
       saveAs(canvas.toDataURL(), '8bit_paint.png');
     });
   });
 
   // Event listener for custom color
-  $('#colorField').on("click", function (event) {
+  document.getElementById('colorField').addEventListener("click", function (event) {
     selectColor(this.value);
     $('.colorSquare').removeClass('selectedColorSquare');
   });
-  $('#colorField').on("change", function (event) {
+  document.getElementById('colorField').addEventListener("change", function (event) {
     selectColor(this.value);
     $('.colorSquare').removeClass('selectedColorSquare');
   });
 
   // Event listener for click of Clear button
-  $("#clearCanvas").on("click", function () {
-    $(this).addClass('blink');
-    setTimeout(() => $(this).removeClass('blink'), 1000);
+  document.getElementById("clearCanvas").addEventListener("click", function () {
     $(".square").css('background-color', '#fff');
   });
 });
