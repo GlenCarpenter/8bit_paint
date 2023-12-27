@@ -8,14 +8,17 @@ $(document).ready(function () {
   var mouseIsDown = false;
   var isRightClick = false;
 
-  for (var i = 0; i < 16; i++) {
-    var row = $("<div class='row'></div>");
-    for (var j = 0; j < 16; j++) {
-      var cell = $("<div class='container-square'><div class='square grid'></div></div>");
-      row.append(cell);
+  $("#colorBox").ready(function () {
+    //create 16x16 grid
+    for (var i = 0; i < 16; i++) {
+      var row = $("<div class='row'></div>");
+      for (var j = 0; j < 16; j++) {
+        var cell = $("<div class='container-square'><div class='square grid'></div></div>");
+        row.append(cell);
+      }
+      $("#colorBox").append(row);
     }
-    $("#colorBox").append(row);
-  }
+  });
 
   $("#colorBox").on('mousedown touchstart', function (e) {
     mouseIsDown = true;      // When mouse goes down, set isDown to true
