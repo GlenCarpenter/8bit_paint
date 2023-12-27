@@ -8,7 +8,7 @@ $(document).ready(function () {
   var mouseIsDown = false;
   var isRightClick = false;
 
-  $("#colorBox").on('mousedown touchstart', function (e) {
+  $(document).on('mousedown touchstart', function (e) {
     mouseIsDown = true;      // When mouse goes down, set isDown to true
     if (e.which == 3) {
       isRightClick = true;
@@ -85,6 +85,7 @@ $(document).ready(function () {
 
   $('.colorSquare').on('click', function (e) {
     $('.colorSquare').removeClass('selectedColorSquare');
+    $('#colorField').css('background-color', '#000');
     $(this).toggleClass('selectedColorSquare');
   });
 
@@ -93,7 +94,6 @@ $(document).ready(function () {
     $("#btnSave").addClass('blink');
     setTimeout(() => $("#btnSave").removeClass('blink'), 1000);
     html2canvas(document.querySelector('#colorBox')).then(function (canvas) {
-      console.log(canvas);
       saveAs(canvas.toDataURL(), '8bit_paint.png');
     });
   });
@@ -102,6 +102,7 @@ $(document).ready(function () {
   $('#colorField').on("click", function (event) {
     selectColor(this.value);
     $('.colorSquare').removeClass('selectedColorSquare');
+    $('#colorField').css('background-color', '#f1f1f1');
   });
   $('#colorField').on("change", function (event) {
     selectColor(this.value);
@@ -111,7 +112,11 @@ $(document).ready(function () {
   // Event listener for click of Clear button
   $("#clearCanvas").on("click", function () {
     $("#clearCanvas").addClass('blink');
-    setTimeout(() => $("#clearCanvas").removeClass('blink'), 1000);
+    $(".square").addClass('blink');
+    setTimeout(() => {
+      $("#clearCanvas").removeClass('blink');
+      $(".square").removeClass('blink');
+    }, 1000);
     $(".square").css('background-color', '#fff');
   });
 });
