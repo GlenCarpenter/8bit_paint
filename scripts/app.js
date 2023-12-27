@@ -27,14 +27,25 @@ $(document).ready(function () {
         case 'touchmove':
           e.preventDefault();
           var touchElement;
+          var currentRect;
 
           $(".square").on("touchmove", function (e) {
             var touch = e.originalEvent.touches[0];
             var touchX = touch.clientX;
             var touchY = touch.clientY;
 
-            touchElement = document.elementFromPoint(touchX, touchY);
+            if (
+              currentRect &&
+              touchX >= currentRect.left &&
+              touchX <= currentRect.right &&
+              touchY >= currentRect.top &&
+              touchY <= currentRect.bottom
+            ) {
+              return;
+            }
 
+            touchElement = document.elementFromPoint(touchX, touchY);
+            currentRect = touchElement.getBoundingClientRect();
             if (touchElement) {
               if ($(touchElement).hasClass('square')) {
                 $(touchElement).css('background-color', paintColor);
