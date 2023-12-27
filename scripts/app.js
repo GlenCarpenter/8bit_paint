@@ -9,6 +9,7 @@ $(document).ready(function () {
   var isRightClick = false;
 
   $(document).on('mousedown touchstart', function (e) {
+    e.preventDefault();
     mouseIsDown = true;      // When mouse goes down, set isDown to true
     if (e.which == 3) {
       isRightClick = true;
@@ -80,7 +81,7 @@ $(document).ready(function () {
   });
 
   $('input[type=checkbox]').on('change', function (e) {
-    $('.square').toggleClass('grid');
+    $('.container-square').toggleClass('grid');
   });
 
   $('.colorSquare').on('click', function (e) {
@@ -112,10 +113,10 @@ $(document).ready(function () {
   // Event listener for click of Clear button
   $("#clearCanvas").on("click", function () {
     $("#clearCanvas").addClass('blink');
-    $(".square").addClass('blink');
+    $(".container-square").addClass('blink');
     setTimeout(() => {
       $("#clearCanvas").removeClass('blink');
-      $(".square").removeClass('blink');
+      $(".container-square").removeClass('blink');
     }, 1000);
     $(".square").css('background-color', '#fff');
   });

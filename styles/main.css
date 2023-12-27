@@ -74,19 +74,18 @@ input[type="color"]#colorField {
 	box-sizing: border-box;
 }
 
+.grid {
+	border: 1px solid #000;
+}
+
 .square {
 	width: 100%;
 	height: 100%;
 	background-color: white;
-	box-sizing: border-box;
 }
 
 .row {
 	display: flex;
-}
-
-.grid {
-	border: 1px solid #000;
 }
 
 .blink {
@@ -101,7 +100,7 @@ input[type="color"]#colorField {
 	border: .25em solid #000;
 	width: 25px;
 	height: 25px;
-	margin: 10px 0px 10px 0px;
+	margin: 10px 5px;
 }
 
 #colorBox {
@@ -109,6 +108,7 @@ input[type="color"]#colorField {
 	border: 2px solid;
 	width: 400px;
 	margin-top: 10px;
+	box-sizing: border-box;
 }
 
 @keyframes blinkColor {
