@@ -1,5 +1,5 @@
 var input = $("#color-field");
-let paintColor = "#000";
+var paintColor = "#000";
 
 //Disable context menu on right click
 document.addEventListener('contextmenu', event => event.preventDefault());
@@ -8,12 +8,20 @@ $(document).ready(function () {
   var mouseIsDown = false;
   var isRightClick = false;
 
-  $(document).on('mousedown touchstart', function (e) {
+  for (var i = 0; i < 16; i++) {
+    var row = $("<div class='row'></div>");
+    for (var j = 0; j < 16; j++) {
+      var cell = $("<div class='container-square'><div class='square grid'></div></div>");
+      row.append(cell);
+    }
+    $("#colorBox").append(row);
+  }
+
+  $("#colorBox").on('mousedown touchstart', function (e) {
     mouseIsDown = true;      // When mouse goes down, set isDown to true
     if (e.which == 3) {
       isRightClick = true;
     }
-
   }).on('mouseup touchend', function () {
     mouseIsDown = false;    // When mouse goes up, set isDown to false
     isRightClick = false;
@@ -21,11 +29,9 @@ $(document).ready(function () {
 
   //on click and drag, change square background color to the input value
   $(".square").on("mouseover touchmove", function (e) {
-    e.preventDefault();
     if (mouseIsDown) {
       switch (e.type) {
         case 'touchmove':
-          e.preventDefault();
           var touchElement;
           var currentRect;
 
@@ -77,7 +83,7 @@ $(document).ready(function () {
     }
   });
 
-  $(".square").on("click", function (e) {
+  $(".square").on("click touchstart", function (e) {
     $(this).css('background-color', isRightClick ? "#fff" : paintColor);
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
