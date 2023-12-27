@@ -36,26 +36,30 @@ $(document).ready(function () {
             touchElement = document.elementFromPoint(touchX, touchY);
 
             if (touchElement) {
-              $(touchElement).css('background-color', paintColor);
               if ($(touchElement).hasClass('grid')) {
+                $(touchElement).css('background-color', paintColor);
                 $(touchElement).addClass('blink');
                 setTimeout(() => $(touchElement).removeClass('blink'), 1000);
               }
               else {
-                $(touchElement).addClass('flash');
-                setTimeout(() => $(touchElement).removeClass('flash'), 1000);
+                if ($(touchElement).hasClass('container-square')) {
+                  $(touchElement).addClass('flash');
+                  setTimeout(() => $(touchElement).removeClass('flash'), 1000);
+                }
               }
             }
           });
           break;
         case "mouseover":
-          $(this).css('background-color', isRightClick ? "#fff" : paintColor);
           if ($(this).hasClass('grid')) {
+            $(this).css('background-color', isRightClick ? "#fff" : paintColor);
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
-            $(this).addClass('flash');
-            setTimeout(() => $(this).removeClass('flash'), 1000);
+            if ($(touchElement).hasClass('container-square')) {
+              $(this).addClass('flash');
+              setTimeout(() => $(this).removeClass('flash'), 1000);
+            }
           }
           break;
       }
