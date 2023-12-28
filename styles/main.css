@@ -4,8 +4,10 @@
 
 }
 
-html {
+html,
+body {
 	overscroll-behavior: none;
+
 }
 
 
@@ -25,7 +27,6 @@ body {
 	width: 400px;
 	justify-content: center;
 	background-image: radial-gradient(Gold, FireBrick);
-	overscroll-behavior: none;
 }
 
 #palleteContainer {
