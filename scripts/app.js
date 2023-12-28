@@ -102,7 +102,7 @@ $(document).ready(function () {
         touchY = e.originalEvent.clientY;
       }
 
-      paintNeighbors(touchX, touchY, currentColor);
+      paintNeighbors(touchX, touchY, paintColor, currentColor);
       return;
     }
 
@@ -205,7 +205,7 @@ function saveAs(uri, filename) {
   }
 }
 
-function paintNeighbors(x, y, currentColor) {
+function paintNeighbors(x, y, paintColor, currentColor) {
   setTimeout(() => {
     var currentSquare = document.elementFromPoint(x, y);
     var newColor = $(currentSquare).css('background-color');
@@ -224,9 +224,9 @@ function paintNeighbors(x, y, currentColor) {
     var centerX = currentRect.left + currentRect.width / 2;
     var centerY = currentRect.top + currentRect.height / 2;
 
-    paintNeighbors(centerX, centerY - 25, currentColor);
-    paintNeighbors(centerX, centerY + 25, currentColor);
-    paintNeighbors(centerX - 25, centerY, currentColor);
-    paintNeighbors(centerX + 25, centerY, currentColor);
+    paintNeighbors(centerX, centerY - 25, paintColor, currentColor);
+    paintNeighbors(centerX, centerY + 25, paintColor, currentColor);
+    paintNeighbors(centerX - 25, centerY, paintColor, currentColor);
+    paintNeighbors(centerX + 25, centerY, paintColor, currentColor);
   }, 25);
 }
