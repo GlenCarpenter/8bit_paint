@@ -11,6 +11,10 @@ $(document).ready(function () {
   var isRightClick = false;
   var pourMode = false;
 
+  $("body").on('touchmove dragstart selectstart', function (e) {
+    e.preventDefault();
+  });
+
   $(document).on('mousedown touchstart', function (e) {
     e.preventDefault();
     mouseIsDown = true;      // When mouse goes down, set isDown to true
@@ -152,9 +156,9 @@ $(document).ready(function () {
 
     $("#paintBucket").removeClass('buttonControl');
     $("#paintBucket").addClass('selectedPaintStyle');
-    $("#paintBucket").addClass('flash');
+    $("#paintBucket").addClass('brushFlash');
     setTimeout(() => {
-      $("#paintBucket").removeClass('flash');
+      $("#paintBucket").removeClass('brushFlash');
     }, 1000);
   });
   $("#paintBrush").on("click", function () {
@@ -165,9 +169,9 @@ $(document).ready(function () {
 
     $("#paintBrush").removeClass('buttonControl')
     $("#paintBrush").addClass('selectedPaintStyle');
-    $("#paintBrush").addClass('flash');
+    $("#paintBrush").addClass('brushFlash');
     setTimeout(() => {
-      $("#paintBrush").removeClass('flash');
+      $("#paintBrush").removeClass('brushFlash');
     }, 1000);
   });
 

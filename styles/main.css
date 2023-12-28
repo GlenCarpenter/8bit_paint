@@ -117,6 +117,10 @@ input[type="color"]#colorField {
 	animation: flash 300ms;
 }
 
+.brushFlash {
+	animation: brushFlash 300ms;
+}
+
 .gridBox {
 	border: .25em solid #000;
 	width: 25px;
@@ -157,6 +161,20 @@ input[type="color"]#colorField {
 
 	100% {
 		border: 0px solid #fff;
+	}
+}
+
+@keyframes brushFlash {
+	0% {
+		border: .35em solid dodgerblue;
+	}
+
+	50% {
+		border: .35em solid #f1f1f1;
+	}
+
+	100% {
+		border: .35em solid dodgerblue;
 	}
 }
 
