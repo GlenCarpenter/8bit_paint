@@ -1,4 +1,8 @@
 var paintColor = "black";
+
+// Register service worker
+navigator.serviceWorker.register('serviceworker.js');
+
 //Disable context menu on right click
 document.addEventListener('contextmenu', event => event.preventDefault());
 
