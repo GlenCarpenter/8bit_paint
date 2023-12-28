@@ -1,6 +1,4 @@
-var input = $("#color-field");
-var paintColor = "#000";
-
+var paintColor = "black";
 //Disable context menu on right click
 document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -150,9 +148,9 @@ $(document).ready(function () {
 
     $("#paintBucket").removeClass('buttonControl');
     $("#paintBucket").addClass('selectedPaintStyle');
-    $("#paintBucket").addClass('blink');
+    $("#paintBucket").addClass('flash');
     setTimeout(() => {
-      $("#paintBucket").removeClass('blink');
+      $("#paintBucket").removeClass('flash');
     }, 1000);
   });
   $("#paintBrush").on("click", function () {
@@ -163,9 +161,9 @@ $(document).ready(function () {
 
     $("#paintBrush").removeClass('buttonControl')
     $("#paintBrush").addClass('selectedPaintStyle');
-    $("#paintBrush").addClass('blink');
+    $("#paintBrush").addClass('flash');
     setTimeout(() => {
-      $("#paintBrush").removeClass('blink');
+      $("#paintBrush").removeClass('flash');
     }, 1000);
   });
 

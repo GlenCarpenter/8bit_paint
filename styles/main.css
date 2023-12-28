@@ -61,7 +61,7 @@ body {
 
 .selectedPaintStyle {
 	padding: 5px;
-	border: 2px solid dodgerblue;
+	border: .35em solid dodgerblue;
 }
 
 .colorSquare {
