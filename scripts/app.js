@@ -7,6 +7,7 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 $(document).ready(function () {
   var mouseIsDown = false;
   var isRightClick = false;
+  var pourMode = false;
 
   $(document).on('mousedown touchstart', function (e) {
     e.preventDefault();
@@ -22,6 +23,7 @@ $(document).ready(function () {
   //on click and drag, change square background color to the input value
   $(".square").on("mouseover touchmove", function (e) {
     e.preventDefault();
+    if (pourMode) return;
     if (mouseIsDown) {
       switch (e.type) {
         case 'touchmove':
@@ -75,6 +77,35 @@ $(document).ready(function () {
 
   $(".square").on("click touchstart", function (e) {
     e.preventDefault();
+
+    if (pourMode) {
+      var currentColor = $(this).css('background-color');
+
+      // Need to get RGB of current paintcolor
+      var testElement = document.createElement('div');
+      testElement.style.backgroundColor = paintColor;
+      document.body.appendChild(testElement);
+      $(testElement).css('background-color', paintColor);
+      var testColor = $(testElement).css('background-color');
+      document.body.removeChild(testElement);
+
+      if (currentColor === testColor) return;
+
+      var touchX, touchY;
+      if (e.type == 'touchstart') {
+        var touch = e.originalEvent.touches[0];
+        touchX = touch.clientX;
+        touchY = touch.clientY;
+      }
+      else {
+        touchX = e.originalEvent.clientX;
+        touchY = e.originalEvent.clientY;
+      }
+
+      paintNeighbors(touchX, touchY, currentColor);
+      return;
+    }
+
     $(this).css('background-color', isRightClick ? "#fff" : paintColor);
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
@@ -108,6 +139,34 @@ $(document).ready(function () {
   $('#colorField').on("change", function (event) {
     selectColor(this.value);
     $('.colorSquare').removeClass('selectedColorSquare');
+  });
+
+  // Event listeners for pour mode
+  $("#paintBucket").on("click", function () {
+    pourMode = true;
+
+    $("#paintBrush").removeClass('selectedPaintStyle')
+    $("#paintBrush").addClass('buttonControl');
+
+    $("#paintBucket").removeClass('buttonControl');
+    $("#paintBucket").addClass('selectedPaintStyle');
+    $("#paintBucket").addClass('blink');
+    setTimeout(() => {
+      $("#paintBucket").removeClass('blink');
+    }, 1000);
+  });
+  $("#paintBrush").on("click", function () {
+    pourMode = false;
+
+    $("#paintBucket").removeClass('selectedPaintStyle')
+    $("#paintBucket").addClass('buttonControl');
+    
+    $("#paintBrush").removeClass('buttonControl')
+    $("#paintBrush").addClass('selectedPaintStyle');
+    $("#paintBrush").addClass('blink');
+    setTimeout(() => {
+      $("#paintBrush").removeClass('blink');
+    }, 1000);
   });
 
   // Event listener for click of Clear button
@@ -144,4 +203,30 @@ function saveAs(uri, filename) {
   } else {
     window.open(uri);
   }
+}
+
+function paintNeighbors(x, y, currentColor) {
+  setTimeout(() => {
+    var currentSquare = document.elementFromPoint(x, y);
+    var newColor = $(currentSquare).css('background-color');
+
+    if (!currentSquare ||
+      !$(currentSquare).hasClass('square') ||
+      newColor !== currentColor) {
+      return;
+    }
+
+    $(currentSquare).css('background-color', paintColor);
+    $(currentSquare).addClass('blink');
+    setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
+
+    var currentRect = currentSquare.getBoundingClientRect();
+    var centerX = currentRect.left + currentRect.width / 2;
+    var centerY = currentRect.top + currentRect.height / 2;
+
+    paintNeighbors(centerX, centerY - 25, currentColor);
+    paintNeighbors(centerX, centerY + 25, currentColor);
+    paintNeighbors(centerX - 25, centerY, currentColor);
+    paintNeighbors(centerX + 25, centerY, currentColor);
+  }, 25);
 }

@@ -32,15 +32,28 @@ body {
 }
 
 #btnSave {
-	padding: 5px;
-	border: 2px solid;
 	width: 200px;
 }
 
 #clearCanvas {
+	width: 90px;
+}
+
+.buttonControl {
 	padding: 5px;
 	border: 2px solid;
-	width: 90px;
+}
+
+.paintStyle {
+	margin-top: 5px;
+	width: 36px;
+	height: 36px;
+	box-sizing: border-box;
+}
+
+.selectedPaintStyle {
+	padding: 5px;
+	border: 2px solid dodgerblue;
 }
 
 .colorSquare {
