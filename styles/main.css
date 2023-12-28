@@ -1,7 +1,13 @@
 * {
 	margin: 0 auto;
 	font-family: 'Press Start 2P', cursive;
+
 }
+
+html {
+	overscroll-behavior: none;
+}
+
 
 #banner {
 	width: 100%;
@@ -19,6 +25,7 @@ body {
 	width: 400px;
 	justify-content: center;
 	background-image: radial-gradient(Gold, FireBrick);
+	overscroll-behavior: none;
 }
 
 #palleteContainer {
