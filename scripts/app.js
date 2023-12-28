@@ -14,6 +14,10 @@ $(document).ready(function () {
   $("body").on('touchmove dragstart selectstart', function (e) {
     e.preventDefault();
   });
+  
+  $("html").on('touchmove dragstart selectstart', function (e) {
+    e.preventDefault();
+  });
 
   $(document).on('mousedown touchstart', function (e) {
     e.preventDefault();
