@@ -75,7 +75,7 @@ $(document).ready(function () {
     }
   });
 
-  $(".square").on("click touchstart", function (e) {
+  $(".square").on("mousedown touchstart", function (e) {
     e.preventDefault();
 
     if (pourMode) {
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
     $("#paintBucket").removeClass('selectedPaintStyle')
     $("#paintBucket").addClass('buttonControl');
-    
+
     $("#paintBrush").removeClass('buttonControl')
     $("#paintBrush").addClass('selectedPaintStyle');
     $("#paintBrush").addClass('blink');
