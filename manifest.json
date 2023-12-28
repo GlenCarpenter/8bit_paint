@@ -1,0 +1,38 @@
+{
+    "name":"8bit Paint",
+    "short_name":"8bit Paint",
+    "description": "A 8bit themed pixel art editor.",
+    "lang": "en-US",
+    "start_url":"?utm_source=manifest",
+    "background_color": "#b22222",
+    "theme_color": "#ffd700",
+    "display": "standalone",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "images/block_64.png",
+        "type": "image/png",
+        "sizes": "64x64"
+      },
+      {
+        "src": "images/block_128.jpg",
+        "type": "image/png",
+        "sizes": "128x128"
+      },
+      {
+        "src": "images/block_144.jpg",
+        "type": "image/png",
+        "sizes": "144x144"
+      },
+      {
+        "src": "images/block_256.jpg",
+        "type": "image/png",
+        "sizes": "256x256"
+      },
+      {
+        "src": "images/block_512.jpg",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ]
+  }

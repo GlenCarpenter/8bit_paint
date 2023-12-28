@@ -26,7 +26,7 @@ body {
 body {
 	width: 400px;
 	justify-content: center;
-	background-image: radial-gradient(Gold, FireBrick);
+	background-image: radial-gradient(#ffd700, #b22222);
 }
 
 #palleteContainer {
