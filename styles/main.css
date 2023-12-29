@@ -149,7 +149,7 @@ body {
 #palleteContainer {
 	margin: auto;
 	margin-top: 30px;
-	width: 320px;
+	width: 340px;
 }
 
 #pallete {
@@ -161,10 +161,8 @@ body {
 }
 
 .controlsRow {
-	display: flex;
 	width: 100%;
-	align-items: center;
-	margin: 5px 0;
+	margin: 5px;
 }
 
 input[type="color"]#colorField {
@@ -173,9 +171,25 @@ input[type="color"]#colorField {
 	height: 30px;
 	border: none;
 }
+input#checkbox {
+	width: 30px;
+	height: 30px;
+	border: none;
+}
 
 label, input {
 	cursor: pointer;
+	vertical-align: middle;
+}
+
+label {
+	display: inline-block;
+	height: 100%;
+	width: 160px;
+}
+
+.labelText {
+	margin-left: 15px;
 }
 
 .paintStyle {
@@ -190,16 +204,23 @@ label, input {
 	border: .35em solid dodgerblue;
 }
 
+.buttonRow {
+	width: 100%;
+	margin-top: 16px;
+	align-content: flex-start;
+}
+
 #btnSave {
 	width: 200px;
-	height: 36px;
+	height: 48px;
 	cursor: pointer;
 }
 
 #clearCanvas {
 	width: 90px;
-	height: 36px;
+	height: 48px;
 	cursor: pointer;
+	float: right;
 }
 
 @media(max-width: 450px) {
