@@ -2,879 +2,896 @@
 <html>
 
 <head>
-	<title>8bit Paint</title>
-	<style>
-		@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-	</style>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="styles/main.css">
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+  <title>8bit Paint</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
 </head>
 
 <body>
-	<div id="app-container">
-		<div id="banner">
-			<h1>8bit Paint</h1>
-		</div>
+  <div id="app-container">
+    <div id="banner">
+      <h1>8bit Paint</h1>
+    </div>
 
-		<!-- Color pallete -->
-		<div id="palleteContainer">
-			<p>Select color:</p>
-			<div id="pallete">
-				<div class="colorSquare" style="background-color: red;" onclick="selectColor('red')"></div>
-				<div class="colorSquare" style="background-color: orange;" onclick="selectColor('orange')"></div>
-				<div class="colorSquare" style="background-color: yellow;" onclick="selectColor('yellow')"></div>
-				<div class="colorSquare" style="background-color: green;" onclick="selectColor('green')"></div>
-				<div class="colorSquare" style="background-color: blue;" onclick="selectColor('blue')"></div>
-				<div class="colorSquare" style="background-color: MediumSlateBlue;"
-					onclick="selectColor('MediumSlateBlue')"></div>
-				<div class="colorSquare" style="background-color: silver;" onclick="selectColor('silver')"></div>
-				<div class="colorSquare selectedColorSquare" style="background-color: black;"
-					onclick="selectColor('black')"></div>
-			</div>
-			<div id="pallete">
-				<div class="colorSquare" style="background-color: pink;" onclick="selectColor('pink')"></div>
-				<div class="colorSquare" style="background-color: Tomato;" onclick="selectColor('Tomato')"></div>
-				<div class="colorSquare" style="background-color: Goldenrod;" onclick="selectColor('Goldenrod')"></div>
-				<div class="colorSquare" style="background-color: YellowGreen;" onclick="selectColor('YellowGreen')">
-				</div>
-				<div class="colorSquare" style="background-color: DodgerBlue;" onclick="selectColor('DodgerBlue')">
-				</div>
-				<div class="colorSquare" style="background-color: Magenta;" onclick="selectColor('Magenta')"></div>
-				<div class="colorSquare" style="background-color: Sienna;" onclick="selectColor('Sienna')"></div>
-				<div class="colorSquare" style="background-color: white;" onclick="selectColor('white')"></div>
-			</div>
+    <!-- Color pallete -->
+    <div id="palleteContainer">
+      <p>Select color:</p>
+      <div id="pallete">
+        <div class="colorSquare" style="background-color: red;" onclick="selectColor('red')"></div>
+        <div class="colorSquare" style="background-color: orange;" onclick="selectColor('orange')"></div>
+        <div class="colorSquare" style="background-color: yellow;" onclick="selectColor('yellow')"></div>
+        <div class="colorSquare" style="background-color: green;" onclick="selectColor('green')"></div>
+        <div class="colorSquare" style="background-color: blue;" onclick="selectColor('blue')"></div>
+        <div class="colorSquare" style="background-color: MediumSlateBlue;" onclick="selectColor('MediumSlateBlue')">
+        </div>
+        <div class="colorSquare" style="background-color: silver;" onclick="selectColor('silver')"></div>
+        <div class="colorSquare selectedColorSquare" style="background-color: black;" onclick="selectColor('black')">
+        </div>
+      </div>
+      <div id="pallete">
+        <div class="colorSquare" style="background-color: pink;" onclick="selectColor('pink')"></div>
+        <div class="colorSquare" style="background-color: Tomato;" onclick="selectColor('Tomato')"></div>
+        <div class="colorSquare" style="background-color: Goldenrod;" onclick="selectColor('Goldenrod')"></div>
+        <div class="colorSquare" style="background-color: YellowGreen;" onclick="selectColor('YellowGreen')">
+        </div>
+        <div class="colorSquare" style="background-color: DodgerBlue;" onclick="selectColor('DodgerBlue')">
+        </div>
+        <div class="colorSquare" style="background-color: Magenta;" onclick="selectColor('Magenta')"></div>
+        <div class="colorSquare" style="background-color: Sienna;" onclick="selectColor('Sienna')"></div>
+        <div class="colorSquare" style="background-color: white;" onclick="selectColor('white')"></div>
+      </div>
 
-			<div id="colorOptions">
-				<div class="controlsRow">
-					<input type="color" id="colorField"></input>
-					<label for="colorField">Custom</label>
-					<input type="checkbox" class="gridBox" id="checkbox" checked />
-					<label for="checkbox">Grid</label>
-				</div>
+      <div id="colorOptions">
+        <div class="controlsRow">
+          <label for="colorField">
+            <input type="color" id="colorField" />
+            <span class="labelText">
+              Custom
+            </span>
+          </label>
+          <label for="checkbox">
+            <input type="checkbox" class="gridBox" id="checkbox" checked />
+            <span class="labelText">
+              Grid
+            </span>
+          </label>
+        </div>
 
-				<div class="controlsRow">
-					<input type="button" class="paintStyle selectedPaintStyle" id="paintBrush" value="🖌️" />
-					<label for="paintBrush">Brush</label>
-					<input type="button" class="paintStyle buttonControl" id="paintBucket" value="🪣" />
-					<label for="paintBucket">Pour</label>
-				</div>
+        <div class="controlsRow">
+          <label for="paintBrush">
+            <input type="button" class="paintStyle selectedPaintStyle" id="paintBrush" value="🖌️" />
+            <span class="labelText">
+              Brush
+            </span>
+          </label>
+          <label for="paintBucket">
+            <input type="button" class="paintStyle buttonControl" id="paintBucket" value="🪣" />
+            <span class="labelText">
+              Pour
+            </span>
+          </label>
+        </div>
 
-				<div class="controlsRow">
-					<input type="button" class="buttonControl" id="btnSave" value="Save to image" />
-					<input type="button" class="buttonControl" id="clearCanvas" value="Clear" />
-				</div>
-			</div>
-		</div>
+      </div>
+    </div>
 
-		<!-- Coloring area -->
-		<div id="colorBox">
+    <!-- Coloring area -->
+    <div id="colorBox">
 
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-				<div class="container-square grid">
-					<div class="square"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+        <div class="container-square grid">
+          <div class="square"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="controlsRow">
+      <input type="button" class="buttonControl" id="btnSave" value="Save to image" />
+      <input type="button" class="buttonControl" id="clearCanvas" value="Clear" />
+    </div>
+  </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/html2canvas.js"></script>
 

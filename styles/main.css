@@ -171,7 +171,10 @@ input[type="color"]#colorField {
 	background-color: #000;
 	width: 30px;
 	height: 30px;
-	border: none;	
+	border: none;
+}
+
+label, input {
 	cursor: pointer;
 }
 
@@ -189,12 +192,14 @@ input[type="color"]#colorField {
 
 #btnSave {
 	width: 200px;
-	height: 30px;
+	height: 36px;
+	cursor: pointer;
 }
 
 #clearCanvas {
 	width: 90px;
-	height: 30px;
+	height: 36px;
+	cursor: pointer;
 }
 
 @media(max-width: 450px) {
