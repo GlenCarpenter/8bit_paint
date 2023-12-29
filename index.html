@@ -29,7 +29,8 @@
 				<div class="colorSquare" style="background-color: MediumSlateBlue;"
 					onclick="selectColor('MediumSlateBlue')"></div>
 				<div class="colorSquare" style="background-color: silver;" onclick="selectColor('silver')"></div>
-				<div class="colorSquare selectedColorSquare" style="background-color: black;" onclick="selectColor('black')"></div>
+				<div class="colorSquare selectedColorSquare" style="background-color: black;"
+					onclick="selectColor('black')"></div>
 			</div>
 			<div id="pallete">
 				<div class="colorSquare" style="background-color: pink;" onclick="selectColor('pink')"></div>
@@ -45,20 +46,24 @@
 			</div>
 
 			<div id="colorOptions">
-				<div>
+				<div class="controlsRow">
 					<input type="color" id="colorField"></input>
-					<label for="colorField">Custom color</label>
+					<label for="colorField">Custom</label>
+					<input type="checkbox" class="gridBox" id="checkbox" checked />
+					<label for="checkbox">Grid</label>
 				</div>
-				<input type="checkbox" class="gridBox" id="checkbox" checked />
-				<label for="checkbox"> Grid</label>
-				<br>
-				<input type="button" class="buttonControl" id="btnSave" value="Save to image" />
-				<input type="button" class="buttonControl" id="clearCanvas" value="Clear" />
 
-				<input type="button" class="paintStyle selectedPaintStyle" id="paintBrush" value="🖌️" />
-        <label for="paintBrush">Brush</label>
-				<input type="button" class="paintStyle buttonControl" id="paintBucket" value="🪣" />
-        <label for="paintBucket">Pour</label>
+				<div class="controlsRow">
+					<input type="button" class="paintStyle selectedPaintStyle" id="paintBrush" value="🖌️" />
+					<label for="paintBrush">Brush</label>
+					<input type="button" class="paintStyle buttonControl" id="paintBucket" value="🪣" />
+					<label for="paintBucket">Pour</label>
+				</div>
+
+				<div class="controlsRow">
+					<input type="button" class="buttonControl" id="btnSave" value="Save to image" />
+					<input type="button" class="buttonControl" id="clearCanvas" value="Clear" />
+				</div>
 			</div>
 		</div>
 

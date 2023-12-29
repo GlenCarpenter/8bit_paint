@@ -11,11 +11,11 @@ $(document).ready(function () {
   var isRightClick = false;
   var pourMode = false;
 
-  $("body").on('touchmove dragstart selectstart', function (e) {
+  $("body").on('touchstart touchmove dblclick', function (e) {
     e.preventDefault();
   });
-  
-  $("html").on('touchmove dragstart selectstart', function (e) {
+
+  $("html").on('touchstart touchmove dblclick', function (e) {
     e.preventDefault();
   });
 

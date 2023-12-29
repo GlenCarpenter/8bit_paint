@@ -29,39 +29,9 @@ body {
 	background-image: radial-gradient(#ffd700, #b22222);
 }
 
-#palleteContainer {
-	margin: auto;
-	margin-top: 30px;
-	width: 320px;
-}
-
-#pallete {
-	display: flex;
-}
-
-#btnSave {
-	width: 200px;
-}
-
-#clearCanvas {
-	width: 90px;
-}
-
 .buttonControl {
 	padding: 5px;
 	border: 2px solid;
-}
-
-.paintStyle {
-	margin-top: 5px;
-	width: 36px;
-	height: 36px;
-	box-sizing: border-box;
-}
-
-.selectedPaintStyle {
-	padding: 5px;
-	border: .35em solid dodgerblue;
 }
 
 .colorSquare {
@@ -76,15 +46,6 @@ body {
 	border: .25em solid #f1f1f1;
 	width: 30px;
 	height: 20px;
-	margin: 5px;
-	cursor: pointer;
-}
-
-input[type="color"]#colorField {
-	background-color: #000;
-	width: 30px;
-	height: 30px;
-	border: none;
 	margin: 5px;
 	cursor: pointer;
 }
@@ -125,7 +86,6 @@ input[type="color"]#colorField {
 	border: .25em solid #000;
 	width: 25px;
 	height: 25px;
-	margin: 10px 5px;
 }
 
 #colorBox {
@@ -186,8 +146,55 @@ input[type="color"]#colorField {
 	padding: 0;
 }
 
+#palleteContainer {
+	margin: auto;
+	margin-top: 30px;
+	width: 320px;
+}
+
+#pallete {
+	display: flex;
+}
+
 #colorOptions {
 	margin-top: 5px;
+}
+
+.controlsRow {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	margin: 5px 0;
+}
+
+input[type="color"]#colorField {
+	background-color: #000;
+	width: 30px;
+	height: 30px;
+	border: none;	
+	cursor: pointer;
+}
+
+.paintStyle {
+	margin-top: 5px;
+	width: 36px;
+	height: 36px;
+	box-sizing: border-box;
+}
+
+.selectedPaintStyle {
+	padding: 5px;
+	border: .35em solid dodgerblue;
+}
+
+#btnSave {
+	width: 200px;
+	height: 30px;
+}
+
+#clearCanvas {
+	width: 90px;
+	height: 30px;
 }
 
 @media(max-width: 450px) {
