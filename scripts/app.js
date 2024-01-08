@@ -1,12 +1,18 @@
 var paintColor = "black";
 
-// Register service worker
-navigator.serviceWorker.register('serviceworker.js');
+// Disable back button
+window.addEventListener('beforeunload', function (e) {
+  // Cancel the event
+  e.preventDefault();
+  // Chrome requires returnValue to be set
+  e.returnValue = '';
+});
 
 //Disable context menu on right click
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 $(document).ready(function () {
+
   var mouseIsDown = false;
   var isRightClick = false;
   var pourMode = false;
@@ -155,7 +161,7 @@ $(document).ready(function () {
   $("#paintBucket").on("click", function () {
     pourMode = true;
 
-    $("#paintBrush").removeClass('selectedPaintStyle')
+    $("#paintBrush").removeClass('selectedPaintStyle');
     $("#paintBrush").addClass('buttonControl');
 
     $("#paintBucket").removeClass('buttonControl');
@@ -168,10 +174,10 @@ $(document).ready(function () {
   $("#paintBrush").on("click", function () {
     pourMode = false;
 
-    $("#paintBucket").removeClass('selectedPaintStyle')
+    $("#paintBucket").removeClass('selectedPaintStyle');
     $("#paintBucket").addClass('buttonControl');
 
-    $("#paintBrush").removeClass('buttonControl')
+    $("#paintBrush").removeClass('buttonControl');
     $("#paintBrush").addClass('selectedPaintStyle');
     $("#paintBrush").addClass('brushFlash');
     setTimeout(() => {
