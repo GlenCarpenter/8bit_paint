@@ -1,20 +1,10 @@
-var paintColor = "black";
-
-// Disable back button
-window.addEventListener('beforeunload', function (e) {
-  // Cancel the event
-  e.preventDefault();
-  // Chrome requires returnValue to be set
-  e.returnValue = '';
-});
-
-//Disable context menu on right click
-document.addEventListener('contextmenu', event => event.preventDefault());
+var paintColor = "#000000";
+var secondaryPaintColor = "#ffffff";
 
 $(document).ready(function () {
-  $("#start-button").text("Tap to start!");
+  $("#start-button-message").text("Tap here to start!");
   // Remove overlay
-  $("#start-button").on("click", function () {
+  $(".loading-overlay").on("click", function () {
     $("#overlay").remove();
   });
 
@@ -65,7 +55,7 @@ $(document).ready(function () {
           }
 
           touchElement = document.elementFromPoint(touchX, touchY);
-          currentRect = touchElement.getBoundingClientRect();
+          currentRect = touchElement && touchElement.getBoundingClientRect();
           if (touchElement) {
             if ($(touchElement).hasClass('square')) {
               $(touchElement).css('background-color', paintColor);
@@ -82,7 +72,7 @@ $(document).ready(function () {
           break;
         case "mouseover":
           if ($(this).hasClass('square')) {
-            $(this).css('background-color', isRightClick ? "#ffffff" : paintColor);
+            $(this).css('background-color', isRightClick ? secondaryPaintColor : paintColor);
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
@@ -98,42 +88,32 @@ $(document).ready(function () {
 
   $(".square").on("mousedown touchstart", function (e) {
     e.preventDefault();
+    var newColor = e.which == 3 ? secondaryPaintColor : paintColor;
 
     if (pourMode) {
       var currentColor = $(this).css('background-color');
 
       // Need to get RGB of current paintcolor
-      var testElement = document.createElement('div');
-      testElement.style.backgroundColor = paintColor;
-      document.body.appendChild(testElement);
-      $(testElement).css('background-color', paintColor);
-      var testColor = $(testElement).css('background-color');
-      document.body.removeChild(testElement);
-
+      var testColor = getCurrentPaintColorRGB(newColor)
       if (currentColor === testColor) return;
 
-      var touchX, touchY;
-      if (e.type == 'touchstart') {
-        var touch = e.originalEvent.touches[0];
-        touchX = touch.clientX;
-        touchY = touch.clientY;
-      }
-      else {
-        touchX = e.originalEvent.clientX;
-        touchY = e.originalEvent.clientY;
-      }
-
-      paintNeighbors(touchX, touchY, paintColor, currentColor);
+      [_, row, col] = this.id.split('-');
+      paintNeighbors(parseInt(row), parseInt(col), newColor, currentColor);
       return;
     }
 
-    $(this).css('background-color', isRightClick ? "#ffffff" : paintColor);
+    $(this).css('background-color', newColor);
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
   });
 
   $('input[type=checkbox]').on('change', function (e) {
     $('.container-square').toggleClass('grid');
+  });
+
+  $('.colorSquare').on('contextmenu', function (e) {
+    e.preventDefault();
+    secondaryPaintColor = $(this).css('background-color');
   });
 
   $('.colorSquare').on('click', function (e) {
@@ -226,13 +206,22 @@ function saveAs(uri, filename) {
   }
 }
 
-function paintNeighbors(x, y, paintColor, currentColor) {
+// Paints neighbors of current square
+function paintNeighbors(row, col, paintColor, currentColor, visited = new Set()) {
   setTimeout(() => {
-    var currentSquare = document.elementFromPoint(x, y);
-    var newColor = $(currentSquare).css('background-color');
 
-    if (!currentSquare ||
-      !$(currentSquare).hasClass('square') ||
+    if (
+      row < 0
+      || row > 15
+      || col < 0
+      || col > 15
+      || visited.has([row, col])
+    ) {
+      return;
+    }
+    var currentSquare = $(`#square-${row}-${col}`);
+    var newColor = $(currentSquare).css('background-color');
+    if (
       newColor !== currentColor) {
       return;
     }
@@ -240,14 +229,21 @@ function paintNeighbors(x, y, paintColor, currentColor) {
     $(currentSquare).css('background-color', paintColor);
     $(currentSquare).addClass('blink');
     setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
-
-    var currentRect = currentSquare.getBoundingClientRect();
-    var centerX = currentRect.left + currentRect.width / 2;
-    var centerY = currentRect.top + currentRect.height / 2;
-
-    paintNeighbors(centerX, centerY - 25, paintColor, currentColor);
-    paintNeighbors(centerX, centerY + 25, paintColor, currentColor);
-    paintNeighbors(centerX - 25, centerY, paintColor, currentColor);
-    paintNeighbors(centerX + 25, centerY, paintColor, currentColor);
+    visited.add([row, col]);
+    paintNeighbors(row - 1, col, paintColor, currentColor, visited);
+    paintNeighbors(row + 1, col, paintColor, currentColor, visited);
+    paintNeighbors(row, col - 1, paintColor, currentColor, visited);
+    paintNeighbors(row, col + 1, paintColor, currentColor, visited);
   }, 25);
+}
+
+function getCurrentPaintColorRGB(color) {  
+  var testElement = document.createElement('div');
+  testElement.style.backgroundColor = color;
+  document.body.appendChild(testElement);
+  $(testElement).css('background-color', color);
+  var rgb = $(testElement).css('background-color');
+  document.body.removeChild(testElement);
+
+  return rgb;
 }
