@@ -12,6 +12,8 @@ window.addEventListener('beforeunload', function (e) {
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 $(document).ready(function () {
+  // Remove overlay
+  $("#overlay").remove();
 
   var mouseIsDown = false;
   var isRightClick = false;
