@@ -30,7 +30,7 @@ body {
 }
 
 .loading-overlay {
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(255, 255, 255, .3);
@@ -41,7 +41,7 @@ body {
 }
 
 .start-button {
-	margin: 35% auto;
+	margin: 45vh auto;
 	padding: 50px 25px;
 	color: rgb(255, 215, 0);
 	background-color: rgb(178, 34, 34, .5);
