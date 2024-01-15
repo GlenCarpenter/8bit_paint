@@ -82,7 +82,7 @@ $(document).ready(function () {
           break;
         case "mouseover":
           if ($(this).hasClass('square')) {
-            $(this).css('background-color', isRightClick ? "#fff" : paintColor);
+            $(this).css('background-color', isRightClick ? "#ffffff" : paintColor);
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
@@ -127,7 +127,7 @@ $(document).ready(function () {
       return;
     }
 
-    $(this).css('background-color', isRightClick ? "#fff" : paintColor);
+    $(this).css('background-color', isRightClick ? "#ffffff" : paintColor);
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
   });
@@ -138,7 +138,7 @@ $(document).ready(function () {
 
   $('.colorSquare').on('click', function (e) {
     $('.colorSquare').removeClass('selectedColorSquare');
-    $('#colorField').css('background-color', '#000');
+    $('#colorField').css('background-color', '#000000');
     $(this).toggleClass('selectedColorSquare');
   });
 
@@ -198,7 +198,7 @@ $(document).ready(function () {
       $("#clearCanvas").removeClass('blink');
       $(".container-square").removeClass('blink');
     }, 1000);
-    $(".square").css('background-color', '#fff');
+    $(".square").css('background-color', '#ffffff');
   });
 });
 
