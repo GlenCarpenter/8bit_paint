@@ -2,7 +2,7 @@
 	margin: 0 auto;
 	font-family: 'Press Start 2P', cursive;
 }
-/*
+
 html,
 body {
 	overscroll-behavior-x: none;
@@ -10,7 +10,6 @@ body {
 	touch-action: none;
 	overflow: hidden;
 }
-*/
 
 #banner {
 	width: 100%;
