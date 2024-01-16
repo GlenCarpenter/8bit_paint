@@ -134,11 +134,6 @@ $(document).ready(function () {
     $("#btnSave").addClass('blink');
     setTimeout(() => $("#btnSave").removeClass('blink'), 1000);
     html2canvas(document.querySelector('#colorBox')).then(function (canvas) {
-      if (!navigator.canShare) {
-        saveAs(canvas.toDataURL(), '8bit_paint.png' + '?' + new Date().getTime());
-        return;
-      }
-
       shareImage(canvas.toDataURL());
     });
   });
@@ -296,9 +291,18 @@ function saveAs(uri, filename) {
 }
 
 async function shareImage(base64url) {
+  if (!navigator.canShare) {
+    saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
+    return;
+  }
   const blob = await (await fetch(base64url)).blob();
   const file = new File([blob], '8bitPaint.png', { type: 'image/png' });
 
+  if (!navigator.canShare({ files: [file] })) {
+    saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
+    return;
+  }
+  
   navigator.share({
     title: '8bit Paint',
     text: 'Check out my 8bit Paint!',
