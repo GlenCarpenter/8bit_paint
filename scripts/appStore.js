@@ -115,18 +115,21 @@ var appStore = {
       }
     }
     if (this.grid) {
-      $('.container-square').addClass('grid');
       const ctx = this.canvas.getContext("2d");
       for (let i = 1; i < 16; i++) {
         // Draw rows
         ctx.beginPath();
         ctx.moveTo(0, i * 25);
         ctx.lineTo(400, i * 25);
+        ctx.strokeStyle = "#202124";
+        ctx.lineWidth = 2;
         ctx.stroke();
         // Draw columns
         ctx.beginPath();
         ctx.moveTo(i * 25, 0);
         ctx.lineTo(i * 25, 400);
+        ctx.strokeStyle = "#202124";
+        ctx.lineWidth = 2;
         ctx.stroke();
       }
     }
