@@ -11,6 +11,7 @@ $(document).ready(function () {
   var mouseIsDown = false;
   var isRightClick = false;
   var pourMode = false;
+  var currentVisitedNodes = new Set();
 
   $("body").on('touchstart touchmove dblclick', function (e) {
     e.preventDefault();
@@ -29,6 +30,13 @@ $(document).ready(function () {
   }).on('mouseup touchend', function () {
     mouseIsDown = false;    // When mouse goes up, set isDown to false
     isRightClick = false;
+    if (currentActions.length > 0 && !pourMode) {
+      console.log("Adding to undo stack")
+      addToUndoStack(currentActions);
+    }
+    resetCurrentActions();
+    saveCurrentDrawing();
+    currentVisitedNodes = new Set();
   });
 
   //on click and drag, change square background color to the input value
@@ -58,9 +66,20 @@ $(document).ready(function () {
           currentRect = touchElement && touchElement.getBoundingClientRect();
           if (touchElement) {
             if ($(touchElement).hasClass('square')) {
+              [_, row, col] = touchElement.id.split('-');
+              if (currentVisitedNodes.has(`${row}, ${col}`)) {
+                return;
+              };
+              currentVisitedNodes.add(`${row}, ${col}`);
+              currentActions.push({ row, col, color: currentDrawing[row][col] });
               $(touchElement).css('background-color', paintColor);
               $(touchElement).addClass('blink');
-              setTimeout(() => $(touchElement).removeClass('blink'), 1000);
+              currentDrawing[row][col] = paintColor;
+
+              setTimeout(() => {
+                $(touchElement).removeClass('blink');
+              }, 1000);
+
             }
             else {
               if ($(touchElement).hasClass('container-square')) {
@@ -72,7 +91,10 @@ $(document).ready(function () {
           break;
         case "mouseover":
           if ($(this).hasClass('square')) {
+            [_, row, col] = this.id.split('-');
+            currentActions.push({ row, col, color: currentDrawing[row][col] });
             $(this).css('background-color', isRightClick ? secondaryPaintColor : paintColor);
+            currentDrawing[row][col] = isRightClick ? secondaryPaintColor : paintColor;
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
@@ -89,19 +111,24 @@ $(document).ready(function () {
   $(".square").on("mousedown touchstart", function (e) {
     e.preventDefault();
     var newColor = e.which == 3 ? secondaryPaintColor : paintColor;
+    [_, row, col] = this.id.split('-');
 
     if (pourMode) {
       var currentColor = $(this).css('background-color');
 
       // Need to get RGB of current paintcolor
-      var testColor = getCurrentPaintColorRGB(newColor)
+      var testColor = getCurrentPaintColorRGB(newColor);
       if (currentColor === testColor) return;
 
-      [_, row, col] = this.id.split('-');
       paintNeighbors(parseInt(row), parseInt(col), newColor, currentColor);
+
       return;
     }
 
+    currentVisitedNodes.add(`${row}, ${col}`);
+    currentActions.push({ row, col, color: currentDrawing[row][col] });
+
+    currentDrawing[row][col] = newColor;
     $(this).css('background-color', newColor);
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
@@ -172,6 +199,15 @@ $(document).ready(function () {
 
   // Event listener for click of Clear button
   $("#clearCanvas").on("click", function () {
+    for (let row = 0; row < 16; row++) {
+      for (let col = 0; col < 16; col++) {
+        let action = { row, col, color: currentDrawing[row][col] };
+        currentActions.push(action);
+      }
+    }
+    addToUndoStack(currentActions);
+    resetCurrentActions();
+    initializeDrawing();
     $("#clearCanvas").addClass('blink');
     $(".container-square").addClass('blink');
     setTimeout(() => {
@@ -180,8 +216,20 @@ $(document).ready(function () {
     }, 1000);
     $(".square").css('background-color', '#ffffff');
   });
-});
 
+  $("#btn-undo").on("click", function () {
+    undo();
+    $("#btn-undo").addClass('blink');
+    setTimeout(() => {
+      $("#btn-undo").removeClass('blink');
+    }, 1000);
+  });
+
+  $("#btn-redo").on("click", function () {
+    redo();
+  });
+
+});
 
 
 function selectColor(color) {
@@ -207,37 +255,56 @@ function saveAs(uri, filename) {
 }
 
 // Paints neighbors of current square
-function paintNeighbors(row, col, paintColor, currentColor, visited = new Set()) {
-  setTimeout(() => {
-
+function paintNeighborsResolver(row, col, paintColor, currentColor, visited = new Set(), actions = []) {
+  return new Promise(resolve => setTimeout(() => {
     if (
-      row < 0
-      || row > 15
-      || col < 0
-      || col > 15
-      || visited.has([row, col])
+      row < 0 ||
+      row > 15 ||
+      col < 0 ||
+      col > 15 ||
+      visited.has([row, col])
     ) {
       return;
     }
     var currentSquare = $(`#square-${row}-${col}`);
     var newColor = $(currentSquare).css('background-color');
-    if (
-      newColor !== currentColor) {
+    if (newColor !== currentColor) {
       return;
     }
+    actions.push({
+      row: row,
+      col: col,
+      color: newColor,
+    });
 
+    currentDrawing[row][col] = paintColor;
+    saveCurrentDrawing();
     $(currentSquare).css('background-color', paintColor);
     $(currentSquare).addClass('blink');
     setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
     visited.add([row, col]);
-    paintNeighbors(row - 1, col, paintColor, currentColor, visited);
-    paintNeighbors(row + 1, col, paintColor, currentColor, visited);
-    paintNeighbors(row, col - 1, paintColor, currentColor, visited);
-    paintNeighbors(row, col + 1, paintColor, currentColor, visited);
-  }, 25);
+
+    paintNeighborsResolver(row - 1, col, paintColor, currentColor, visited, actions);
+    paintNeighborsResolver(row + 1, col, paintColor, currentColor, visited, actions);
+    paintNeighborsResolver(row, col - 1, paintColor, currentColor, visited, actions);
+    paintNeighborsResolver(row, col + 1, paintColor, currentColor, visited, actions);
+
+    currentActions = actions;
+    resolve();
+  }, 25));
 }
 
-function getCurrentPaintColorRGB(color) {  
+
+function paintNeighbors(row, col, paintColor, currentColor) {
+  Promise.resolve(paintNeighborsResolver(row, col, paintColor, currentColor)).then(() => {
+    console.log("Adding to undo stack!!")
+    addToUndoStack(currentActions);
+    resetCurrentActions();
+  });
+}
+
+
+function getCurrentPaintColorRGB(color) {
   var testElement = document.createElement('div');
   testElement.style.backgroundColor = color;
   document.body.appendChild(testElement);
@@ -246,4 +313,55 @@ function getCurrentPaintColorRGB(color) {
   document.body.removeChild(testElement);
 
   return rgb;
+}
+
+function undo() {
+  if (undoStack.length > 0) {
+    var lastAction = undoStack.pop();
+    var currentStateColor = $(`#square-${lastAction[0].row}-${lastAction[0].col}`).css('background-color');
+    var currentStateAction = lastAction.map(action => {
+      return {
+        row: action.row,
+        col: action.col,
+        color: currentStateColor,
+      };
+    });
+    addToRedoStack(currentStateAction);
+    revertAction(lastAction);
+    localStorage.setItem('undoStack', JSON.stringify(undoStack));
+    localStorage.setItem('redoStack', JSON.stringify(redoStack));
+  }
+}
+
+function redo() {
+  if (redoStack.length > 0) {
+    var lastAction = redoStack.pop();
+    var currentStateColor = $(`#square-${lastAction[0].row}-${lastAction[0].col}`).css('background-color');
+    var currentStateAction = lastAction.map(action => {
+      return {
+        row: action.row,
+        col: action.col,
+        color: currentStateColor,
+      };
+    });
+    addToUndoStack(currentStateAction);
+    revertAction(lastAction);
+    localStorage.setItem('undoStack', JSON.stringify(undoStack));
+    localStorage.setItem('redoStack', JSON.stringify(redoStack));
+  }
+}
+
+function revertAction(lastAction) {
+  for (let action of lastAction) {
+    colorSquare(action.row, action.col, action.color);
+  }
+  saveCurrentDrawing();
+}
+
+function colorSquare(row, col, color) {
+  var currentSquare = $("#square-" + row + "-" + col);
+  $(currentSquare).css('background-color', color);
+  $(currentSquare).addClass('blink');
+  setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
+  currentDrawing[row][col] = color;
 }
