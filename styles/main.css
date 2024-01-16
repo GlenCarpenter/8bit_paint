@@ -242,13 +242,13 @@ label {
 }
 
 #btnSave {
-	width: 200px;
+	width: 150px;
 	height: 48px;
 	cursor: pointer;
 }
 
 #clearCanvas {
-	width: 90px;
+	width: 150px;
 	height: 48px;
 	cursor: pointer;
 	float: right;
@@ -282,6 +282,7 @@ label {
 	height: 30px;
 	box-sizing: border-box;
 	border: 2px solid;
+	cursor: pointer;
 }
 
 .btn-undo {
@@ -299,4 +300,6 @@ label {
 	font-weight: 700;
 	font-size: 20px;
 	height: 30px;
+	transform: rotate(90deg);
+	transform-origin: 10px 14px;
 }
