@@ -10,35 +10,31 @@ window.addEventListener('beforeunload', function (e) {
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 // Initialize undo and redo stacks
-if (!localStorage.getItem("undoStack")) {
-  localStorage.setItem("undoStack", JSON.stringify(new Array()));
-}
-if (!localStorage.getItem("redoStack")) {
-  localStorage.setItem("redoStack", JSON.stringify(new Array()));
-}
+localStorage.setItem("undoStack", JSON.stringify(new Array()));
+localStorage.setItem("redoStack", JSON.stringify(new Array()));
 
 var undoStack = JSON.parse(localStorage.getItem("undoStack"));
 var redoStack = JSON.parse(localStorage.getItem("redoStack"));
 var currentActions = [];
 
-var resetCurrentActions = function() {
+var resetCurrentActions = function () {
   currentActions = [];
-}
+};
 
 // Add to undo stack
-var addToUndoStack = function(action) {
+var addToUndoStack = function (action) {
   undoStack.push(action);
   localStorage.setItem("undoStack", JSON.stringify(undoStack));
-}
+};
 
 // Add to redo stack
-var addToRedoStack = function(action) {
+var addToRedoStack = function (action) {
   redoStack.push(action);
   localStorage.setItem("redoStack", JSON.stringify(redoStack));
-}
+};
 
 // Initialize drawing
-var initializeDrawing = function() {
+var initializeDrawing = function () {
   var initialDrawing = [];
   for (var i = 0; i < 16; i++) {
     initialDrawing[i] = [];
@@ -47,7 +43,7 @@ var initializeDrawing = function() {
     }
   }
   localStorage.setItem("currentDrawing", JSON.stringify(initialDrawing));
-}
+};
 
 if (!localStorage.getItem("currentDrawing")) {
   initializeDrawing();
@@ -57,9 +53,9 @@ if (!localStorage.getItem("currentDrawing")) {
 var currentDrawing = JSON.parse(localStorage.getItem("currentDrawing"));
 
 // Save current drawing to local storage
-var saveCurrentDrawing = function() {
+var saveCurrentDrawing = function () {
   localStorage.setItem("currentDrawing", JSON.stringify(currentDrawing));
-}
+};
 
 // Initialize color box
 function initColorBox() {

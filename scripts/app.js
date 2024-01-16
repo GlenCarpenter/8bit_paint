@@ -31,7 +31,6 @@ $(document).ready(function () {
     mouseIsDown = false;    // When mouse goes up, set isDown to false
     isRightClick = false;
     if (currentActions.length > 0 && !pourMode) {
-      console.log("Adding to undo stack")
       addToUndoStack(currentActions);
     }
     resetCurrentActions();
@@ -255,54 +254,53 @@ function saveAs(uri, filename) {
 }
 
 // Paints neighbors of current square
-function paintNeighborsResolver(row, col, paintColor, currentColor, visited = new Set(), actions = []) {
-  return new Promise(resolve => setTimeout(() => {
+async function paintNeighbors(row, col, paintColor, currentColor) {
+  let queue = [];
+  let visited = new Set();
+  queue.push([row, col]);
+  while (queue.length > 0) {
+    let current = queue.shift();
+    let currentRow = current[0];
+    let currentCol = current[1];
+    let hash = `${currentRow}, ${currentCol}`;
     if (
-      row < 0 ||
-      row > 15 ||
-      col < 0 ||
-      col > 15 ||
-      visited.has([row, col])
+      currentRow < 0 ||
+      currentRow > 15 ||
+      currentCol < 0 ||
+      currentCol > 15 ||
+      visited.has(hash)
     ) {
-      return;
+      continue;
     }
-    var currentSquare = $(`#square-${row}-${col}`);
+    visited.add(hash);
+    var currentSquare = $(`#square-${currentRow}-${currentCol}`);
     var newColor = $(currentSquare).css('background-color');
     if (newColor !== currentColor) {
-      return;
+      continue;
     }
-    actions.push({
-      row: row,
-      col: col,
+    currentActions.push({
+      row: currentRow,
+      col: currentCol,
       color: newColor,
     });
 
-    currentDrawing[row][col] = paintColor;
+    currentDrawing[currentRow][currentCol] = paintColor;
     saveCurrentDrawing();
     $(currentSquare).css('background-color', paintColor);
     $(currentSquare).addClass('blink');
-    setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
-    visited.add([row, col]);
 
-    paintNeighborsResolver(row - 1, col, paintColor, currentColor, visited, actions);
-    paintNeighborsResolver(row + 1, col, paintColor, currentColor, visited, actions);
-    paintNeighborsResolver(row, col - 1, paintColor, currentColor, visited, actions);
-    paintNeighborsResolver(row, col + 1, paintColor, currentColor, visited, actions);
+    queue.push([currentRow - 1, currentCol]);
+    queue.push([currentRow + 1, currentCol]);
+    queue.push([currentRow, currentCol - 1]);
+    queue.push([currentRow, currentCol + 1]);
 
-    currentActions = actions;
-    resolve();
-  }, 25));
+  }
+  addToUndoStack(currentActions);
+  for (let action of currentActions) {
+    setTimeout(() => $(`#square-${action.row}-${action.col}`).removeClass('blink'), 1000);
+  }
+  resetCurrentActions();
 }
-
-
-function paintNeighbors(row, col, paintColor, currentColor) {
-  Promise.resolve(paintNeighborsResolver(row, col, paintColor, currentColor)).then(() => {
-    console.log("Adding to undo stack!!")
-    addToUndoStack(currentActions);
-    resetCurrentActions();
-  });
-}
-
 
 function getCurrentPaintColorRGB(color) {
   var testElement = document.createElement('div');
