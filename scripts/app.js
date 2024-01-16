@@ -154,7 +154,12 @@ $(document).ready(function () {
     $("#btnSave").addClass('blink');
     setTimeout(() => $("#btnSave").removeClass('blink'), 1000);
     html2canvas(document.querySelector('#colorBox')).then(function (canvas) {
-      saveAs(canvas.toDataURL(), '8bit_paint.png');
+      if (!navigator.canShare) {
+        saveAs(canvas.toDataURL(), '8bit_paint.png' + '?' + new Date().getTime());
+        return;
+      }
+
+      shareImage(canvas.toDataURL());
     });
   });
 
@@ -372,3 +377,16 @@ function colorSquare(row, col, color) {
   setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
   currentDrawing[row][col] = color;
 }
+
+async function shareImage(base64url) {
+  const blob = await (await fetch(base64url)).blob();
+  const file = new File([blob], '8bitPaint.png', { type: 'image/png' });
+
+  navigator.share({
+    title: '8bit Paint',
+    text: 'Check out my 8bit Paint!',
+    files: [file],
+  })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+} 
