@@ -135,6 +135,8 @@ $(document).ready(function () {
     setTimeout(() => $("#btnSave").removeClass('blink'), 1000);
     html2canvas(document.querySelector('#colorBox'), {
       scale: 1,
+      windowWidth: 857,
+      windowHeight: 911,
     }).then(function (canvas) {
       shareImage(canvas.toDataURL());
     });
