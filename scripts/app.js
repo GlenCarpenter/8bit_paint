@@ -4,13 +4,14 @@ appStore.resetCurrentVisitedNodes();
 appStore.resetCurrentActions();
 appStore.initUndoStack();
 appStore.initRedoStack();
+appStore.initCanvas();
 
 
 $(document).ready(function () {
   $("#start-button-message").text("Tap here to start!");
   // Remove overlay
+  $("#overlay").remove();
   $(".loading-overlay").on("click", function () {
-    $("#overlay").remove();
   });
 
   $("body").on('touchstart touchmove dblclick', function (e) {
@@ -114,7 +115,7 @@ $(document).ready(function () {
   });
 
   $('input[type=checkbox]').on('change', function (e) {
-    $('.container-square').toggleClass('grid');
+    appStore.toggleGrid();
   });
 
   $('.colorSquare').on('contextmenu', function (e) {
@@ -133,15 +134,7 @@ $(document).ready(function () {
   $("#btnSave").on("click", function () {
     $("#btnSave").addClass('blink');
     setTimeout(() => $("#btnSave").removeClass('blink'), 1000);
-    html2canvas(document.querySelector('#colorBox'), {
-      scale: 1,
-      windowWidth: 857,
-      windowHeight: 911,
-      width: 400,
-      height: 400,
-    }).then(function (canvas) {
-      shareImage(canvas.toDataURL());
-    });
+    shareImage();
   });
 
   // Event listener for custom color
@@ -296,27 +289,33 @@ function saveAs(uri, filename) {
   }
 }
 
-async function shareImage(base64url) {
-  if (!navigator.canShare) {
-    saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
-    return;
-  }
-  const blob = await (await fetch(base64url)).blob();
-  const file = new File([blob], '8bitPaint.png', { type: 'image/png' });
+async function shareImage() {
+  appStore.initCanvas();
 
-  if (!navigator.canShare({ files: [file] })) {
-    saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
-    return;
-  }
+  appStore.canvas.toBlob(function (blob) {
+    const file = new File([blob], '8bitPaint.png', { type: 'image/png' });
 
-  navigator.share({
-    title: '8bit Paint',
-    text: 'Check out my 8bit Paint!',
-    files: [file],
-  })
-    .then(() => console.log('Successful share'))
-    .catch((error) => console.log('Error sharing', error));
-}
+
+    if (!navigator.canShare) {
+      const base64url = URL.createObjectURL(blob);
+      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
+      return;
+    }
+    if (!navigator.canShare({ files: [file] })) {
+      const base64url = URL.createObjectURL(blob);
+      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
+      return;
+    }
+
+    navigator.share({
+      title: '8bit Paint',
+      text: 'Check out my 8bit Paint!',
+      files: [file],
+    })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing', error));
+  });
+};
 
 function handleTouchMove(touchElement) {
   if ($(touchElement).hasClass('square')) {

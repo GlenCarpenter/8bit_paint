@@ -90,8 +90,11 @@
       <button class="btn-revert btn-redo" id="btn-redo">Redo<span class="btn-icon">↻</span>
       </button>
     </div>
-    
+
     <!-- Coloring area -->
+    <canvas id="colorBoxCanvas" width="400" height="400">
+
+    </canvas>
     <div id="colorBox"></div>
     <div class="buttonRow">
       <button class="buttonControl" id="btnSave">Share <img src="images/share_icon.svg" alt="share" />
@@ -102,7 +105,6 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="scripts/disableBackButton.js"></script>
 <script src="scripts/appStore.js"></script>
 <script src="scripts/init.js"></script>
