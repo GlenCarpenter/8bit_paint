@@ -86,12 +86,14 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	font-size: 0;
 }
 
 .container-square {
 	width: 25px;
 	height: 25px;
 	box-sizing: border-box;
+	font-size: 0;
 }
 
 .grid {
@@ -104,6 +106,7 @@ body {
 	background-color: #ffffff;
 	touch-action: none;
 	overflow: hidden;
+	font-size: 0;
 }
 
 .row {
