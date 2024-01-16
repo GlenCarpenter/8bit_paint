@@ -32,6 +32,7 @@ $(document).ready(function () {
     isRightClick = false;
     if (currentActions.length > 0 && !pourMode) {
       addToUndoStack(currentActions);
+      clearRedoStack();
     }
     resetCurrentActions();
     saveCurrentDrawing();
@@ -205,6 +206,7 @@ $(document).ready(function () {
       }
     }
     addToUndoStack(currentActions);
+    clearRedoStack();
     resetCurrentActions();
     initializeDrawing();
     $("#clearCanvas").addClass('blink');
@@ -296,6 +298,7 @@ async function paintNeighbors(row, col, paintColor, currentColor) {
 
   }
   addToUndoStack(currentActions);
+  clearRedoStack();
   for (let action of currentActions) {
     setTimeout(() => $(`#square-${action.row}-${action.col}`).removeClass('blink'), 1000);
   }
@@ -328,6 +331,9 @@ function undo() {
     revertAction(lastAction);
     localStorage.setItem('undoStack', JSON.stringify(undoStack));
     localStorage.setItem('redoStack', JSON.stringify(redoStack));
+    if (undoStack.length === 0) {
+      $("#btn-undo").prop('disabled', true);
+    }
   }
 }
 
@@ -346,6 +352,9 @@ function redo() {
     revertAction(lastAction);
     localStorage.setItem('undoStack', JSON.stringify(undoStack));
     localStorage.setItem('redoStack', JSON.stringify(redoStack));
+    if (redoStack.length === 0) {
+      $("#btn-redo").prop('disabled', true);
+    }
   }
 }
 

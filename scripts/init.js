@@ -12,6 +12,8 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 // Initialize undo and redo stacks
 localStorage.setItem("undoStack", JSON.stringify(new Array()));
 localStorage.setItem("redoStack", JSON.stringify(new Array()));
+$("#btn-undo").prop('disabled', true);
+$("#btn-redo").prop('disabled', true);
 
 var undoStack = JSON.parse(localStorage.getItem("undoStack"));
 var redoStack = JSON.parse(localStorage.getItem("redoStack"));
@@ -25,12 +27,21 @@ var resetCurrentActions = function () {
 var addToUndoStack = function (action) {
   undoStack.push(action);
   localStorage.setItem("undoStack", JSON.stringify(undoStack));
+  $("#btn-undo").prop("disabled", false);
 };
 
 // Add to redo stack
 var addToRedoStack = function (action) {
   redoStack.push(action);
   localStorage.setItem("redoStack", JSON.stringify(redoStack));
+  $("#btn-redo").prop("disabled", false);
+};
+
+// Clear redo stack
+var clearRedoStack = function (action) {
+  redoStack = [];
+  localStorage.setItem("redoStack", JSON.stringify(redoStack));
+  $("#btn-redo").prop("disabled", true);
 };
 
 // Initialize drawing

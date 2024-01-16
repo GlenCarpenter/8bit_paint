@@ -273,21 +273,30 @@ label {
 .undo-row {
 	width: 100%;
 	height: 20px;
+	margin-bottom: 5px;
+}
+
+.btn-revert {
+	width: 100px;
+	cursor: pointer;
+	height: 30px;
+	box-sizing: border-box;
+	border: 2px solid;
 }
 
 .btn-undo {
-	width: 100px;
-	cursor: pointer;
 	float: left;
-	height: 30px;
 }
 
-.btn-undo-icon {
+.btn-redo {
+	float: right;
+}
+
+.btn-icon {
 	text-align: center;
 	display: inline-block;
 	vertical-align: middle;
 	font-weight: 700;
 	font-size: 20px;
 	height: 30px;
-	
 }
