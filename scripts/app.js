@@ -137,6 +137,8 @@ $(document).ready(function () {
       scale: 1,
       windowWidth: 857,
       windowHeight: 911,
+      width: 400,
+      height: 400,
     }).then(function (canvas) {
       shareImage(canvas.toDataURL());
     });
