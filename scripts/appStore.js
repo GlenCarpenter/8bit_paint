@@ -162,38 +162,40 @@ var appStore = {
   },
   undo: function () {
     if (this.undoStack.length > 0) {
+      $("#btn-undo").prop('disabled', true);
       const lastAction = this.getUndoAction();
-      const currentStateColor = $(`#square-${lastAction[0].row}-${lastAction[0].col}`).css('background-color');
       const currentStateAction = lastAction.map(action => {
         return {
           row: action.row,
           col: action.col,
-          color: currentStateColor,
+          color: this.currentDrawing[action.row][action.col],
         };
       });
       this.addToRedoStack(currentStateAction);
       this.revertAction(lastAction);
-      if (this.undoStack.length === 0) {
-        $("#btn-undo").prop('disabled', true);
-      }
+      $("#btn-undo").prop('disabled', false);
+    }
+    if (this.undoStack.length === 0) {
+      $("#btn-undo").prop('disabled', true);
     }
   },
   redo: function () {
     if (this.redoStack.length > 0) {
+      $("#btn-redo").prop('disabled', true);
       const lastAction = this.getRedoAction();
-      const currentStateColor = $(`#square-${lastAction[0].row}-${lastAction[0].col}`).css('background-color');
       const currentStateAction = lastAction.map(action => {
         return {
           row: action.row,
           col: action.col,
-          color: currentStateColor,
+          color: this.currentDrawing[action.row][action.col],
         };
       });
       this.addToUndoStack(currentStateAction);
       this.revertAction(lastAction);
-      if (this.redoStack.length === 0) {
-        $("#btn-redo").prop('disabled', true);
-      }
+      $("#btn-redo").prop('disabled', false);
+    }
+    if (this.redoStack.length === 0) {
+      $("#btn-redo").prop('disabled', true);
     }
   },
   revertAction: function (lastAction) {

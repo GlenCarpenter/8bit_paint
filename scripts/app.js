@@ -10,8 +10,8 @@ appStore.initCanvas();
 $(document).ready(function () {
   $("#start-button-message").text("Tap here to start!");
   // Remove overlay
-  $("#overlay").remove();
   $(".loading-overlay").on("click", function () {
+    $("#overlay").remove();
   });
 
   $("body").on('touchstart touchmove dblclick', function (e) {
