@@ -72,7 +72,6 @@ $(document).ready(function () {
           if ($(this).hasClass('square')) {
             [_, row, col] = this.id.split('-');
             appStore.currentActions.push({ row, col, color: appStore.currentDrawing[row][col] });
-            console.log(appStore.paintColor)
             $(this).css('background-color', appStore.isRightClick ? appStore.secondaryPaintColor : appStore.paintColor);
             appStore.updateCurrentDrawing(row, col, appStore.isRightClick ? appStore.secondaryPaintColor : appStore.paintColor);
             $(this).addClass('blink');
