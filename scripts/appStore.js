@@ -9,7 +9,6 @@ var appStore = {
   redoStack: [],
   currentActions: [],
   currentDrawing: [],
-  canvas: document.getElementById("colorBoxCanvas"),
   grid: true,
   toggleGrid: function () {
     this.grid = !this.grid;
@@ -18,7 +17,6 @@ var appStore = {
     } else {
       $(".container-square").removeClass("grid");
     }
-    this.initCanvas();
   },
   setMouseIsDown: function (mouseIsDown) {
     this.mouseIsDown = mouseIsDown;
@@ -106,16 +104,16 @@ var appStore = {
     localStorage.setItem("currentDrawing", JSON.stringify(initialDrawing));
     this.currentDrawing = initialDrawing;
   },
-  initCanvas: function () {
+  initCanvas: function (canvas) {
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 16; j++) {
-        const ctx = this.canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
         ctx.fillStyle = this.currentDrawing[i][j];
         ctx.fillRect(j * 25, i * 25, 25, 25);
       }
     }
     if (this.grid) {
-      const ctx = this.canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       for (let i = 1; i < 16; i++) {
         // Draw rows
         ctx.beginPath();

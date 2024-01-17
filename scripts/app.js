@@ -4,11 +4,9 @@ appStore.resetCurrentVisitedNodes();
 appStore.resetCurrentActions();
 appStore.initUndoStack();
 appStore.initRedoStack();
-appStore.initCanvas();
-
 
 $(document).ready(function () {
-  $("#start-button-message").text("Tap here to start!");
+  $("#start-button-message").text("Tap to start!");
   // Remove overlay
   $(".loading-overlay").on("click", function () {
     $("#overlay").remove();
@@ -290,9 +288,16 @@ function saveAs(uri, filename) {
 }
 
 async function shareImage() {
-  appStore.initCanvas();
+  const canvas = document.createElement('canvas');
+  canvas.width = 400;
+  canvas.height = 400;
+  canvas.style.border = "4px solid";
+  canvas.style.boxSizing = "border-box";
 
-  appStore.canvas.toBlob(function (blob) {
+  appStore.initCanvas(canvas);
+  document.body.appendChild(canvas);
+
+  canvas.toBlob(function (blob) {
     const file = new File([blob], '8bitPaint.jpeg', { type: 'image/jpeg' });
 
     if (!navigator.canShare) {
@@ -314,6 +319,8 @@ async function shareImage() {
       .then(() => console.log('Successful share'))
       .catch((error) => console.log('Error sharing', error));
   }, 'image/jpeg', 1);
+
+  document.body.removeChild(canvas);
 };
 
 function handleTouchMove(touchElement) {
