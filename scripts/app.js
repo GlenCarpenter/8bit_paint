@@ -293,17 +293,16 @@ async function shareImage() {
   appStore.initCanvas();
 
   appStore.canvas.toBlob(function (blob) {
-    const file = new File([blob], '8bitPaint.png', { type: 'image/png' });
-
+    const file = new File([blob], '8bitPaint.jpeg', { type: 'image/jpeg' });
 
     if (!navigator.canShare) {
       const base64url = URL.createObjectURL(blob);
-      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
+      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".jpeg");
       return;
     }
     if (!navigator.canShare({ files: [file] })) {
       const base64url = URL.createObjectURL(blob);
-      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".png");
+      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".jpeg");
       return;
     }
 
@@ -314,7 +313,7 @@ async function shareImage() {
     })
       .then(() => console.log('Successful share'))
       .catch((error) => console.log('Error sharing', error));
-  });
+  }, 'image/jpeg', 1);
 };
 
 function handleTouchMove(touchElement) {
