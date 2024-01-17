@@ -33,57 +33,57 @@
       <h1>8bit Paint</h1>
     </div>
 
-    <!-- Color pallete -->
-    <div id="palleteContainer">
+    <!-- Color palette -->
+    <div id="palette-container">
       <p>Select color:</p>
-      <div id="pallete">
-        <div class="colorSquare" style="background-color: orangered;"></div>
-        <div class="colorSquare" style="background-color: #ac581c;"></div>
-        <div class="colorSquare" style="background-color: orange;"></div>
-        <div class="colorSquare" style="background-color: #208800;"></div>
-        <div class="colorSquare" style="background-color: #1c38ac;"> </div>
-        <div class="colorSquare" style="background-color: #7070fc;"> </div>
-        <div class="colorSquare" style="background-color: #68605c;"></div>
-        <div class="colorSquare selectedColorSquare" style="background-color: #000000;">
+      <div id="palette-row">
+        <div class="color-container" style="background-color: orangered;"></div>
+        <div class="color-container" style="background-color: #ac581c;"></div>
+        <div class="color-container" style="background-color: orange;"></div>
+        <div class="color-container" style="background-color: #208800;"></div>
+        <div class="color-container" style="background-color: #1c38ac;"> </div>
+        <div class="color-container" style="background-color: #7070fc;"> </div>
+        <div class="color-container" style="background-color: #68605c;"></div>
+        <div class="color-container selected-color" style="background-color: #000000;">
         </div>
       </div>
-      <div id="pallete">
-        <div class="colorSquare" style="background-color: tomato;"></div>
-        <div class="colorSquare" style="background-color: #f8a850;"></div>
-        <div class="colorSquare" style="background-color: #f8ec20;"></div>
-        <div class="colorSquare" style="background-color: #70f828;"> </div>
-        <div class="colorSquare" style="background-color: dodgerblue;"></div>
-        <div class="colorSquare" style="background-color: hotpink;"></div>
-        <div class="colorSquare" style="background-color: #b0b0b8;"></div>
-        <div class="colorSquare" style="background-color: #ffffff;"></div>
+      <div id="palette-row">
+        <div class="color-container" style="background-color: tomato;"></div>
+        <div class="color-container" style="background-color: #f8a850;"></div>
+        <div class="color-container" style="background-color: #f8ec20;"></div>
+        <div class="color-container" style="background-color: #70f828;"> </div>
+        <div class="color-container" style="background-color: dodgerblue;"></div>
+        <div class="color-container" style="background-color: hotpink;"></div>
+        <div class="color-container" style="background-color: #b0b0b8;"></div>
+        <div class="color-container" style="background-color: #ffffff;"></div>
       </div>
 
-      <div id="colorOptions">
-        <div class="controlsRow">
-          <label for="colorField">
-            <input type="color" id="colorField" />
-            <span class="labelText">
+      <div id="color-options">
+        <div class="color-controls-row">
+          <label for="color-field">
+            <input type="color" id="color-field" />
+            <span class="label-text">
               Custom
             </span>
           </label>
           <label for="checkbox">
             <input type="checkbox" class="gridBox" id="checkbox" checked />
-            <span class="labelText">
+            <span class="label-text">
               Grid
             </span>
           </label>
         </div>
 
-        <div class="controlsRow">
-          <label for="paintBrush">
-            <input type="button" class="paintStyle selectedPaintStyle" id="paintBrush" value="🖌️" />
-            <span class="labelText">
+        <div class="color-controls-row">
+          <label for="paint-brush">
+            <input type="button" class="paint-style selected-paint-style" id="paint-brush" value="🖌️" />
+            <span class="label-text">
               Brush
             </span>
           </label>
-          <label for="paintBucket">
-            <input type="button" class="paintStyle buttonControl" id="paintBucket" value="🪣" />
-            <span class="labelText">
+          <label for="paint-bucket">
+            <input type="button" class="paint-style button-control" id="paint-bucket" value="🪣" />
+            <span class="label-text">
               Pour
             </span>
           </label>
@@ -100,11 +100,11 @@
     </div>
 
     <!-- Coloring area -->
-    <div id="colorBox"></div>
-    <div class="buttonRow">
-      <button class="buttonControl" id="btnSave">Share <img src="images/share_icon.svg" alt="share" />
+    <div id="color-box"></div>
+    <div class="button-row">
+      <button class="button-control" id="btn-share">Share <img src="images/share_icon.svg" alt="share" />
       </button>
-      <input type="button" class="buttonControl" id="clearCanvas" value="Clear" />
+      <input type="button" class="button-control" id="clearCanvas" value="Clear" />
     </div>
   </div>
 </body>

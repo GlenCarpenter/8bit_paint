@@ -55,12 +55,12 @@ body {
 	margin: 25px 0;
 }
 
-.buttonControl {
+.button-control {
 	padding: 5px;
 	border: 2px solid;
 }
 
-.colorSquare {
+.color-container {
 	border: .25em solid #000000;
 	width: 30px;
 	height: 20px;
@@ -68,7 +68,7 @@ body {
 	cursor: pointer;
 }
 
-.selectedColorSquare {
+.selected-color {
 	border: .25em solid #f1f1f1;
 	width: 30px;
 	height: 20px;
@@ -76,7 +76,7 @@ body {
 	cursor: pointer;
 }
 
-#colorBox {
+#color-box {
 	cursor: crosshair;
 	border: 2px solid;
 	width: 400px;
@@ -109,15 +109,15 @@ body {
 }
 
 .blink {
-	animation: blinkColor 600ms;
+	animation: blink-color 600ms;
 }
 
 .flash {
 	animation: flash 300ms;
 }
 
-.brushFlash {
-	animation: brushFlash 300ms;
+.brush-flash {
+	animation: brush-flash 300ms;
 }
 
 .gridBox {
@@ -126,7 +126,7 @@ body {
 	height: 25px;
 }
 
-@keyframes blinkColor {
+@keyframes blink-color {
 	0% {
 		border: 1px solid #000000;
 	}
@@ -154,7 +154,7 @@ body {
 	}
 }
 
-@keyframes brushFlash {
+@keyframes brush-flash {
 	0% {
 		border: .35em solid dodgerblue;
 	}
@@ -176,26 +176,26 @@ body {
 	padding: 0;
 }
 
-#palleteContainer {
+#palette-container {
 	margin: auto;
 	margin-top: 30px;
 	width: 340px;
 }
 
-#pallete {
+#palette-row {
 	display: flex;
 }
 
-#colorOptions {
+#color-options {
 	margin-top: 5px;
 }
 
-.controlsRow {
+.color-controls-row {
 	width: 100%;
 	margin: 5px;
 }
 
-input[type="color"]#colorField {
+input[type="color"]#color-field {
 	background-color: #000000;
 	width: 30px;
 	height: 30px;
@@ -220,29 +220,29 @@ label {
 	width: 160px;
 }
 
-.labelText {
+.label-text {
 	margin-left: 15px;
 }
 
-.paintStyle {
+.paint-style {
 	margin-top: 5px;
 	width: 36px;
 	height: 36px;
 	box-sizing: border-box;
 }
 
-.selectedPaintStyle {
+.selected-paint-style {
 	padding: 5px;
 	border: .35em solid dodgerblue;
 }
 
-.buttonRow {
+.button-row {
 	width: 100%;
 	margin-top: 16px;
 	align-content: flex-start;
 }
 
-#btnSave {
+#btn-share {
 	width: 150px;
 	height: 48px;
 	cursor: pointer;
@@ -262,11 +262,11 @@ label {
 		margin: 0 auto;
 	}
 
-	#colorBox {
+	#color-box {
 		margin: 10px auto auto 0;
 	}
 
-	#palleteContainer {
+	#palette-container {
 		margin-top: 10px;
 	}
 }

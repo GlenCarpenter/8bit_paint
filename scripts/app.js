@@ -116,61 +116,61 @@ $(document).ready(function () {
     appStore.toggleGrid();
   });
 
-  $('.colorSquare').on('contextmenu', function (e) {
+  $('.color-container').on('contextmenu', function (e) {
     e.preventDefault();
     appStore.setSecondaryPaintColor($(this).css('background-color'));
   });
 
-  $('.colorSquare').on('click', function (e) {
-    $('.colorSquare').removeClass('selectedColorSquare');
-    $('#colorField').css('background-color', '#000000');
-    $(this).toggleClass('selectedColorSquare');
+  $('.color-container').on('click', function (e) {
+    $('.color-container').removeClass('selected-color');
+    $('#color-field').css('background-color', '#000000');
+    $(this).toggleClass('selected-color');
     appStore.setPaintColor($(this).css('background-color'));
   });
 
   // Event listener for click of save button
-  $("#btnSave").on("click", function () {
-    $("#btnSave").addClass('blink');
-    setTimeout(() => $("#btnSave").removeClass('blink'), 1000);
+  $("#btn-share").on("click", function () {
+    $("#btn-share").addClass('blink');
+    setTimeout(() => $("#btn-share").removeClass('blink'), 1000);
     shareImage();
   });
 
   // Event listener for custom color
-  $('#colorField').on("click", function (event) {
+  $('#color-field').on("click", function (event) {
     appStore.setPaintColor(this.value);
-    $('.colorSquare').removeClass('selectedColorSquare');
-    $('#colorField').css('background-color', '#f1f1f1');
+    $('.color-container').removeClass('selected-color');
+    $('#color-field').css('background-color', '#f1f1f1');
   });
-  $('#colorField').on("change", function (event) {
+  $('#color-field').on("change", function (event) {
     appStore.setPaintColor(this.value);
-    $('.colorSquare').removeClass('selectedColorSquare');
+    $('.color-container').removeClass('selected-color');
   });
 
   // Event listeners for pour mode
-  $("#paintBucket").on("click", function () {
+  $("#paint-bucket").on("click", function () {
     appStore.setPourMode(true);
 
-    $("#paintBrush").removeClass('selectedPaintStyle');
-    $("#paintBrush").addClass('buttonControl');
+    $("#paint-brush").removeClass('selected-paint-style');
+    $("#paint-brush").addClass('button-control');
 
-    $("#paintBucket").removeClass('buttonControl');
-    $("#paintBucket").addClass('selectedPaintStyle');
-    $("#paintBucket").addClass('brushFlash');
+    $("#paint-bucket").removeClass('button-control');
+    $("#paint-bucket").addClass('selected-paint-style');
+    $("#paint-bucket").addClass('brush-flash');
     setTimeout(() => {
-      $("#paintBucket").removeClass('brushFlash');
+      $("#paint-bucket").removeClass('brush-flash');
     }, 1000);
   });
-  $("#paintBrush").on("click", function () {
+  $("#paint-brush").on("click", function () {
     appStore.setPourMode(false);
 
-    $("#paintBucket").removeClass('selectedPaintStyle');
-    $("#paintBucket").addClass('buttonControl');
+    $("#paint-bucket").removeClass('selected-paint-style');
+    $("#paint-bucket").addClass('button-control');
 
-    $("#paintBrush").removeClass('buttonControl');
-    $("#paintBrush").addClass('selectedPaintStyle');
-    $("#paintBrush").addClass('brushFlash');
+    $("#paint-brush").removeClass('button-control');
+    $("#paint-brush").addClass('selected-paint-style');
+    $("#paint-brush").addClass('brush-flash');
     setTimeout(() => {
-      $("#paintBrush").removeClass('brushFlash');
+      $("#paint-brush").removeClass('brush-flash');
     }, 1000);
   });
 

@@ -231,12 +231,156 @@ var appStore = {
         $(containerSquare).append(square);
         $(row).append(containerSquare);
       }
-      $("#colorBox").append(row);
+      $("#color-box").append(row);
+    }
+  },
+  initPalette: function initPalette() {
+    for (let palette of palettes) {
+      const paletteContainer = document.getElementById("palette-container");
+      $(paletteContainer).addClass("palette-container");
+      const paletteName = document.createElement("div");
+      $(paletteName).addClass("palette-name");
+      $(paletteName).text(palette.name);
+      $(paletteContainer).append(paletteName);
+      for (let color of palette.colors) {
+        const colorContainer = document.createElement("div");
+        $(colorContainer).addClass("color-container");
+        $(colorContainer).css("background-color", color);
+        $(colorContainer).attr("data-color", color);
+        $(paletteContainer).append(colorContainer);
+      }
+      $("#palette").append(paletteContainer);
     }
   }
 };
 
-
-
+const palettes = [
+  {
+    name: "8bit",
+    colors: [
+      "#000000",
+      "orangered",
+      "#ac581c",
+      "orange",
+      "#208800",
+      "#1c38ac",
+      "#7070fc",
+      "#68605c",
+      "#ffffff",
+      "tomato",
+      "#f8a850",
+      "#f8ec20",
+      "#70f828",
+      "dodgerblue",
+      "hotpink",
+      "#b0b0b8",
+    ],
+  },
+  {
+    name: "Secondary",
+    colors: [
+      "#ffffff",
+      "#000000",
+      "#9c9c9c",
+      "#be2633",
+      "#e06f8b",
+      "#493c2b",
+      "#a46422",
+      "#eb8931",
+      "#f7e26b",
+      "#2f484e",
+      "#44891a",
+      "#a3ce27",
+      "#1b2632",
+      "#005784",
+      "#31a2f2",
+      "#b2dcef",
+    ],
+  },
+  {
+    name: "Gameboy",
+    colors: [
+      "#ffffff",
+      "#9bbc0f",
+      "#8bac0f",
+      "#306230",
+      "#0f380f",
+      "#0f380f",
+      "#0f740f",
+      "#306230",
+      "#9bbc0f",
+      "#8bac0f",
+      "#306230",
+      "#0f380f",
+      "#0f380f",
+      "#0f740f",
+      "#306230",
+      "#0f380f",
+    ],
+  },
+  {
+    name: "NES",
+    colors: [
+      "#7c7c7c",
+      "#0000fc",
+      "#0000bc",
+      "#4428bc",
+      "#940084",
+      "#a80020",
+      "#a81000",
+      "#881400",
+      "#503000",
+      "#007800",
+      "#006800",
+      "#005800",
+      "#004058",
+      "#000000",
+      "#000000",
+      "#000000",
+    ],
+  },
+  {
+    name: "SNES",
+    colors: [
+      "#808080",
+      "#0000ff",
+      "#0000be",
+      "#3f00be",
+      "#8200ff",
+      "#be00be",
+      "#be003f",
+      "#be0000",
+      "#be3f00",
+      "#be7f00",
+      "#3fbe00",
+      "#00be00",
+      "#00be3f",
+      "#007fbe",
+      "#000000",
+      "#000000",
+    ],
+  },
+  {
+    name: "Gameboy Advance",
+    colors: [
+      "#ffffff",
+      "#000000",
+      "#8b8b8b",
+      "#a9a9a9",
+      "#545454",
+      "#fcfcfc",
+      "#a4a4a4",
+      "#7c7c7c",
+      "#545454",
+      "#383838",
+      "#1c1c1c",
+      "#000000",
+      "#fcfcfc",
+      "#a4a4a4",
+      "#7c7c7c",
+      "#545454",
+    ],
+  },
+]
 
 
