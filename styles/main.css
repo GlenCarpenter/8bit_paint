@@ -75,6 +75,7 @@ body {
 	width: 400px;
 	margin-top: 10px;
 	box-sizing: border-box;
+	touch-action: pinch-zoom;
 }
 
 .container-square {
