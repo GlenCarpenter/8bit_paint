@@ -3,13 +3,6 @@
 	font-family: 'Press Start 2P', cursive;
 }
 
-html,
-body {
-	overscroll-behavior-x: none;
-	overscroll-behavior-y: none;
-	touch-action: none;
-	overflow: hidden;
-}
 
 #banner {
 	width: 100%;
@@ -82,6 +75,10 @@ body {
 	width: 400px;
 	margin-top: 10px;
 	box-sizing: border-box;
+	
+	overscroll-behavior-x: none;
+	overscroll-behavior-y: none;
+	touch-action: none;
 }
 
 .container-square {
