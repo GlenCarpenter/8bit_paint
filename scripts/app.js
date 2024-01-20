@@ -175,7 +175,7 @@ $(document).ready(function () {
   });
 
   // Event listener for click of Clear button
-  $("#clearCanvas").on("click", function () {
+  $("#clear-canvas").on("click", function () {
     for (let row = 0; row < 16; row++) {
       for (let col = 0; col < 16; col++) {
         let action = { row, col, color: appStore.currentDrawing[row][col] };
@@ -186,10 +186,10 @@ $(document).ready(function () {
     appStore.clearRedoStack();
     appStore.resetCurrentActions();
     appStore.initCurrentDrawing();
-    $("#clearCanvas").addClass('blink');
+    $("#clear-canvas").addClass('blink');
     $(".container-square").addClass('blink');
     setTimeout(() => {
-      $("#clearCanvas").removeClass('blink');
+      $("#clear-canvas").removeClass('blink');
       $(".container-square").removeClass('blink');
     }, 1000);
     $(".square").css('background-color', '#ffffff');
