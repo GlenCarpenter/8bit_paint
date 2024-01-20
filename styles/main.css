@@ -75,10 +75,6 @@ body {
 	width: 400px;
 	margin-top: 10px;
 	box-sizing: border-box;
-	
-	overscroll-behavior-x: none;
-	overscroll-behavior-y: none;
-	touch-action: none;
 }
 
 .container-square {
