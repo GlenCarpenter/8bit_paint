@@ -29,12 +29,12 @@
   </div>
   </div>
   <div id="app-container">
-    <div id="banner">
+    <div id="banner" class="no-select">
       <h1>8bit Paint</h1>
     </div>
 
     <!-- Color palette -->
-    <div id="palette-container">
+    <div class="no-select" id="palette-container">
       <p>Select color:</p>
       <div id="palette-row">
         <div class="color-container" style="background-color: orangered;"></div>
@@ -62,13 +62,13 @@
         <div class="color-controls-row">
           <label for="color-field">
             <input type="color" id="color-field" />
-            <span class="label-text">
+            <span class="label-text no-select">
               Custom
             </span>
           </label>
           <label for="checkbox">
             <input type="checkbox" class="grid-box" id="checkbox" checked />
-            <span class="label-text">
+            <span class="label-text no-select">
               Grid
             </span>
           </label>
@@ -77,13 +77,13 @@
         <div class="color-controls-row">
           <label for="paint-brush">
             <input type="button" class="paint-style selected-paint-style" id="paint-brush" value="🖌️" />
-            <span class="label-text">
+            <span class="label-text no-select">
               Brush
             </span>
           </label>
           <label for="paint-bucket">
             <input type="button" class="paint-style button-control" id="paint-bucket" value="🪣" />
-            <span class="label-text">
+            <span class="label-text no-select">
               Pour
             </span>
           </label>
@@ -93,18 +93,18 @@
 
     <!-- Undo controls -->
     <div class="undo-row">
-      <button class="btn-revert btn-undo" id="btn-undo">Undo<span class="btn-icon">↺</span>
+      <button class="btn-revert btn-undo no-select" id="btn-undo">Undo<span class="btn-icon">↺</span>
       </button>
-      <button class="btn-revert btn-redo" id="btn-redo">Redo<span class="btn-icon">↻</span>
+      <button class="btn-revert btn-redo no-select" id="btn-redo">Redo<span class="btn-icon">↻</span>
       </button>
     </div>
 
     <!-- Coloring area -->
     <div id="color-box"></div>
     <div class="button-row">
-      <button class="button-control" id="btn-share">Share <img src="images/share_icon.svg" alt="share" />
+      <button class="button-control no-select" id="btn-share">Share <img src="images/share_icon.svg" alt="share" />
       </button>
-      <input type="button" class="button-control" id="clear-canvas" value="Clear" />
+      <input type="button" class="button-control no-select" id="clear-canvas" value="Clear" />
     </div>
   </div>
 </body>
