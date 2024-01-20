@@ -21,7 +21,6 @@ $(document).ready(function () {
   });
 
   $(document).on('mousedown touchstart', function (e) {
-    e.preventDefault();
     appStore.setMouseIsDown(true);      // When mouse goes down, set isDown to true
     if (e.which == 3) {
       appStore.setIsRightClick(true);
@@ -40,7 +39,6 @@ $(document).ready(function () {
 
   //on click and drag, change square background color to the input value
   $(".square").on("mouseover touchmove", function (e) {
-    e.preventDefault();
     if (appStore.pourMode) return;
     if (appStore.mouseIsDown) {
       switch (e.type) {
@@ -96,7 +94,6 @@ $(document).ready(function () {
   });
 
   $(".square").on("mousedown touchstart", function (e) {
-    e.preventDefault();
     var newColor = e.which == 3 ? appStore.secondaryPaintColor : appStore.paintColor;
     var currentColor = $(this).css('background-color');
     var testColor = getCurrentPaintColorRGB(newColor);
