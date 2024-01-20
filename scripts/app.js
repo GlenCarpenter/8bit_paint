@@ -69,10 +69,17 @@ $(document).ready(function () {
           break;
         case "mouseover":
           if ($(this).hasClass('square')) {
+            var newColor = e.which == 3 ? appStore.secondaryPaintColor : appStore.paintColor;
+
+            // Need to get RGB of current paintcolor
+            var currentColor = $(this).css('background-color');
+            var testColor = getCurrentPaintColorRGB(newColor);
+            if (currentColor === testColor) return;
+
             [_, row, col] = this.id.split('-');
             appStore.currentActions.push({ row, col, color: appStore.currentDrawing[row][col] });
-            $(this).css('background-color', appStore.isRightClick ? appStore.secondaryPaintColor : appStore.paintColor);
-            appStore.updateCurrentDrawing(row, col, appStore.isRightClick ? appStore.secondaryPaintColor : appStore.paintColor);
+            $(this).css('background-color', newColor);
+            appStore.updateCurrentDrawing(row, col, newColor);
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
@@ -329,6 +336,12 @@ function handleTouchMove(touchElement) {
     if (appStore.currentVisitedNodes.has(`${row}, ${col}`)) {
       return;
     };
+
+    // Need to get RGB of current paintcolor
+    var currentColor = $(touchElement).css('background-color');
+    var testColor = getCurrentPaintColorRGB(appStore.paintColor);
+    if (currentColor === testColor) return;
+
     appStore.addToCurrentVisitedNodes(`${row}, ${col}`);
     appStore.addToCurrentActions({ row, col, color: appStore.currentDrawing[row][col] });
     $(touchElement).css('background-color', appStore.paintColor);
