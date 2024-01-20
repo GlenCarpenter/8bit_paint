@@ -12,14 +12,6 @@ $(document).ready(function () {
     $("#overlay").remove();
   });
 
-  $("body").on('touchstart touchmove dblclick', function (e) {
-    e.preventDefault();
-  });
-
-  $("html").on('touchstart touchmove dblclick', function (e) {
-    e.preventDefault();
-  });
-
   $(document).on('mousedown touchstart', function (e) {
     appStore.setMouseIsDown(true);      // When mouse goes down, set isDown to true
     if (e.which == 3) {
