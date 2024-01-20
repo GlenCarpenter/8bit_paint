@@ -74,13 +74,15 @@ $(document).ready(function () {
             // Need to get RGB of current paintcolor
             var currentColor = $(this).css('background-color');
             var testColor = getCurrentPaintColorRGB(newColor);
-            if (currentColor === testColor) return;
+            if (currentColor === testColor) {
+              return;
+            };
 
             [_, row, col] = this.id.split('-');
             appStore.currentActions.push({ row, col, color: appStore.currentDrawing[row][col] });
             $(this).css('background-color', newColor);
             appStore.updateCurrentDrawing(row, col, newColor);
-            $(this).addClass('blink');
+                        $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
             if ($(touchElement).hasClass('container-square')) {
@@ -96,17 +98,16 @@ $(document).ready(function () {
   $(".square").on("mousedown touchstart", function (e) {
     e.preventDefault();
     var newColor = e.which == 3 ? appStore.secondaryPaintColor : appStore.paintColor;
+    var currentColor = $(this).css('background-color');
+    var testColor = getCurrentPaintColorRGB(newColor);
+    if (currentColor === testColor) {
+      return;
+    };
+
     [_, row, col] = this.id.split('-');
 
     if (appStore.pourMode) {
-      var currentColor = $(this).css('background-color');
-
-      // Need to get RGB of current paintcolor
-      var testColor = getCurrentPaintColorRGB(newColor);
-      if (currentColor === testColor) return;
-
       paintNeighbors(parseInt(row), parseInt(col), currentColor);
-
       return;
     }
 
@@ -115,7 +116,7 @@ $(document).ready(function () {
 
     appStore.updateCurrentDrawing(row, col, newColor);
     $(this).css('background-color', newColor);
-    $(this).addClass('blink');
+        $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
   });
 
@@ -194,7 +195,7 @@ $(document).ready(function () {
     appStore.resetCurrentActions();
     appStore.initCurrentDrawing();
     $("#clear-canvas").addClass('blink');
-    $(".container-square").addClass('blink');
+        $(".container-square").addClass('blink');
     setTimeout(() => {
       $("#clear-canvas").removeClass('blink');
       $(".container-square").removeClass('blink');
@@ -249,7 +250,7 @@ function paintNeighbors(row, col, currentColor) {
 
     appStore.updateCurrentDrawing(currentRow, currentCol, appStore.paintColor);
     $(currentSquare).css('background-color', appStore.paintColor);
-    $(currentSquare).addClass('blink');
+        $(currentSquare).addClass('blink');
 
     queue.push([currentRow - 1, currentCol]);
     queue.push([currentRow + 1, currentCol]);
@@ -332,20 +333,22 @@ async function shareImage() {
 
 function handleTouchMove(touchElement) {
   if ($(touchElement).hasClass('square')) {
+    // Need to get RGB of current paintcolor
+    var currentColor = $(touchElement).css('background-color');
+    var testColor = getCurrentPaintColorRGB(appStore.paintColor);
+    if (currentColor === testColor) {
+      return;
+    };
+
     [_, row, col] = touchElement.id.split('-');
     if (appStore.currentVisitedNodes.has(`${row}, ${col}`)) {
       return;
     };
 
-    // Need to get RGB of current paintcolor
-    var currentColor = $(touchElement).css('background-color');
-    var testColor = getCurrentPaintColorRGB(appStore.paintColor);
-    if (currentColor === testColor) return;
-
     appStore.addToCurrentVisitedNodes(`${row}, ${col}`);
     appStore.addToCurrentActions({ row, col, color: appStore.currentDrawing[row][col] });
     $(touchElement).css('background-color', appStore.paintColor);
-    $(touchElement).addClass('blink');
+        $(touchElement).addClass('blink');
     appStore.updateCurrentDrawing(row, col, appStore.paintColor);
 
     setTimeout(() => {
