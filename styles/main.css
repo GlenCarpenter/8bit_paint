@@ -3,10 +3,6 @@
 	font-family: 'Press Start 2P', cursive;
 }
 
-html {
-	overscroll-behavior: none;
-}
-
 body {
 	width: 400px;
 	justify-content: center;
@@ -178,6 +174,7 @@ body {
 	margin: auto;
 	margin-top: 30px;
 	width: 340px;
+	overscroll-behavior: none;
 }
 
 #palette-row {
