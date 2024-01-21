@@ -3,6 +3,15 @@
 	font-family: 'Press Start 2P', cursive;
 }
 
+html {
+	overscroll-behavior: contain;
+}
+
+body {
+	width: 400px;
+	justify-content: center;
+	background-image: radial-gradient(#ffd700, #b22222);
+}
 
 #banner {
 	width: 100%;
@@ -16,11 +25,6 @@
 	border: 2px solid black;
 }
 
-body {
-	width: 400px;
-	justify-content: center;
-	background-image: radial-gradient(#ffd700, #b22222);
-}
 
 .loading-overlay {
 	position: fixed;
