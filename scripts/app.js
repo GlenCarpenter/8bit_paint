@@ -35,11 +35,11 @@ $(document).ready(function () {
     if (appStore.mouseIsDown) {
       switch (e.type) {
         case 'touchmove':
-          var touchElement;
-          var currentRect;
-          var touch = e.originalEvent.touches[0];
-          var touchX = touch.clientX;
-          var touchY = touch.clientY;
+          let touchElement;
+          let currentRect;
+          const touch = e.originalEvent.touches[0];
+          const touchX = touch.clientX;
+          const touchY = touch.clientY;
 
           if (
             currentRect &&
@@ -59,11 +59,10 @@ $(document).ready(function () {
           break;
         case "mouseover":
           if ($(this).hasClass('square')) {
-            var newColor = e.which == 3 ? appStore.secondaryPaintColor : appStore.paintColor;
-
+            const newColor = appStore.isRightClick ? appStore.secondaryPaintColor : appStore.paintColor;
             // Need to get RGB of current paintcolor
-            var currentColor = $(this).css('background-color');
-            var testColor = getCurrentPaintColorRGB(newColor);
+            const currentColor = $(this).css('background-color');
+            const testColor = getCurrentPaintColorRGB(newColor);
             if (currentColor === testColor) {
               return;
             };
@@ -72,7 +71,7 @@ $(document).ready(function () {
             appStore.currentActions.push({ row, col, color: appStore.currentDrawing[row][col] });
             $(this).css('background-color', newColor);
             appStore.updateCurrentDrawing(row, col, newColor);
-                        $(this).addClass('blink');
+            $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
             if ($(touchElement).hasClass('container-square')) {
@@ -105,7 +104,7 @@ $(document).ready(function () {
 
     appStore.updateCurrentDrawing(row, col, newColor);
     $(this).css('background-color', newColor);
-        $(this).addClass('blink');
+    $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
   });
 
@@ -184,7 +183,7 @@ $(document).ready(function () {
     appStore.resetCurrentActions();
     appStore.initCurrentDrawing();
     $("#clear-canvas").addClass('blink');
-        $(".container-square").addClass('blink');
+    $(".container-square").addClass('blink');
     setTimeout(() => {
       $("#clear-canvas").removeClass('blink');
       $(".container-square").removeClass('blink');
@@ -239,7 +238,7 @@ function paintNeighbors(row, col, currentColor) {
 
     appStore.updateCurrentDrawing(currentRow, currentCol, appStore.paintColor);
     $(currentSquare).css('background-color', appStore.paintColor);
-        $(currentSquare).addClass('blink');
+    $(currentSquare).addClass('blink');
 
     queue.push([currentRow - 1, currentCol]);
     queue.push([currentRow + 1, currentCol]);
@@ -337,7 +336,7 @@ function handleTouchMove(touchElement) {
     appStore.addToCurrentVisitedNodes(`${row}, ${col}`);
     appStore.addToCurrentActions({ row, col, color: appStore.currentDrawing[row][col] });
     $(touchElement).css('background-color', appStore.paintColor);
-        $(touchElement).addClass('blink');
+    $(touchElement).addClass('blink');
     appStore.updateCurrentDrawing(row, col, appStore.paintColor);
 
     setTimeout(() => {
