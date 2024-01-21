@@ -1,3 +1,4 @@
+appStore.initGridCheckbox();
 appStore.loadCurrentDrawing();
 appStore.initColorBox();
 appStore.resetCurrentVisitedNodes();

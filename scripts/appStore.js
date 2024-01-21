@@ -14,9 +14,15 @@ var appStore = {
     this.grid = !this.grid;
     if (this.grid) {
       $('.container-square').addClass('grid');
+      localStorage.setItem('grid', true);
     } else {
       $(".container-square").removeClass("grid");
+      localStorage.setItem("grid", false);
     }
+  },
+  initGridCheckbox: function () {
+    this.grid = localStorage.getItem('grid') === 'true';
+    $("#checkbox").prop("checked", this.grid);
   },
   setMouseIsDown: function (mouseIsDown) {
     this.mouseIsDown = mouseIsDown;
@@ -222,8 +228,9 @@ var appStore = {
         const containerSquare = document.createElement("div");
         containerSquare.id = "containerSquare-" + i + "-" + j;
         $(containerSquare).addClass("container-square");
-        $(containerSquare).addClass("grid");
-
+        if (this.grid) {
+          $(containerSquare).addClass("grid");
+        }
         const square = document.createElement("div");
         square.id = "square-" + i + "-" + j;
         $(square).addClass("square");
