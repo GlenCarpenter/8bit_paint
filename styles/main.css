@@ -168,13 +168,13 @@ body {
 	flex-direction: column;
 	align-items: center;
 	padding: 0;
+	overscroll-behavior: none;
 }
 
 #palette-container {
 	margin: auto;
 	margin-top: 30px;
 	width: 340px;
-	overscroll-behavior: none;
 }
 
 #palette-row {
