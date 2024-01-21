@@ -14,6 +14,7 @@ $(document).ready(function () {
   });
 
   $(document).on('mousedown touchstart', function (e) {
+    e.preventDefault();
     appStore.setMouseIsDown(true);      // When mouse goes down, set isDown to true
     if (e.which == 3) {
       appStore.setIsRightClick(true);
@@ -96,7 +97,7 @@ $(document).ready(function () {
     [_, row, col] = this.id.split('-');
 
     if (appStore.pourMode) {
-      paintNeighbors(parseInt(row), parseInt(col), currentColor);
+      paintNeighbors(parseInt(row), parseInt(col), currentColor, newColor);
       return;
     }
 
@@ -115,7 +116,9 @@ $(document).ready(function () {
 
   $('.color-container').on('contextmenu', function (e) {
     e.preventDefault();
+    $('.color-container').removeClass('selected-secondary-color');
     appStore.setSecondaryPaintColor($(this).css('background-color'));
+    $(this).addClass('selected-secondary-color');
   });
 
   $('.color-container').on('click', function (e) {
@@ -207,7 +210,7 @@ $(document).ready(function () {
 });
 
 // Paints neighbors of current square
-function paintNeighbors(row, col, currentColor) {
+function paintNeighbors(row, col, currentColor, newColor) {
   let queue = [];
   const visited = new Set();
   queue.push([row, col]);
@@ -227,18 +230,18 @@ function paintNeighbors(row, col, currentColor) {
     }
     visited.add(hash);
     const currentSquare = $(`#square-${currentRow}-${currentCol}`);
-    const newColor = $(currentSquare).css('background-color');
-    if (newColor !== currentColor) {
+    const testColor = $(currentSquare).css('background-color');
+    if (testColor !== currentColor) {
       continue;
     }
     appStore.currentActions.push({
       row: currentRow,
       col: currentCol,
-      color: newColor,
+      color: testColor,
     });
 
-    appStore.updateCurrentDrawing(currentRow, currentCol, appStore.paintColor);
-    $(currentSquare).css('background-color', appStore.paintColor);
+    appStore.updateCurrentDrawing(currentRow, currentCol, newColor);
+    $(currentSquare).css('background-color', newColor);
     $(currentSquare).addClass('blink');
 
     queue.push([currentRow - 1, currentCol]);
