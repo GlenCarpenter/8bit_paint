@@ -63,7 +63,7 @@ body {
 }
 
 div.selected-color {
-	border: .25em solid #f1f1f1;
+	border: .25em solid DeepSkyBlue;
 	width: 30px;
 	height: 20px;
 	margin: 5px;
@@ -71,7 +71,7 @@ div.selected-color {
 }
 
 .selected-secondary-color {
-	border: .25em solid DeepSkyBlue;
+	border: .25em solid #f1f1f1;
 	width: 30px;
 	height: 20px;
 	margin: 5px;
