@@ -62,7 +62,7 @@ body {
 	cursor: pointer;
 }
 
-.selected-color {
+div.selected-color {
 	border: .25em solid #f1f1f1;
 	width: 30px;
 	height: 20px;

@@ -86,7 +86,38 @@ $(document).ready(function () {
     }
   });
 
+  $(".square").on("click", function (e) {
+    if (appStore.pourMode) {
+      var currentColor = $(this).css('background-color');
+      var testColor = getCurrentPaintColorRGB(appStore.paintColor);
+      if (currentColor === testColor) {
+        return;
+      };
+
+      [_, row, col] = this.id.split('-');
+      paintNeighbors(parseInt(row), parseInt(col), currentColor, appStore.paintColor);
+      return;
+    }
+  });
+
+  $(".square").on("contextmenu", function (e) {
+    if (appStore.pourMode) {
+      var currentColor = $(this).css('background-color');
+      var testColor = getCurrentPaintColorRGB(appStore.secondaryPaintColor);
+      if (currentColor === testColor) {
+        return;
+      };
+
+      [_, row, col] = this.id.split('-');
+      paintNeighbors(parseInt(row), parseInt(col), currentColor, appStore.secondaryPaintColor);
+      return;
+    }
+  });
+
   $(".square").on("mousedown touchstart", function (e) {
+    if (appStore.pourMode) {
+      return;
+    }
     var newColor = e.which == 3 ? appStore.secondaryPaintColor : appStore.paintColor;
     var currentColor = $(this).css('background-color');
     var testColor = getCurrentPaintColorRGB(newColor);
@@ -96,10 +127,6 @@ $(document).ready(function () {
 
     [_, row, col] = this.id.split('-');
 
-    if (appStore.pourMode) {
-      paintNeighbors(parseInt(row), parseInt(col), currentColor, newColor);
-      return;
-    }
 
     appStore.currentVisitedNodes.add(`${row}, ${col}`);
     appStore.currentActions.push({ row, col, color: appStore.currentDrawing[row][col] });
