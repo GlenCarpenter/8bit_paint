@@ -279,7 +279,7 @@ const palettes = [
       "#f8ec20",
       "#70f828",
       "dodgerblue",
-      "hotpink",
+      "#ff91af", // Baker Miller Pink
       "#b0b0b8",
     ],
   },
