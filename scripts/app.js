@@ -345,46 +345,52 @@ $(document).ready(function () {
 });
 
 // Paints neighbors of current square
-function paintNeighbors(row, col, currentColor, newColor) {
-  let queue = [];
+async function paintNeighbors(row, col, currentColor, newColor) {
+  let queue = [[row, col]];
   const visited = new Set();
-  queue.push([row, col]);
+
   while (queue.length > 0) {
-    const current = queue.shift();
-    const currentRow = current[0];
-    const currentCol = current[1];
-    const hash = `${currentRow}, ${currentCol}`;
-    if (
-      currentRow < 0 ||
-      currentRow > 15 ||
-      currentCol < 0 ||
-      currentCol > 15 ||
-      visited.has(hash)
-    ) {
-      continue;
+    const nextQueue = [];
+
+    for (const [currentRow, currentCol] of queue) {
+      const hash = `${currentRow}, ${currentCol}`;
+      if (
+        currentRow < 0 ||
+        currentRow > 15 ||
+        currentCol < 0 ||
+        currentCol > 15 ||
+        visited.has(hash)
+      ) {
+        continue;
+      }
+      visited.add(hash);
+      const currentSquare = $(`#square-${currentRow}-${currentCol}`);
+      const testColor = $(currentSquare).css('background-color');
+      if (testColor !== currentColor) {
+        continue;
+      }
+      appStore.currentActions.push({
+        row: currentRow,
+        col: currentCol,
+        color: testColor,
+      });
+
+      appStore.updateCurrentDrawing(currentRow, currentCol, newColor);
+      $(currentSquare).css('background-color', newColor);
+      $(currentSquare).addClass('blink');
+
+      nextQueue.push([currentRow - 1, currentCol]);
+      nextQueue.push([currentRow + 1, currentCol]);
+      nextQueue.push([currentRow, currentCol - 1]);
+      nextQueue.push([currentRow, currentCol + 1]);
     }
-    visited.add(hash);
-    const currentSquare = $(`#square-${currentRow}-${currentCol}`);
-    const testColor = $(currentSquare).css('background-color');
-    if (testColor !== currentColor) {
-      continue;
+
+    queue = nextQueue;
+    if (queue.length > 0) {
+      await new Promise(resolve => setTimeout(resolve, 30));
     }
-    appStore.currentActions.push({
-      row: currentRow,
-      col: currentCol,
-      color: testColor,
-    });
-
-    appStore.updateCurrentDrawing(currentRow, currentCol, newColor);
-    $(currentSquare).css('background-color', newColor);
-    $(currentSquare).addClass('blink');
-
-    queue.push([currentRow - 1, currentCol]);
-    queue.push([currentRow + 1, currentCol]);
-    queue.push([currentRow, currentCol - 1]);
-    queue.push([currentRow, currentCol + 1]);
-
   }
+
   appStore.addToUndoStack(appStore.currentActions);
   appStore.clearRedoStack();
   for (let action of appStore.currentActions) {
