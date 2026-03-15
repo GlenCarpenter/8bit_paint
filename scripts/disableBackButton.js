@@ -13,23 +13,22 @@
         }, 50);
     };
 
-    global.onhashchange = function () {
+    global.addEventListener('hashchange', function () {
         if (global.location.hash !== _hash) {
             global.location.hash = _hash;
         }
-    };
+    });
 
-    global.onload = function () {
+    global.addEventListener('load', function () {
         noBackPlease();
 
         // Disables backspace on page except on input fields and textarea..
-        document.body.onkeydown = function (e) {
+        document.body.addEventListener('keydown', function (e) {
             var elm = e.target.nodeName.toLowerCase();
             if (e.which === 8 && (elm !== 'input' && elm  !== 'textarea')) {
                 e.preventDefault();
             }
-            // Stopping the event bubbling up the DOM tree...
             e.stopPropagation();
-        };
-    }
+        });
+    });
 })(window);
