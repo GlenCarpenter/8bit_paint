@@ -6,7 +6,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
   </style>
-  <meta name='viewport' content='width=device-width, height=device-height, initial-scale:1, user-scalable=no' />
+  <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
   <meta property="og:title" content="8bit Paint" />
   <meta property="og:description" content="8bit pixel painting to share with friends!" />
   <meta property="og:image" content="images/block_256.png" />
@@ -60,12 +60,14 @@
 
       <div id="color-options">
         <div class="color-controls-row">
-          <label for="color-field">
-            <input type="color" id="color-field" />
-            <span class="label-text no-select">
+          <div class="custom-picker-group">
+            <div id="custom-color-trigger" class="custom-color-square"
+              role="button" tabindex="0" aria-label="Use custom color"></div>
+            <button type="button" id="open-custom-color-dialog" class="custom-color-open-button no-select"
+              aria-haspopup="dialog" aria-controls="custom-color-dialog">
               Custom
-            </span>
-          </label>
+            </button>
+          </div>
           <label for="checkbox">
             <input type="checkbox" class="grid-box" id="checkbox" checked />
             <span class="label-text no-select">
@@ -107,9 +109,17 @@
       <input type="button" class="button-control no-select" id="clear-canvas" value="Clear" />
     </div>
   </div>
+
+  <dialog id="custom-color-dialog" class="custom-color-dialog no-select" aria-label="Custom color picker dialog">
+    <div class="custom-color-dialog-content">
+      <h2>Custom color</h2>
+      <div id="color-picker" aria-label="Custom color picker"></div>
+      <button type="button" id="close-custom-color-dialog" class="button-control">Done</button>
+    </div>
+  </dialog>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="scripts/jquery-3.3.1.min.js"></script>
+<script src="scripts/iro.min.js"></script>
 <script src="scripts/disableBackButton.js"></script>
 <script src="scripts/appStore.js"></script>
 <script src="scripts/init.js"></script>

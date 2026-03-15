@@ -6,19 +6,136 @@ appStore.resetCurrentActions();
 appStore.initUndoStack();
 appStore.initRedoStack();
 
+function getPickerWidth() {
+  return window.matchMedia('(max-width: 450px)').matches ? 220 : 260;
+}
+
+function initIroColorPicker() {
+  if (typeof iro === 'undefined') {
+    return null;
+  }
+
+  const pickerElement = document.getElementById('color-picker');
+  if (!pickerElement) {
+    return null;
+  }
+
+  const colorPicker = new iro.ColorPicker('#color-picker', {
+    width: getPickerWidth(),
+    color: appStore.paintColor,
+    borderWidth: 1,
+    borderColor: '#000000',
+    wheelLightness: false,
+    layout: [
+      {
+        component: iro.ui.Wheel,
+      },
+      {
+        component: iro.ui.Slider,
+        options: {
+          sliderType: 'value',
+        }
+      }
+    ]
+  });
+
+  let syncingFromPalette = false;
+  colorPicker.on('color:change', function (color) {
+    appStore.setPaintColor(color.hexString);
+    $('#custom-color-trigger').css('background-color', color.hexString);
+    localStorage.setItem('customColor', color.hexString);
+    if (!syncingFromPalette) {
+      $('.color-container').removeClass('selected-color');
+      $('#custom-color-trigger').addClass('selected-color');
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    colorPicker.resize(getPickerWidth());
+  }, { passive: true });
+
+  return {
+    setColor: function (color) {
+      syncingFromPalette = true;
+      colorPicker.color.set(color);
+      syncingFromPalette = false;
+    },
+    getCurrentColor: function () {
+      return colorPicker.color.hexString;
+    }
+  };
+}
+
 $(document).ready(function () {
+  const customColorPicker = initIroColorPicker();
+  const customColorDialog = document.getElementById('custom-color-dialog');
+  const customColorTrigger = document.getElementById('custom-color-trigger');
+  const openCustomColorDialogButton = document.getElementById('open-custom-color-dialog');
+  const closeCustomColorDialogButton = document.getElementById('close-custom-color-dialog');
+
+  function openCustomColorDialog() {
+    if (!customColorDialog || !customColorDialog.showModal) {
+      return;
+    }
+    if (customColorDialog.open) {
+      return;
+    }
+    if (customColorPicker) {
+      customColorPicker.setColor($(customColorTrigger).css('background-color'));
+    }
+    customColorDialog.showModal();
+  }
+
+  function closeCustomColorDialog() {
+    if (!customColorDialog || !customColorDialog.open) {
+      return;
+    }
+    customColorDialog.close();
+  }
+
+  if (customColorTrigger) {
+    var savedCustomColor = localStorage.getItem('customColor') || appStore.paintColor;
+    $(customColorTrigger).css('background-color', savedCustomColor);
+    $(customColorTrigger).on('click', function () {
+      appStore.setPaintColor($(customColorTrigger).css('background-color'));
+      $('.color-container').removeClass('selected-color');
+      $(customColorTrigger).addClass('selected-color');
+    });
+  }
+
+  if (openCustomColorDialogButton) {
+    $(openCustomColorDialogButton).on('click', function () {
+      openCustomColorDialog();
+    });
+  }
+
+  if (closeCustomColorDialogButton) {
+    $(closeCustomColorDialogButton).on('click', function () {
+      closeCustomColorDialog();
+    });
+  }
+
+  if (customColorDialog) {
+    $(customColorDialog).on('click', function (event) {
+      if (event.target === customColorDialog) {
+        closeCustomColorDialog();
+      }
+    });
+  }
+
   $("#start-button-message").text("Tap to start!");
   // Remove overlay
   $(".loading-overlay").on("click", function () {
     $("#overlay").remove();
   });
 
-  $(document).on('mousedown touchstart', function (e) {
-    e.preventDefault();
+  $(document).on('mousedown', function (e) {
     appStore.setMouseIsDown(true);      // When mouse goes down, set isDown to true
     if (e.which == 3) {
       appStore.setIsRightClick(true);
     }
+  }).on('touchstart', function () {
+    appStore.setMouseIsDown(true);
   }).on('mouseup touchend', function () {
     appStore.setMouseIsDown(false);    // When mouse goes up, set isDown to false
     appStore.setIsRightClick(false);
@@ -150,9 +267,11 @@ $(document).ready(function () {
 
   $('.color-container').on('click', function (e) {
     $('.color-container').removeClass('selected-color');
-    $('#color-field').css('background-color', '#000000');
     $(this).toggleClass('selected-color');
     appStore.setPaintColor($(this).css('background-color'));
+    if (customColorTrigger) {
+      $(customColorTrigger).removeClass('selected-color');
+    }
   });
 
   // Event listener for click of save button
@@ -160,17 +279,6 @@ $(document).ready(function () {
     $("#btn-share").addClass('blink');
     setTimeout(() => $("#btn-share").removeClass('blink'), 1000);
     shareImage();
-  });
-
-  // Event listener for custom color
-  $('#color-field').on("click", function (event) {
-    appStore.setPaintColor(this.value);
-    $('.color-container').removeClass('selected-color');
-    $('#color-field').css('background-color', '#f1f1f1');
-  });
-  $('#color-field').on("change", function (event) {
-    appStore.setPaintColor(this.value);
-    $('.color-container').removeClass('selected-color');
   });
 
   // Event listeners for pour mode
