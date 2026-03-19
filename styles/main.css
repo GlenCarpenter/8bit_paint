@@ -105,6 +105,9 @@ div.selected-color {
 	touch-action: none;
 	overflow: hidden;
 	font-size: 0;
+	-webkit-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 .row {

@@ -231,7 +231,12 @@ $(document).ready(function () {
     }
   });
 
+  $("#color-box").on("dragstart", function (e) {
+    e.preventDefault();
+  });
+
   $(".square").on("mousedown touchstart", function (e) {
+    e.preventDefault();
     if (appStore.pourMode) {
       return;
     }
