@@ -340,6 +340,7 @@ label {
 @media(max-width: 450px) {
 	#banner {
 		width: 85%;
+		height: 36px;
 		padding: 5px;
 		margin: 0 auto;
 	}
