@@ -214,8 +214,10 @@ var appStore = {
   colorSquare: function (row, col, color) {
     const currentSquare = $("#square-" + row + "-" + col);
     $(currentSquare).css('background-color', color);
-    $(currentSquare).addClass('blink');
-    setTimeout(() => $(currentSquare).removeClass('blink'), 1000);
+    currentSquare.removeClass('blink');
+    void currentSquare[0].offsetWidth;
+    currentSquare.addClass('blink');
+    setTimeout(() => currentSquare.removeClass('blink'), 1000);
     appStore.updateCurrentDrawing(row, col, color);
   },
   initColorBox: function initColorBox() {

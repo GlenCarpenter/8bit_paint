@@ -191,10 +191,14 @@ $(document).ready(function () {
             appStore.currentActions.push({ row, col, color: appStore.currentDrawing[row][col] });
             $(this).css('background-color', newColor);
             appStore.updateCurrentDrawing(row, col, newColor);
+            this.classList.remove('blink');
+            void this.offsetWidth;
             $(this).addClass('blink');
             setTimeout(() => $(this).removeClass('blink'), 1000);
           } else {
             if ($(touchElement).hasClass('container-square')) {
+              this.classList.remove('flash');
+              void this.offsetWidth;
               $(this).addClass('flash');
               setTimeout(() => $(this).removeClass('flash'), 1000);
             }
@@ -256,6 +260,8 @@ $(document).ready(function () {
 
     appStore.updateCurrentDrawing(row, col, newColor);
     $(this).css('background-color', newColor);
+    this.classList.remove('blink');
+    void this.offsetWidth;
     $(this).addClass('blink');
     setTimeout(() => $(this).removeClass('blink'), 1000);
   });
@@ -396,6 +402,8 @@ async function paintNeighbors(row, col, currentColor, newColor) {
 
       appStore.updateCurrentDrawing(currentRow, currentCol, newColor);
       $(currentSquare).css('background-color', newColor);
+      currentSquare[0].classList.remove('blink');
+      void currentSquare[0].offsetWidth;
       $(currentSquare).addClass('blink');
 
       nextQueue.push([currentRow - 1, currentCol]);
@@ -500,6 +508,8 @@ function handleTouchMove(touchElement) {
     appStore.addToCurrentVisitedNodes(`${row}, ${col}`);
     appStore.addToCurrentActions({ row, col, color: appStore.currentDrawing[row][col] });
     $(touchElement).css('background-color', appStore.paintColor);
+    touchElement.classList.remove('blink');
+    void touchElement.offsetWidth;
     $(touchElement).addClass('blink');
     appStore.updateCurrentDrawing(row, col, appStore.paintColor);
 
@@ -510,6 +520,8 @@ function handleTouchMove(touchElement) {
   }
   else {
     if ($(touchElement).hasClass('container-square')) {
+      touchElement.classList.remove('flash');
+      void touchElement.offsetWidth;
       $(touchElement).addClass('flash');
       setTimeout(() => $(touchElement).removeClass('flash'), 1000);
     }
