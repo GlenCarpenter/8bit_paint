@@ -1,0 +1,11 @@
+{
+  "name": "8bit-paint",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "browser-sync start --server --files \"*.html, styles/*.css, scripts/*.js, images/*\""
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.0"
+  }
+}

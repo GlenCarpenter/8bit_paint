@@ -1,3 +1,5 @@
+node_modules/
+
 # Android
 android/.gradle/
 android/.idea/
