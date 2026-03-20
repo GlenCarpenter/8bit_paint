@@ -88,8 +88,8 @@ div.selected-color {
 }
 
 .container-square {
-	width: 25px;
-	height: 25px;
+	flex: 1;
+	aspect-ratio: 1;
 	box-sizing: border-box;
 	font-size: 0;
 }
@@ -134,29 +134,35 @@ div.selected-color {
 
 @keyframes blink-color {
 	0% {
-		border: 1px solid #000000;
+		outline: 1px solid #000000;
+		outline-offset: -1px;
 	}
 
 	50% {
-		border: 1px solid #f1f1f1;
+		outline: 1px solid #f1f1f1;
+		outline-offset: -1px;
 	}
 
 	100% {
-		border: 1px solid #000000;
+		outline: 1px solid #000000;
+		outline-offset: -1px;
 	}
 }
 
 @keyframes flash {
 	0% {
-		border: 0px solid #ffffff;
+		outline: 0px solid #ffffff;
+		outline-offset: -1px;
 	}
 
 	50% {
-		border: 1px solid #ffffff;
+		outline: 1px solid #ffffff;
+		outline-offset: -1px;
 	}
 
 	100% {
-		border: 0px solid #ffffff;
+		outline: 0px solid #ffffff;
+		outline-offset: -1px;
 	}
 }
 
@@ -391,7 +397,9 @@ label {
 	}
 
 	#color-box {
-		margin: 10px auto auto 0;
+		margin: 10px auto;
+		max-width: calc(100vw - 40px);
+		aspect-ratio: 1 / 1;
 	}
 
 	#palette-container {
