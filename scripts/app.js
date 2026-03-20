@@ -236,10 +236,10 @@ $(document).ready(function () {
   });
 
   $(".square").on("mousedown touchstart", function (e) {
-    e.preventDefault();
     if (appStore.pourMode) {
       return;
     }
+    e.preventDefault();
     var newColor = e.which == 3 ? appStore.secondaryPaintColor : appStore.paintColor;
     var currentColor = $(this).css('background-color');
     var testColor = getCurrentPaintColorRGB(newColor);
