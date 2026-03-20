@@ -5,6 +5,7 @@ appStore.resetCurrentVisitedNodes();
 appStore.resetCurrentActions();
 appStore.initUndoStack();
 appStore.initRedoStack();
+appStore.loadPalette(0);
 
 function getPickerWidth() {
   return window.matchMedia('(max-width: 450px)').matches ? 220 : 260;
@@ -263,20 +264,33 @@ $(document).ready(function () {
     appStore.toggleGrid();
   });
 
-  $('.color-container').on('contextmenu', function (e) {
-    e.preventDefault();
-    $('.color-container').removeClass('selected-secondary-color');
-    appStore.setSecondaryPaintColor($(this).css('background-color'));
-    $(this).addClass('selected-secondary-color');
+  function bindPaletteColorEvents() {
+    $('.color-container').off('click contextmenu');
+    $('.color-container').on('contextmenu', function (e) {
+      e.preventDefault();
+      $('.color-container').removeClass('selected-secondary-color');
+      appStore.setSecondaryPaintColor($(this).css('background-color'));
+      $(this).addClass('selected-secondary-color');
+    });
+    $('.color-container').on('click', function (e) {
+      $('.color-container').removeClass('selected-color');
+      $(this).toggleClass('selected-color');
+      appStore.setPaintColor($(this).css('background-color'));
+      if (customColorTrigger) {
+        $(customColorTrigger).removeClass('selected-color');
+      }
+    });
+  }
+  bindPaletteColorEvents();
+
+  $('#palette-prev').on('click', function () {
+    appStore.prevPalette();
+    bindPaletteColorEvents();
   });
 
-  $('.color-container').on('click', function (e) {
-    $('.color-container').removeClass('selected-color');
-    $(this).toggleClass('selected-color');
-    appStore.setPaintColor($(this).css('background-color'));
-    if (customColorTrigger) {
-      $(customColorTrigger).removeClass('selected-color');
-    }
+  $('#palette-next').on('click', function () {
+    appStore.nextPalette();
+    bindPaletteColorEvents();
   });
 
   // Event listener for click of save button

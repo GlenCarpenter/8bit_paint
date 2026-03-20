@@ -35,27 +35,14 @@
 
     <!-- Color palette -->
     <div class="no-select" id="palette-container">
-      <p>Select color:</p>
-      <div id="palette-row">
-        <div class="color-container" style="background-color: orangered;"></div>
-        <div class="color-container" style="background-color: #ac581c;"></div>
-        <div class="color-container" style="background-color: orange;"></div>
-        <div class="color-container" style="background-color: #208800;"></div>
-        <div class="color-container" style="background-color: #1c38ac;"> </div>
-        <div class="color-container" style="background-color: #7070fc;"> </div>
-        <div class="color-container" style="background-color: #68605c;"></div>
-        <div class="color-container selected-color" style="background-color: #000000;">
+      <div class="palette-switcher">
+        <button type="button" id="palette-prev" class="palette-chevron no-select" aria-label="Previous palette">&#x276E;</button>
+        <div class="palette-center">
+          <p id="palette-label"></p>
+          <div id="palette-row-1" class="palette-row"></div>
+          <div id="palette-row-2" class="palette-row"></div>
         </div>
-      </div>
-      <div id="palette-row">
-        <div class="color-container" style="background-color: tomato;"></div>
-        <div class="color-container" style="background-color: #f8a850;"></div>
-        <div class="color-container" style="background-color: #f8ec20;"></div>
-        <div class="color-container" style="background-color: #70f828;"> </div>
-        <div class="color-container" style="background-color: dodgerblue;"></div>
-        <div class="color-container" style="background-color: #ff91af;"></div>
-        <div class="color-container" style="background-color: #b0b0b8;"></div>
-        <div class="color-container selected-secondary-color" style="background-color: #ffffff;"></div>
+        <button type="button" id="palette-next" class="palette-chevron no-select" aria-label="Next palette">&#x276F;</button>
       </div>
 
       <div id="color-options">

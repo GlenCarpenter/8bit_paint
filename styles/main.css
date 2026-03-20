@@ -185,11 +185,51 @@ div.selected-color {
 #palette-container {
 	margin: auto;
 	margin-top: 15px;
-	width: 340px;
+	width: 400px;
 }
 
-#palette-row {
+.palette-switcher {
 	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.palette-center {
+	flex: 1;
+	min-width: 0;
+}
+
+.palette-chevron {
+	flex: none;
+	width: 28px;
+	align-self: stretch;
+	border: 2px solid #000;
+	background: #f0f0f0;
+	font-size: 18px;
+	cursor: pointer;
+	padding: 0;
+	line-height: 1;
+}
+
+.palette-chevron:hover {
+	background: dodgerblue;
+	color: #fff;
+}
+
+.palette-chevron:active {
+	background: #1c38ac;
+	color: #fff;
+}
+
+#palette-label {
+	text-align: center;
+	font-size: 10px;
+	margin-bottom: 4px;
+}
+
+.palette-row {
+	display: flex;
+	justify-content: center;
 }
 
 #color-options {
@@ -205,7 +245,7 @@ div.selected-color {
 }
 
 .custom-picker-group {
-	width: 160px;
+	width: 140px;
 	display: flex;
 	align-items: center;
 	gap: 8px;
@@ -218,16 +258,19 @@ div.selected-color {
 
 .custom-color-square {
 	flex: none;
-	width: 30px;
-	height: 20px;
+	width: 32px;
+	height: 28px;
 	background-color: #000000;
 	margin: 5px;
 	cursor: pointer;
 	border: .25em solid #000000;
+	box-sizing: border-box;
 }
 
 .custom-color-square.selected-color {
 	border: .25em solid DeepSkyBlue;
+	width: 32px;
+	height: 28px;
 }
 
 .custom-color-open-button {
@@ -351,6 +394,7 @@ label {
 
 	#palette-container {
 		margin-top: 10px;
+		width: 100%;
 	}
 
 	.custom-picker-group {
