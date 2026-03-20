@@ -527,7 +527,7 @@ const palettes = [
       "#ffffff", // white
     ],
   },
-  
+
   // IBM CGA (1981) — the canonical 16-color RGBI palette
   // Colors use the "rule of thirds" mapping: 0=0x00, dim=0xAA, bright=0xFF
   // Color 6 is brown (not dark yellow) — IBM's intentional exception
@@ -741,47 +741,46 @@ const palettes = [
       "#382C42",
       "#190806",
     ],
-  },
-  {
+  },{
     name: "Oakland Sun",
     colors: [
-      "#E37371",
-      "#9E52E0",
-      "#C51C8B",
-      "#1F8BC4",
-      "#168A8C",
-      "#9F514F",
-      "#6F399D",
-      "#8A1461",
-      "#166189",
-      "#0F6162",
-      "#5B2E2D",
-      "#3F215A",
-      "#4F0B35",
-      "#0C384E",
-      "#093738",
-      "#100816",
+      "#E37371", // coral pink (kept)
+      "#9E52E0", // purple (kept)
+      "#E8A030", // warm amber — new, sunrise gold
+      "#4DB87A", // fresh green — new, Bay Area eucalyptus
+      "#1F8BC4", // sky blue (kept)
+      "#F0C060", // pale gold — new, afternoon haze
+      "#C51C8B", // magenta (kept)
+      "#3AB8B0", // teal — new, replaces a dark purple dupe
+      "#8A1461", // deep magenta (kept)
+      "#166189", // dark blue (kept)
+      "#A05C10", // burnt orange — new, replaced dark maroon dupe
+      "#1A7A4A", // dark green — new
+      "#6F399D", // mid purple (kept)
+      "#0F6162", // dark teal (kept)
+      "#4F0B35", // near-black magenta (kept)
+      "#100816", // near-black (kept)
     ],
   },
   {
     name: "Shibuya Night",
     colors: [
-      "#50D8DC",
-      "#419296",
-      "#E66926",
-      "#A93636",
-      "#065060",
-      "#38979A",
-      "#2E6669",
-      "#A1601B",
-      "#762626",
-      "#043843",
-      "#205658",
-      "#1A3A3C",
-      "#5C370F",
-      "#441616",
-      "#022026",
-      "#081616",
+      "#50D8DC", // cyan (kept)
+      "#E66926", // orange (kept)
+      "#C840A0", // hot pink/magenta — new, neon sign energy
+      "#78D858", // acid green — new, pachinko glow
+      "#F0D020", // electric yellow — new, taxi / vending machine
+      "#419296", // muted teal (kept)
+      "#A93636", // dark red (kept)
+      "#38579A", // deep blue — new, rainy reflections
+      "#205658", // dark teal (kept)
+      "#A1601B", // dark orange (kept)
+      "#7A2870", // dark magenta — new, replaces near-dupe teal
+      "#3A6830", // dark green — new
+      "#1A3A3C", // near-black teal (kept)
+      "#441616", // near-black red (kept)
+      "#022026", // darkest teal (kept)
+      "#081616", // near-black (kept)
     ],
   },
 ]
