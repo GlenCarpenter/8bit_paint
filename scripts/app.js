@@ -124,12 +124,6 @@ $(document).ready(function () {
     });
   }
 
-  $("#start-button-message").text("Tap to start!");
-  // Remove overlay
-  $(".loading-overlay").on("click", function () {
-    $("#overlay").remove();
-  });
-
   $(document).on('mousedown', function (e) {
     appStore.setMouseIsDown(true);      // When mouse goes down, set isDown to true
     if (e.which == 3) {
