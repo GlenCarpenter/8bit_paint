@@ -603,57 +603,168 @@ function rippleBlinkGrid() {
 var currentZoomLevel = 0; // 0 = 16x16, 1 = 12x12, 2 = 8x8
 var zoomSteps = [16, 12, 8];
 
+// Custom scrollbar drag state
+var scrollDrag = null;
+
+function initCustomScrollbars() {
+  var clip = document.getElementById('color-box-clip');
+  var trackTop = document.getElementById('scroll-track-top');
+  var thumbTop = document.getElementById('scroll-thumb-top');
+  var trackRight = document.getElementById('scroll-track-right');
+  var thumbRight = document.getElementById('scroll-thumb-right');
+
+  function startDrag(axis, e) {
+    e.preventDefault();
+    var track = axis === 'x' ? trackTop : trackRight;
+    var thumb = axis === 'x' ? thumbTop : thumbRight;
+    var rect = track.getBoundingClientRect();
+    var thumbRect = thumb.getBoundingClientRect();
+    var startPos = axis === 'x' ? e.clientX : e.clientY;
+    var startThumbPos = axis === 'x' ? (thumbRect.left - rect.left) : (thumbRect.top - rect.top);
+    scrollDrag = { axis: axis, startPos: startPos, startThumbPos: startThumbPos };
+  }
+
+  function onMove(e) {
+    if (!scrollDrag) return;
+    e.preventDefault();
+    var clientPos = e.clientX !== undefined ? e : (e.touches ? e.touches[0] : null);
+    if (!clientPos) return;
+
+    var axis = scrollDrag.axis;
+    var track = axis === 'x' ? trackTop : trackRight;
+    var thumb = axis === 'x' ? thumbTop : thumbRight;
+    var rect = track.getBoundingClientRect();
+    var trackSize = axis === 'x' ? (rect.width - 4) : (rect.height - 4); // account for border padding
+    var thumbSize = axis === 'x' ? thumb.offsetWidth : thumb.offsetHeight;
+    var maxThumbPos = trackSize - thumbSize;
+
+    var delta = (axis === 'x' ? clientPos.clientX : clientPos.clientY) - scrollDrag.startPos;
+    var newThumbPos = Math.max(0, Math.min(maxThumbPos, scrollDrag.startThumbPos + delta));
+
+    if (axis === 'x') {
+      thumb.style.left = newThumbPos + 'px';
+      var scrollRatio = maxThumbPos > 0 ? newThumbPos / maxThumbPos : 0;
+      clip.scrollLeft = scrollRatio * (clip.scrollWidth - clip.clientWidth);
+    } else {
+      thumb.style.top = newThumbPos + 'px';
+      var scrollRatio = maxThumbPos > 0 ? newThumbPos / maxThumbPos : 0;
+      clip.scrollTop = scrollRatio * (clip.scrollHeight - clip.clientHeight);
+    }
+  }
+
+  function endDrag() {
+    scrollDrag = null;
+  }
+
+  // Pointer events on thumbs
+  thumbTop.addEventListener('pointerdown', function (e) { startDrag('x', e); });
+  thumbRight.addEventListener('pointerdown', function (e) { startDrag('y', e); });
+  document.addEventListener('pointermove', onMove);
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+
+  // Track click jumps to position
+  trackTop.addEventListener('pointerdown', function (e) {
+    if (e.target === thumbTop) return;
+    var rect = trackTop.getBoundingClientRect();
+    var clickPos = e.clientX - rect.left - 2;
+    var thumbSize = thumbTop.offsetWidth;
+    var trackSize = rect.width - 4;
+    var maxThumbPos = trackSize - thumbSize;
+    var newThumbPos = Math.max(0, Math.min(maxThumbPos, clickPos - thumbSize / 2));
+    thumbTop.style.left = newThumbPos + 'px';
+    clip.scrollLeft = maxThumbPos > 0 ? (newThumbPos / maxThumbPos) * (clip.scrollWidth - clip.clientWidth) : 0;
+    startDrag('x', e);
+  });
+
+  trackRight.addEventListener('pointerdown', function (e) {
+    if (e.target === thumbRight) return;
+    var rect = trackRight.getBoundingClientRect();
+    var clickPos = e.clientY - rect.top - 2;
+    var thumbSize = thumbRight.offsetHeight;
+    var trackSize = rect.height - 4;
+    var maxThumbPos = trackSize - thumbSize;
+    var newThumbPos = Math.max(0, Math.min(maxThumbPos, clickPos - thumbSize / 2));
+    thumbRight.style.top = newThumbPos + 'px';
+    clip.scrollTop = maxThumbPos > 0 ? (newThumbPos / maxThumbPos) * (clip.scrollHeight - clip.clientHeight) : 0;
+    startDrag('y', e);
+  });
+}
+
+initCustomScrollbars();
+
+function updateScrollThumbs() {
+  var clip = document.getElementById('color-box-clip');
+  var trackTop = document.getElementById('scroll-track-top');
+  var thumbTop = document.getElementById('scroll-thumb-top');
+  var trackRight = document.getElementById('scroll-track-right');
+  var thumbRight = document.getElementById('scroll-thumb-right');
+
+  if (currentZoomLevel === 0) return;
+
+  // Horizontal thumb
+  var trackW = trackTop.clientWidth - 4;
+  var ratio = clip.clientWidth / clip.scrollWidth;
+  var thumbW = Math.max(28, Math.round(trackW * ratio));
+  thumbTop.style.width = thumbW + 'px';
+
+  // Vertical thumb
+  var trackH = trackRight.clientHeight - 4;
+  var ratioV = clip.clientHeight / clip.scrollHeight;
+  var thumbH = Math.max(28, Math.round(trackH * ratioV));
+  thumbRight.style.height = thumbH + 'px';
+}
+
 function zoomGrid(direction) {
   var newLevel = currentZoomLevel + direction;
   if (newLevel < 0 || newLevel >= zoomSteps.length) return;
   currentZoomLevel = newLevel;
 
-  var visibleCells = zoomSteps[currentZoomLevel];
   var clip = document.getElementById('color-box-clip');
   var colorBox = document.getElementById('color-box');
-  var scrollTop = document.getElementById('color-box-scroll-top');
-  var scrollTopInner = document.getElementById('color-box-scroll-top-inner');
-  var scrollRight = document.getElementById('color-box-scroll-right');
-  var scrollRightInner = document.getElementById('color-box-scroll-right-inner');
+  var trackTop = document.getElementById('scroll-track-top');
+  var trackRight = document.getElementById('scroll-track-right');
+  var thumbTop = document.getElementById('scroll-thumb-top');
+  var thumbRight = document.getElementById('scroll-thumb-right');
 
   if (currentZoomLevel === 0) {
-    // No zoom — hide scrollbars, reset size
+    // Reset inline styles so responsive CSS takes over
     colorBox.style.width = '';
     colorBox.style.height = '';
     clip.style.width = '';
     clip.style.height = '';
-    scrollTop.style.display = 'none';
-    scrollRight.style.display = 'none';
-    scrollTop.onscroll = null;
-    scrollRight.onscroll = null;
+    trackTop.style.display = 'none';
+    trackRight.style.display = 'none';
+    trackRight.style.height = '';
+    clip.scrollLeft = 0;
+    clip.scrollTop = 0;
   } else {
-    // Show proxy scrollbars first so clip can shrink via flex
-    scrollRight.style.display = 'block';
-    scrollTop.style.display = 'block';
+    // Show custom scrollbar tracks so flex layout adjusts clip width
+    trackRight.style.display = 'block';
+    trackTop.style.display = 'block';
 
-    // Measure actual clip size after scrollbar takes its space
-    var clipWidth = clip.clientWidth;
-    var clipHeight = clipWidth; // keep it square
-    clip.style.height = clipHeight + 'px';
+    // Measure wrapper width, subtract scrollbar track + gap to get clip size
+    var wrapper = document.getElementById('color-box-wrapper');
+    var clipSize = wrapper.clientWidth - trackRight.offsetWidth - 6; // 6px margin-left gap
+    clip.style.width = clipSize + 'px';
+    clip.style.height = clipSize + 'px';
 
-    // Scale: each cell fills clipWidth/visibleCells, total inner = 16 * cellSize
-    var cellSize = clipWidth / visibleCells;
-    var innerSize = 16 * cellSize;
+    // Size inner grid: 16 cells total, visibleCells fit in viewport
+    var visibleCells = zoomSteps[currentZoomLevel];
+    var innerSize = Math.round(16 * clipSize / visibleCells);
 
     colorBox.style.width = innerSize + 'px';
     colorBox.style.height = innerSize + 'px';
 
-    scrollTopInner.style.width = innerSize + 'px';
-    scrollRight.style.height = clipHeight + 'px';
-    scrollRightInner.style.height = innerSize + 'px';
+    trackRight.style.height = clipSize + 'px';
 
-    // Sync scroll: proxy scrollbars control the clip container
-    scrollTop.onscroll = function () {
-      clip.scrollLeft = scrollTop.scrollLeft;
-    };
-    scrollRight.onscroll = function () {
-      clip.scrollTop = scrollRight.scrollTop;
-    };
+    // Reset scroll positions and thumb positions
+    clip.scrollLeft = 0;
+    clip.scrollTop = 0;
+    thumbTop.style.left = '0px';
+    thumbRight.style.top = '0px';
+
+    updateScrollThumbs();
   }
 }
 
@@ -676,12 +787,8 @@ function transformGrid(type) {
     for (let c = 0; c < 16; c++) {
       if (type === 'rotateCW') {
         next[c][15 - r] = old[r][c];
-      } else if (type === 'rotateCCW') {
-        next[15 - c][r] = old[r][c];
       } else if (type === 'flipH') {
         next[r][15 - c] = old[r][c];
-      } else if (type === 'flipV') {
-        next[15 - r][c] = old[r][c];
       }
     }
   }

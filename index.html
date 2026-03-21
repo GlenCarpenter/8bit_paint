@@ -65,7 +65,7 @@
         </div>
 
         <div class="color-controls-row transform-row">
-          <button type="button" class="transform-btn button-control" id="paint-picker" title="Color Picker"><img src="public/eyedropper.png" alt="Color Picker" class="tool-icon" /></button>
+          <button type="button" class="transform-btn button-control" id="paint-picker" title="Color Picker"><img src="public/color-picker.png" alt="Color Picker" class="tool-icon" /></button>
           <button type="button" class="transform-btn button-control" id="transform-rotate-cw" title="Rotate"><img src="public/rotate.png" alt="Rotate Right" class="tool-icon" /></button>
           <button type="button" class="transform-btn button-control" id="transform-flip-h" title="Flip Horizontal"><img src="public/flip.png" alt="Flip Horizontal" class="tool-icon" /></button>
           <button type="button" class="transform-btn button-control" id="zoom-in" title="Zoom In"><img src="public/zoom-in.png" alt="Zoom In" class="tool-icon" /></button>
@@ -84,10 +84,14 @@
 
     <!-- Coloring area -->
     <div id="color-box-wrapper">
-      <div id="color-box-scroll-top"><div id="color-box-scroll-top-inner"></div></div>
+      <div id="scroll-track-top" class="scroll-track scroll-track-h" style="display:none">
+        <div id="scroll-thumb-top" class="scroll-thumb"></div>
+      </div>
       <div id="color-box-scroll-area">
         <div id="color-box-clip"><div id="color-box"></div></div>
-        <div id="color-box-scroll-right"><div id="color-box-scroll-right-inner"></div></div>
+        <div id="scroll-track-right" class="scroll-track scroll-track-v" style="display:none">
+          <div id="scroll-thumb-right" class="scroll-thumb"></div>
+        </div>
       </div>
     </div>
     <div class="button-row">
