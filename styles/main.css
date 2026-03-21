@@ -24,8 +24,8 @@ body {
 
 
 .button-control {
-	padding: 5px;
 	border: 2px solid;
+	box-sizing: border-box;
 }
 
 .color-container {
@@ -142,15 +142,15 @@ div.selected-color {
 
 @keyframes brush-flash {
 	0% {
-		border: .35em solid dodgerblue;
+		outline: 3px solid dodgerblue;
 	}
 
 	50% {
-		border: .35em solid #f1f1f1;
+		outline: 3px solid #f1f1f1;
 	}
 
 	100% {
-		border: .35em solid dodgerblue;
+		outline: 3px solid dodgerblue;
 	}
 }
 
@@ -234,6 +234,20 @@ div.selected-color {
 	gap: 16px;
 }
 
+.color-controls-row.transform-row {
+	display: flex;
+	grid-column: 1 / -1;
+	gap: 16px;
+}
+
+.transform-btn {
+	width: 72px;
+	height: 32px;
+	font-size: 18px;
+	text-align: center;
+	vertical-align: middle;
+}
+
 .custom-picker-group {
 	width: 140px;
 	display: flex;
@@ -271,8 +285,15 @@ div.selected-color {
 	padding: 5px;
 	font-family: inherit;
 	font-size: inherit;
-	line-height: 1;
 	cursor: pointer;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.custom-color-open-button .btn-emoji {
+	font-size: 18px;
 }
 
 .custom-color-dialog {
@@ -339,15 +360,13 @@ label {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.paint-style {
-	width: 72px;
-	height: 36px;
-	box-sizing: border-box;
+.paint-style {	width: 72px;
+	height: 32px;
+	font-size: 18px;
 }
 
 .selected-paint-style {
-	padding: 5px;
-	border: .35em solid dodgerblue;
+	outline: 3px solid dodgerblue;
 }
 
 .button-row {
@@ -389,7 +408,7 @@ label {
 	}
 
 	.custom-picker-group {
-		width: 140px;
+		width: 170px;
 	}
 
 	#color-picker {

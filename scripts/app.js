@@ -377,8 +377,8 @@ $(document).ready(function () {
 
   // Event listeners for paint mode
   function selectPaintTool(selectedId) {
-    $('.paint-style').removeClass('selected-paint-style').addClass('button-control');
-    $("#" + selectedId).removeClass('button-control').addClass('selected-paint-style');
+    $('.paint-style').removeClass('selected-paint-style');
+    $("#" + selectedId).addClass('selected-paint-style');
     $("#" + selectedId).addClass('brush-flash');
     setTimeout(() => $("#" + selectedId).removeClass('brush-flash'), 1000);
   }
@@ -400,6 +400,20 @@ $(document).ready(function () {
     selectPaintTool('paint-fill-v');
   });
 
+  // Transform buttons
+  $("#transform-rotate-cw").on("click", function () {
+    transformGrid('rotateCW');
+  });
+  $("#transform-rotate-ccw").on("click", function () {
+    transformGrid('rotateCCW');
+  });
+  $("#transform-flip-h").on("click", function () {
+    transformGrid('flipH');
+  });
+  $("#transform-flip-v").on("click", function () {
+    transformGrid('flipV');
+  });
+
   // Event listener for click of Clear button
   $("#clear-canvas").on("click", function () {
     for (let row = 0; row < 16; row++) {
@@ -412,13 +426,10 @@ $(document).ready(function () {
     appStore.clearRedoStack();
     appStore.resetCurrentActions();
     appStore.initCurrentDrawing();
-    $("#clear-canvas").addClass('blink');
-    $(".container-square").addClass('blink');
-    setTimeout(() => {
-      $("#clear-canvas").removeClass('blink');
-      $(".container-square").removeClass('blink');
-    }, 1000);
     $(".square").css('background-color', '#ffffff');
+    $("#clear-canvas").addClass('blink');
+    setTimeout(() => $("#clear-canvas").removeClass('blink'), 1000);
+    rippleBlinkGrid();
   });
 
   $("#btn-undo").on("click", function () {
@@ -546,6 +557,75 @@ async function paintLine(row, col, currentColor, newColor, direction) {
     setTimeout(() => $(`#square-${action.row}-${action.col}`).removeClass('blink'), 1000);
   }
   appStore.resetCurrentActions();
+}
+
+function rippleBlinkGrid() {
+  // Group cells by Manhattan distance from center, then blink wave-by-wave
+  const waves = {};
+  for (let r = 0; r < 16; r++) {
+    for (let c = 0; c < 16; c++) {
+      const dist = Math.abs(r - 7.5) + Math.abs(c - 7.5);
+      const wave = Math.floor(dist);
+      if (!waves[wave]) waves[wave] = [];
+      waves[wave].push(`#containerSquare-${r}-${c}`);
+    }
+  }
+  const keys = Object.keys(waves).map(Number).sort((a, b) => a - b);
+  keys.forEach((wave, i) => {
+    setTimeout(() => {
+      for (const sel of waves[wave]) {
+        const el = $(sel);
+        el[0].classList.remove('blink');
+        void el[0].offsetWidth;
+        el.addClass('blink');
+        setTimeout(() => el.removeClass('blink'), 1000);
+      }
+    }, i * 30);
+  });
+}
+
+function transformGrid(type) {
+  // Save current state for undo
+  const actions = [];
+  for (let r = 0; r < 16; r++) {
+    for (let c = 0; c < 16; c++) {
+      actions.push({ row: r, col: c, color: appStore.currentDrawing[r][c] });
+    }
+  }
+  appStore.addToUndoStack(actions);
+  appStore.clearRedoStack();
+
+  // Build transformed copy
+  const old = appStore.currentDrawing.map(row => [...row]);
+  const next = Array.from({ length: 16 }, () => Array(16).fill('#ffffff'));
+
+  for (let r = 0; r < 16; r++) {
+    for (let c = 0; c < 16; c++) {
+      if (type === 'rotateCW') {
+        next[c][15 - r] = old[r][c];
+      } else if (type === 'rotateCCW') {
+        next[15 - c][r] = old[r][c];
+      } else if (type === 'flipH') {
+        next[r][15 - c] = old[r][c];
+      } else if (type === 'flipV') {
+        next[15 - r][c] = old[r][c];
+      }
+    }
+  }
+
+  // Apply to state and re-render
+  for (let r = 0; r < 16; r++) {
+    for (let c = 0; c < 16; c++) {
+      appStore.currentDrawing[r][c] = next[r][c];
+      $("#square-" + r + "-" + c).css('background-color', next[r][c]);
+    }
+  }
+  appStore.saveCurrentDrawing();
+
+  // Flash color-box border
+  const box = $("#color-box");
+  box.addClass('blink');
+  setTimeout(() => box.removeClass('blink'), 1000);
 }
 
 function getCurrentPaintColorRGB(color) {

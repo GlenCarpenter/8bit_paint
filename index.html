@@ -47,9 +47,7 @@
             <div id="custom-color-trigger" class="custom-color-square" role="button" tabindex="0"
               aria-label="Use custom color"></div>
             <button type="button" id="open-custom-color-dialog" class="custom-color-open-button no-select"
-              aria-haspopup="dialog" aria-controls="custom-color-dialog">
-              Custom
-            </button>
+              aria-haspopup="dialog" aria-controls="custom-color-dialog">Custom<span class="btn-emoji">🎨</span></button>
           </div>
           <label for="checkbox">
             <input type="checkbox" class="grid-box" id="checkbox" checked />
@@ -61,9 +59,16 @@
 
         <div class="color-controls-row">
           <input type="button" class="paint-style selected-paint-style" id="paint-brush" value="🖌️" title="Brush" />
-          <input type="button" class="paint-style button-control" id="paint-bucket" value="🪣" title="Pour" />
-          <input type="button" class="paint-style button-control" id="paint-fill-h" value="↔️" title="Fill Row" />
-          <input type="button" class="paint-style button-control" id="paint-fill-v" value="↕️" title="Fill Column" />
+          <input type="button" class="paint-style" id="paint-bucket" value="🪣" title="Pour" />
+          <input type="button" class="paint-style" id="paint-fill-h" value="↔️" title="Fill Row" />
+          <input type="button" class="paint-style" id="paint-fill-v" value="↕️" title="Fill Column" />
+        </div>
+
+        <div class="color-controls-row transform-row">
+          <input type="button" class="transform-btn button-control" id="transform-rotate-ccw" value="↪️" title="Rotate Left" />
+          <input type="button" class="transform-btn button-control" id="transform-rotate-cw" value="↩️" title="Rotate Right" />
+          <input type="button" class="transform-btn button-control" id="transform-flip-h" value="🔁" title="Flip Horizontal" />
+          <input type="button" class="transform-btn button-control" id="transform-flip-v" value="🔃" title="Flip Vertical" />
         </div>
       </div>
     </div>
