@@ -65,10 +65,11 @@
         </div>
 
         <div class="color-controls-row transform-row">
-          <button type="button" class="paint-style button-control" id="paint-picker" title="Color Picker"><img src="public/eyedropper.png" alt="Color Picker" class="tool-icon" /></button>
-          <button type="button" class="paint-style button-control" id="transform-rotate-cw" title="Rotate"><img src="public/rotate.png" alt="Rotate Right" class="tool-icon" /></button>
-          <button type="button" class="paint-style button-control" id="transform-flip-h" title="Flip Horizontal"><img src="public/flip.png" alt="Flip Horizontal" class="tool-icon" /></button>
-          <input type="button" class="transform-btn button-control" id="transform-flip-v" value="🔃" title="Flip Vertical" />
+          <button type="button" class="transform-btn button-control" id="paint-picker" title="Color Picker"><img src="public/eyedropper.png" alt="Color Picker" class="tool-icon" /></button>
+          <button type="button" class="transform-btn button-control" id="transform-rotate-cw" title="Rotate"><img src="public/rotate.png" alt="Rotate Right" class="tool-icon" /></button>
+          <button type="button" class="transform-btn button-control" id="transform-flip-h" title="Flip Horizontal"><img src="public/flip.png" alt="Flip Horizontal" class="tool-icon" /></button>
+          <button type="button" class="transform-btn button-control" id="zoom-in" title="Zoom In"><img src="public/zoom-in.png" alt="Zoom In" class="tool-icon" /></button>
+          <button type="button" class="transform-btn button-control" id="zoom-out" title="Zoom Out"><img src="public/zoom-out.png" alt="Zoom Out" class="tool-icon" /></button>
         </div>
       </div>
     </div>
@@ -82,7 +83,13 @@
     </div>
 
     <!-- Coloring area -->
-    <div id="color-box"></div>
+    <div id="color-box-wrapper">
+      <div id="color-box-scroll-top"><div id="color-box-scroll-top-inner"></div></div>
+      <div id="color-box-scroll-area">
+        <div id="color-box-clip"><div id="color-box"></div></div>
+        <div id="color-box-scroll-right"><div id="color-box-scroll-right-inner"></div></div>
+      </div>
+    </div>
     <div class="button-row">
       <button class="button-control no-select" id="btn-share">Share <img src="images/share_icon.svg" alt="share" />
       </button>

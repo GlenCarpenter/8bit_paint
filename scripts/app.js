@@ -423,8 +423,11 @@ $(document).ready(function () {
   $("#transform-flip-h").on("click", function () {
     transformGrid('flipH');
   });
-  $("#transform-flip-v").on("click", function () {
-    transformGrid('flipV');
+  $("#zoom-in").on("click", function () {
+    zoomGrid(1);
+  });
+  $("#zoom-out").on("click", function () {
+    zoomGrid(-1);
   });
 
   // Event listener for click of Clear button
@@ -595,6 +598,63 @@ function rippleBlinkGrid() {
       }
     }, i * 30);
   });
+}
+
+var currentZoomLevel = 0; // 0 = 16x16, 1 = 12x12, 2 = 8x8
+var zoomSteps = [16, 12, 8];
+
+function zoomGrid(direction) {
+  var newLevel = currentZoomLevel + direction;
+  if (newLevel < 0 || newLevel >= zoomSteps.length) return;
+  currentZoomLevel = newLevel;
+
+  var visibleCells = zoomSteps[currentZoomLevel];
+  var clip = document.getElementById('color-box-clip');
+  var colorBox = document.getElementById('color-box');
+  var scrollTop = document.getElementById('color-box-scroll-top');
+  var scrollTopInner = document.getElementById('color-box-scroll-top-inner');
+  var scrollRight = document.getElementById('color-box-scroll-right');
+  var scrollRightInner = document.getElementById('color-box-scroll-right-inner');
+
+  if (currentZoomLevel === 0) {
+    // No zoom — hide scrollbars, reset size
+    colorBox.style.width = '';
+    colorBox.style.height = '';
+    clip.style.width = '';
+    clip.style.height = '';
+    scrollTop.style.display = 'none';
+    scrollRight.style.display = 'none';
+    scrollTop.onscroll = null;
+    scrollRight.onscroll = null;
+  } else {
+    // Show proxy scrollbars first so clip can shrink via flex
+    scrollRight.style.display = 'block';
+    scrollTop.style.display = 'block';
+
+    // Measure actual clip size after scrollbar takes its space
+    var clipWidth = clip.clientWidth;
+    var clipHeight = clipWidth; // keep it square
+    clip.style.height = clipHeight + 'px';
+
+    // Scale: each cell fills clipWidth/visibleCells, total inner = 16 * cellSize
+    var cellSize = clipWidth / visibleCells;
+    var innerSize = 16 * cellSize;
+
+    colorBox.style.width = innerSize + 'px';
+    colorBox.style.height = innerSize + 'px';
+
+    scrollTopInner.style.width = innerSize + 'px';
+    scrollRight.style.height = clipHeight + 'px';
+    scrollRightInner.style.height = innerSize + 'px';
+
+    // Sync scroll: proxy scrollbars control the clip container
+    scrollTop.onscroll = function () {
+      clip.scrollLeft = scrollTop.scrollLeft;
+    };
+    scrollRight.onscroll = function () {
+      clip.scrollTop = scrollRight.scrollTop;
+    };
+  }
 }
 
 function transformGrid(type) {

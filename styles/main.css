@@ -52,11 +52,55 @@ div.selected-color {
 	cursor: pointer;
 }
 
+#color-box-wrapper {
+	width: 400px;
+	margin-top: 6px;
+}
+
+#color-box-scroll-top {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	display: none;
+	scrollbar-width: thin;
+}
+
+#color-box-scroll-top-inner {
+	height: 1px;
+}
+
+#color-box-scroll-area {
+	display: flex;
+}
+
+#color-box-clip {
+	width: 400px;
+	height: 400px;
+	overflow: scroll;
+	scrollbar-width: none;
+}
+
+#color-box-clip::-webkit-scrollbar {
+	display: none;
+}
+
+#color-box-scroll-right {
+	width: 14px;
+	flex-shrink: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: none;
+	scrollbar-width: thin;
+}
+
+#color-box-scroll-right-inner {
+	width: 1px;
+}
+
 #color-box {
 	cursor: crosshair;
 	border: 2px solid;
 	width: 400px;
-	margin-top: 6px;
 	box-sizing: border-box;
 	touch-action: pinch-zoom;
 }
@@ -241,7 +285,7 @@ div.selected-color {
 }
 
 .transform-btn {
-	width: 72px;
+	width: 68px;
 	height: 32px;
 	font-size: 18px;
 	text-align: center;
@@ -402,9 +446,19 @@ label {
 		margin: 0 auto;
 	}
 
-	#color-box {
-		margin: 10px auto;
+	#color-box-wrapper {
 		max-width: calc(100vw - 40px);
+		margin: 10px auto;
+	}
+
+	#color-box-clip {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1 / 1;
+	}
+
+	#color-box {
+		max-width: 100%;
 		aspect-ratio: 1 / 1;
 	}
 
