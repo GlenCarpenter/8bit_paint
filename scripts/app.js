@@ -315,7 +315,32 @@ $(document).ready(function () {
   $("#btn-share").on("click", function () {
     $("#btn-share").addClass('blink');
     setTimeout(() => $("#btn-share").removeClass('blink'), 1000);
-    shareImage();
+    openShareDialog();
+  });
+
+  // Share dialog filter controls
+  $("#share-dialog").on("input", "input[type=range]", function () {
+    applyShareFilters();
+  });
+  $("#share-dialog").on("change", "input[type=checkbox]", function () {
+    applyShareFilters();
+  });
+
+  $("#share-reset").on("click", function () {
+    $("#filter-contrast").val(100);
+    $("#filter-hue").val(0);
+    $("#filter-invert").prop('checked', false);
+    $("#filter-grayscale").prop('checked', false);
+    $("#filter-saturate").val(100);
+    applyShareFilters();
+  });
+
+  $("#share-send").on("click", function () {
+    sendShareImage();
+  });
+
+  $("#share-dialog").on("click", function (e) {
+    if (e.target === this) this.close();
   });
 
   // Event listeners for paint mode
@@ -520,27 +545,51 @@ function saveAs(uri, filename) {
   }
 }
 
-async function shareImage() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 400;
-  canvas.height = 400;
-  canvas.style.border = "4px solid";
-  canvas.style.boxSizing = "border-box";
+function openShareDialog() {
+  // Reset filters
+  $("#filter-contrast").val(100);
+  $("#filter-hue").val(0);
+  $("#filter-invert").prop('checked', false);
+  $("#filter-grayscale").prop('checked', false);
+  $("#filter-saturate").val(100);
 
-  appStore.initCanvas(canvas);
-  document.body.appendChild(canvas);
+  // Draw current art onto preview canvas
+  const preview = document.getElementById('share-preview');
+  appStore.initCanvas(preview);
+  preview.style.filter = '';
 
-  canvas.toBlob(function (blob) {
-    const file = new File([blob], '8bitPaint.jpeg', { type: 'image/jpeg' });
+  document.getElementById('share-dialog').showModal();
+}
 
-    if (!navigator.canShare) {
-      const base64url = URL.createObjectURL(blob);
-      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".jpeg");
-      return;
-    }
-    if (!navigator.canShare({ files: [file] })) {
-      const base64url = URL.createObjectURL(blob);
-      saveAs(base64url, '8bit_paint' + '?' + new Date().getTime() + ".jpeg");
+function applyShareFilters() {
+  const contrast = $("#filter-contrast").val();
+  const hue = $("#filter-hue").val();
+  const invert = $("#filter-invert").is(':checked') ? 100 : 0;
+  const grayscale = $("#filter-grayscale").is(':checked') ? 100 : 0;
+  const saturate = $("#filter-saturate").val();
+
+  document.getElementById('share-preview').style.filter =
+    `contrast(${contrast}%) hue-rotate(${hue}deg) invert(${invert}%) grayscale(${grayscale}%) saturate(${saturate}%)`;
+}
+
+function sendShareImage() {
+  const preview = document.getElementById('share-preview');
+  const filterStr = preview.style.filter;
+
+  // Render filtered image to an offscreen canvas
+  const offscreen = document.createElement('canvas');
+  offscreen.width = 400;
+  offscreen.height = 400;
+  const ctx = offscreen.getContext('2d');
+  ctx.filter = filterStr || 'none';
+  ctx.drawImage(preview, 0, 0);
+
+  offscreen.toBlob(function (blob) {
+    const file = new File([blob], '8bitPaint.png', { type: 'image/png' });
+
+    if (!navigator.canShare || !navigator.canShare({ files: [file] })) {
+      const url = URL.createObjectURL(blob);
+      saveAs(url, '8bit_paint_' + Date.now() + '.png');
       return;
     }
 
@@ -551,10 +600,10 @@ async function shareImage() {
     })
       .then(() => console.log('Successful share'))
       .catch((error) => console.log('Error sharing', error));
-  }, 'image/jpeg', 1);
+  }, 'image/png');
 
-  document.body.removeChild(canvas);
-};
+  document.getElementById('share-dialog').close();
+}
 
 function handleTouchMove(touchElement) {
   if ($(touchElement).hasClass('square')) {

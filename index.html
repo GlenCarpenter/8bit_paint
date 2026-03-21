@@ -36,20 +36,22 @@
     <!-- Color palette -->
     <div class="no-select" id="palette-container">
       <div class="palette-switcher">
-        <button type="button" id="palette-prev" class="palette-chevron no-select" aria-label="Previous palette">&#x276E;</button>
+        <button type="button" id="palette-prev" class="palette-chevron no-select"
+          aria-label="Previous palette">&#x276E;</button>
         <div class="palette-center">
           <p id="palette-label"></p>
           <div id="palette-row-1" class="palette-row"></div>
           <div id="palette-row-2" class="palette-row"></div>
         </div>
-        <button type="button" id="palette-next" class="palette-chevron no-select" aria-label="Next palette">&#x276F;</button>
+        <button type="button" id="palette-next" class="palette-chevron no-select"
+          aria-label="Next palette">&#x276F;</button>
       </div>
 
       <div id="color-options">
         <div class="color-controls-row">
           <div class="custom-picker-group">
-            <div id="custom-color-trigger" class="custom-color-square"
-              role="button" tabindex="0" aria-label="Use custom color"></div>
+            <div id="custom-color-trigger" class="custom-color-square" role="button" tabindex="0"
+              aria-label="Use custom color"></div>
             <button type="button" id="open-custom-color-dialog" class="custom-color-open-button no-select"
               aria-haspopup="dialog" aria-controls="custom-color-dialog">
               Custom
@@ -88,6 +90,34 @@
       <input type="button" class="button-control no-select" id="clear-canvas" value="Clear" />
     </div>
   </div>
+
+  <dialog id="share-dialog" class="share-dialog no-select" aria-label="Share image dialog">
+    <div class="share-dialog-content">
+      <h2>Share</h2>
+      <canvas id="share-preview" width="400" height="400"></canvas>
+      <div class="share-filters">
+        <label class="share-filter-label">Contrast
+          <input type="range" id="filter-contrast" min="0" max="200" value="100" />
+        </label>
+        <label class="share-filter-label">Hue
+          <input type="range" id="filter-hue" min="0" max="360" value="0" />
+        </label>
+        <label class="share-filter-label">Saturate
+          <input type="range" id="filter-saturate" min="0" max="200" value="100" />
+        </label>
+        <label class="share-filter-label">Invert
+          <input type="checkbox" id="filter-invert" />
+        </label>
+        <label class="share-filter-label">Grayscale
+          <input type="checkbox" id="filter-grayscale" />
+        </label>
+      </div>
+      <div class="share-actions">
+        <button type="button" id="share-reset" class="button-control"><span>🔄</span>Reset</button>
+        <button type="button" id="share-send" class="button-control" aria-label="Share"><span>✉︎</span>Send</button>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="custom-color-dialog" class="custom-color-dialog no-select" aria-label="Custom color picker dialog">
     <div class="custom-color-dialog-content">
