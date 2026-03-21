@@ -2,6 +2,7 @@ var appStore = {
   mouseIsDown: false,
   isRightClick: false,
   pourMode: false,
+  paintMode: 'brush',
   paintColor: "#000000",
   secondaryPaintColor: "#ffffff",
   currentVisitedNodes: new Set(),
@@ -32,6 +33,10 @@ var appStore = {
   },
   setPourMode: function (pourMode) {
     this.pourMode = pourMode;
+  },
+  setPaintMode: function (mode) {
+    this.paintMode = mode;
+    this.pourMode = mode !== 'brush';
   },
   setPaintColor: function (color) {
     this.paintColor = color;

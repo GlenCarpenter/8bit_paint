@@ -217,7 +217,13 @@ $(document).ready(function () {
       };
 
       [_, row, col] = this.id.split('-');
-      paintNeighbors(parseInt(row), parseInt(col), currentColor, appStore.paintColor);
+      if (appStore.paintMode === 'fillH') {
+        paintLine(parseInt(row), parseInt(col), currentColor, appStore.paintColor, 'horizontal');
+      } else if (appStore.paintMode === 'fillV') {
+        paintLine(parseInt(row), parseInt(col), currentColor, appStore.paintColor, 'vertical');
+      } else {
+        paintNeighbors(parseInt(row), parseInt(col), currentColor, appStore.paintColor);
+      }
       return;
     }
   });
@@ -231,7 +237,13 @@ $(document).ready(function () {
       };
 
       [_, row, col] = this.id.split('-');
-      paintNeighbors(parseInt(row), parseInt(col), currentColor, appStore.secondaryPaintColor);
+      if (appStore.paintMode === 'fillH') {
+        paintLine(parseInt(row), parseInt(col), currentColor, appStore.secondaryPaintColor, 'horizontal');
+      } else if (appStore.paintMode === 'fillV') {
+        paintLine(parseInt(row), parseInt(col), currentColor, appStore.secondaryPaintColor, 'vertical');
+      } else {
+        paintNeighbors(parseInt(row), parseInt(col), currentColor, appStore.secondaryPaintColor);
+      }
       return;
     }
   });
@@ -306,32 +318,29 @@ $(document).ready(function () {
     shareImage();
   });
 
-  // Event listeners for pour mode
+  // Event listeners for paint mode
+  function selectPaintTool(selectedId) {
+    $('.paint-style').removeClass('selected-paint-style').addClass('button-control');
+    $("#" + selectedId).removeClass('button-control').addClass('selected-paint-style');
+    $("#" + selectedId).addClass('brush-flash');
+    setTimeout(() => $("#" + selectedId).removeClass('brush-flash'), 1000);
+  }
+
   $("#paint-bucket").on("click", function () {
-    appStore.setPourMode(true);
-
-    $("#paint-brush").removeClass('selected-paint-style');
-    $("#paint-brush").addClass('button-control');
-
-    $("#paint-bucket").removeClass('button-control');
-    $("#paint-bucket").addClass('selected-paint-style');
-    $("#paint-bucket").addClass('brush-flash');
-    setTimeout(() => {
-      $("#paint-bucket").removeClass('brush-flash');
-    }, 1000);
+    appStore.setPaintMode('pour');
+    selectPaintTool('paint-bucket');
   });
   $("#paint-brush").on("click", function () {
-    appStore.setPourMode(false);
-
-    $("#paint-bucket").removeClass('selected-paint-style');
-    $("#paint-bucket").addClass('button-control');
-
-    $("#paint-brush").removeClass('button-control');
-    $("#paint-brush").addClass('selected-paint-style');
-    $("#paint-brush").addClass('brush-flash');
-    setTimeout(() => {
-      $("#paint-brush").removeClass('brush-flash');
-    }, 1000);
+    appStore.setPaintMode('brush');
+    selectPaintTool('paint-brush');
+  });
+  $("#paint-fill-h").on("click", function () {
+    appStore.setPaintMode('fillH');
+    selectPaintTool('paint-fill-h');
+  });
+  $("#paint-fill-v").on("click", function () {
+    appStore.setPaintMode('fillV');
+    selectPaintTool('paint-fill-v');
   });
 
   // Event listener for click of Clear button
@@ -421,6 +430,62 @@ async function paintNeighbors(row, col, currentColor, newColor) {
   appStore.addToUndoStack(appStore.currentActions);
   appStore.clearRedoStack();
   for (let action of appStore.currentActions) {
+    setTimeout(() => $(`#square-${action.row}-${action.col}`).removeClass('blink'), 1000);
+  }
+  appStore.resetCurrentActions();
+}
+
+// Paints a line of matching-color cells in one direction from the clicked cell
+async function paintLine(row, col, currentColor, newColor, direction) {
+  // Collect cells in both directions from clicked cell
+  const negative = [];
+  const positive = [];
+
+  if (direction === 'horizontal') {
+    for (let c = col - 1; c >= 0; c--) {
+      if ($(`#square-${row}-${c}`).css('background-color') !== currentColor) break;
+      negative.push([row, c]);
+    }
+    for (let c = col + 1; c <= 15; c++) {
+      if ($(`#square-${row}-${c}`).css('background-color') !== currentColor) break;
+      positive.push([row, c]);
+    }
+  } else {
+    for (let r = row - 1; r >= 0; r--) {
+      if ($(`#square-${r}-${col}`).css('background-color') !== currentColor) break;
+      negative.push([r, col]);
+    }
+    for (let r = row + 1; r <= 15; r++) {
+      if ($(`#square-${r}-${col}`).css('background-color') !== currentColor) break;
+      positive.push([r, col]);
+    }
+  }
+
+  // Paint outward from clicked cell, one wave at a time (like flood fill)
+  function paintCell(r, c) {
+    const sq = $(`#square-${r}-${c}`);
+    appStore.currentActions.push({ row: r, col: c, color: currentColor });
+    appStore.updateCurrentDrawing(r, c, newColor);
+    sq.css('background-color', newColor);
+    sq[0].classList.remove('blink');
+    void sq[0].offsetWidth;
+    sq.addClass('blink');
+  }
+
+  // Wave 0: the clicked cell itself
+  paintCell(row, col);
+
+  // Waves 1..N: expand outward in both directions simultaneously
+  const maxDist = Math.max(negative.length, positive.length);
+  for (let i = 0; i < maxDist; i++) {
+    await new Promise(resolve => setTimeout(resolve, 30));
+    if (i < negative.length) paintCell(negative[i][0], negative[i][1]);
+    if (i < positive.length) paintCell(positive[i][0], positive[i][1]);
+  }
+
+  appStore.addToUndoStack(appStore.currentActions);
+  appStore.clearRedoStack();
+  for (const action of appStore.currentActions) {
     setTimeout(() => $(`#square-${action.row}-${action.col}`).removeClass('blink'), 1000);
   }
   appStore.resetCurrentActions();

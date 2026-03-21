@@ -252,6 +252,12 @@ div.selected-color {
 	display: contents;
 }
 
+.color-controls-row:has(.paint-style) {
+	display: flex;
+	grid-column: 1 / -1;
+	gap: 16px;
+}
+
 .custom-picker-group {
 	width: 140px;
 	display: flex;
@@ -358,8 +364,7 @@ label {
 }
 
 .paint-style {
-	margin-top: 5px;
-	width: 36px;
+	width: 72px;
 	height: 36px;
 	box-sizing: border-box;
 }
