@@ -203,6 +203,17 @@ $(document).ready(function () {
   });
 
   $(".square").on("click", function (e) {
+    if (appStore.paintMode === 'picker') {
+      var pickedColor = $(this).css('background-color');
+      appStore.setPaintColor(pickedColor);
+      $('#custom-color-trigger').css('background-color', pickedColor);
+      localStorage.setItem('customColor', pickedColor);
+      $('.color-container').removeClass('selected-color');
+      $('#custom-color-trigger').addClass('selected-color');
+      appStore.setPaintMode('brush');
+      selectPaintTool('paint-brush');
+      return;
+    }
     if (appStore.pourMode) {
       var currentColor = $(this).css('background-color');
       var testColor = getCurrentPaintColorRGB(appStore.paintColor);
@@ -400,12 +411,14 @@ $(document).ready(function () {
     selectPaintTool('paint-fill-v');
   });
 
+  $("#paint-picker").on("click", function () {
+    appStore.setPaintMode('picker');
+    selectPaintTool('paint-picker');
+  });
+
   // Transform buttons
   $("#transform-rotate-cw").on("click", function () {
     transformGrid('rotateCW');
-  });
-  $("#transform-rotate-ccw").on("click", function () {
-    transformGrid('rotateCCW');
   });
   $("#transform-flip-h").on("click", function () {
     transformGrid('flipH');
