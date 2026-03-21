@@ -460,7 +460,7 @@ label {
 	width: 100%;
 	display: grid;
 	grid-template-columns: auto 1fr;
-	gap: 8px 12px;
+	gap: 16px 8px;
 	align-items: center;
 }
 
@@ -470,7 +470,7 @@ label {
 }
 
 .share-filter-input {
-	width: 80%;
+	width: 100%;
 }
 
 .share-filter-input input[type="range"] {
@@ -492,7 +492,7 @@ label {
 
 .share-actions button {
 	display: inline-block;
-	height: 36px;
+	height: 48px;
 	min-width: 140px;
 	line-height: 1.2rem;
 }
