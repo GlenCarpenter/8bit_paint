@@ -260,10 +260,11 @@ var appStore = {
     const half = Math.ceil(palette.colors.length / 2);
     palette.colors.forEach(function (color, i) {
       const el = $("<div>").addClass("color-container").css("background-color", color);
-      if (color.toLowerCase() === appStore.paintColor.toLowerCase()) {
+      const rendered = el.css("background-color");
+      if (rendered === appStore.paintColor) {
         el.addClass("selected-color");
       }
-      if (color.toLowerCase() === appStore.secondaryPaintColor.toLowerCase()) {
+      if (rendered === appStore.secondaryPaintColor) {
         el.addClass("selected-secondary-color");
       }
       if (i < half) { row1.append(el); } else { row2.append(el); }
@@ -302,7 +303,7 @@ const palettes = [
     ],
   },
   {
-    name: "Greatbit",
+    name: "GreatBit",
     colors: [
       "#000000",
       "#9c9c9c",
@@ -350,7 +351,7 @@ const palettes = [
   // Overworld sky blues, Mario's reds, brick oranges, underground blacks,
   // castle grays, Goomba browns, pipe greens, coin golds
   {
-    name: "Super Mario Bros.",
+    name: "Super Mario Bros",
     colors: [
       "#000000", // black (underground bg, text)
       "#5c94fc", // sky blue (overworld bg)
@@ -375,7 +376,7 @@ const palettes = [
   // Pastel dreamworld palette — very different from SMB1.
   // Subcon world pinks, the Arabian Nights vibe, Birdo reds, Wart greens
   {
-    name: "Super Mario Bros. 2",
+    name: "Super Mario Bros 2",
     colors: [
       "#000000", // black
       "#fcfcfc", // white
@@ -400,7 +401,7 @@ const palettes = [
   // Richest NES palette of the trilogy — map screen greens, Tanooki browns,
   // fortress reds, ice world blues, the iconic dark map navy
   {
-    name: "Super Mario Bros. 3",
+    name: "Super Mario Bros 3",
     colors: [
       "#000000", // black
       "#1c1c84", // map screen dark navy
@@ -491,7 +492,7 @@ const palettes = [
 
   // Acorn RISC OS default 16-color palette
   {
-    name: "RiscOS",
+    name: "Risc OS",
     colors: [
       "#ffffff", // white
       "#dddddd", // grey 1
@@ -636,7 +637,7 @@ const palettes = [
   // Pico-8 fantasy console (2015) — beloved indie dev palette
   // Designed for maximum charm in 16 colors
   {
-    name: "Pico-8 fantasy",
+    name: "Pico-8 Fantasy",
     colors: [
       "#000000", // black
       "#1d2b53", // dark navy

@@ -177,6 +177,8 @@ div.selected-color {
 .palette-center {
 	flex: 1;
 	min-width: 0;
+	overflow: hidden;
+	position: relative;
 }
 
 .palette-chevron {

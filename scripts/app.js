@@ -295,14 +295,52 @@ $(document).ready(function () {
   }
   bindPaletteColorEvents();
 
-  $('#palette-prev').on('click', function () {
-    appStore.prevPalette();
+  function animatePaletteSwitch(direction, loadFn) {
+    const center = document.querySelector('.palette-center');
+    const inner = document.querySelector('.palette-inner');
+
+    // Clone old content before loading new
+    const oldClone = inner.cloneNode(true);
+    oldClone.style.position = 'absolute';
+    oldClone.style.top = '0';
+    oldClone.style.left = '0';
+    oldClone.style.width = '100%';
+
+    // Load new palette
+    loadFn();
     bindPaletteColorEvents();
+
+    // Place old clone on top
+    center.appendChild(oldClone);
+
+    // Set starting positions
+    const slideIn = direction === 'next' ? '100%' : '-100%';
+    const slideOut = direction === 'next' ? '-100%' : '100%';
+    inner.style.transform = 'translateX(' + slideIn + ')';
+    oldClone.style.transform = 'translateX(0)';
+
+    // Animate both together
+    requestAnimationFrame(function () {
+      inner.style.transition = 'transform 200ms ease-out';
+      oldClone.style.transition = 'transform 200ms ease-out';
+      inner.style.transform = 'translateX(0)';
+      oldClone.style.transform = 'translateX(' + slideOut + ')';
+    });
+
+    // Clean up after animation
+    oldClone.addEventListener('transitionend', function () {
+      oldClone.remove();
+      inner.style.transition = '';
+      inner.style.transform = '';
+    }, { once: true });
+  }
+
+  $('#palette-prev').on('click', function () {
+    animatePaletteSwitch('prev', function () { appStore.prevPalette(); });
   });
 
   $('#palette-next').on('click', function () {
-    appStore.nextPalette();
-    bindPaletteColorEvents();
+    animatePaletteSwitch('next', function () { appStore.nextPalette(); });
   });
 
   // Event listener for click of save button
