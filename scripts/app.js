@@ -613,6 +613,8 @@ function initCustomScrollbars() {
   var trackRight = document.getElementById('scroll-track-right');
   var thumbRight = document.getElementById('scroll-thumb-right');
 
+  var TRACK_PAD = 2; // inner padding so thumb never touches track edges
+
   function startDrag(axis, e) {
     e.preventDefault();
     var track = axis === 'x' ? trackTop : trackRight;
@@ -634,20 +636,21 @@ function initCustomScrollbars() {
     var track = axis === 'x' ? trackTop : trackRight;
     var thumb = axis === 'x' ? thumbTop : thumbRight;
     var rect = track.getBoundingClientRect();
-    var trackSize = axis === 'x' ? (rect.width - 4) : (rect.height - 4); // account for border padding
+    var innerSize = axis === 'x' ? (rect.width - 4) : (rect.height - 4);
     var thumbSize = axis === 'x' ? thumb.offsetWidth : thumb.offsetHeight;
-    var maxThumbPos = trackSize - thumbSize;
+    var minPos = TRACK_PAD;
+    var maxPos = innerSize - TRACK_PAD - thumbSize;
 
     var delta = (axis === 'x' ? clientPos.clientX : clientPos.clientY) - scrollDrag.startPos;
-    var newThumbPos = Math.max(0, Math.min(maxThumbPos, scrollDrag.startThumbPos + delta));
+    var newThumbPos = Math.max(minPos, Math.min(maxPos, scrollDrag.startThumbPos + delta));
 
     if (axis === 'x') {
       thumb.style.left = newThumbPos + 'px';
-      var scrollRatio = maxThumbPos > 0 ? newThumbPos / maxThumbPos : 0;
+      var scrollRatio = maxPos > minPos ? (newThumbPos - minPos) / (maxPos - minPos) : 0;
       clip.scrollLeft = scrollRatio * (clip.scrollWidth - clip.clientWidth);
     } else {
       thumb.style.top = newThumbPos + 'px';
-      var scrollRatio = maxThumbPos > 0 ? newThumbPos / maxThumbPos : 0;
+      var scrollRatio = maxPos > minPos ? (newThumbPos - minPos) / (maxPos - minPos) : 0;
       clip.scrollTop = scrollRatio * (clip.scrollHeight - clip.clientHeight);
     }
   }
@@ -669,11 +672,13 @@ function initCustomScrollbars() {
     var rect = trackTop.getBoundingClientRect();
     var clickPos = e.clientX - rect.left - 2;
     var thumbSize = thumbTop.offsetWidth;
-    var trackSize = rect.width - 4;
-    var maxThumbPos = trackSize - thumbSize;
-    var newThumbPos = Math.max(0, Math.min(maxThumbPos, clickPos - thumbSize / 2));
+    var innerSize = rect.width - 4;
+    var minPos = TRACK_PAD;
+    var maxPos = innerSize - TRACK_PAD - thumbSize;
+    var newThumbPos = Math.max(minPos, Math.min(maxPos, clickPos - thumbSize / 2));
     thumbTop.style.left = newThumbPos + 'px';
-    clip.scrollLeft = maxThumbPos > 0 ? (newThumbPos / maxThumbPos) * (clip.scrollWidth - clip.clientWidth) : 0;
+    var scrollRatio = maxPos > minPos ? (newThumbPos - minPos) / (maxPos - minPos) : 0;
+    clip.scrollLeft = scrollRatio * (clip.scrollWidth - clip.clientWidth);
     startDrag('x', e);
   });
 
@@ -682,13 +687,45 @@ function initCustomScrollbars() {
     var rect = trackRight.getBoundingClientRect();
     var clickPos = e.clientY - rect.top - 2;
     var thumbSize = thumbRight.offsetHeight;
-    var trackSize = rect.height - 4;
-    var maxThumbPos = trackSize - thumbSize;
-    var newThumbPos = Math.max(0, Math.min(maxThumbPos, clickPos - thumbSize / 2));
+    var innerSize = rect.height - 4;
+    var minPos = TRACK_PAD;
+    var maxPos = innerSize - TRACK_PAD - thumbSize;
+    var newThumbPos = Math.max(minPos, Math.min(maxPos, clickPos - thumbSize / 2));
     thumbRight.style.top = newThumbPos + 'px';
-    clip.scrollTop = maxThumbPos > 0 ? (newThumbPos / maxThumbPos) * (clip.scrollHeight - clip.clientHeight) : 0;
+    var scrollRatio = maxPos > minPos ? (newThumbPos - minPos) / (maxPos - minPos) : 0;
+    clip.scrollTop = scrollRatio * (clip.scrollHeight - clip.clientHeight);
     startDrag('y', e);
   });
+
+  // Sync thumb positions when clip is scrolled (e.g. mouse wheel)
+  clip.addEventListener('scroll', function () {
+    if (scrollDrag || currentZoomLevel === 0) return;
+    syncThumbsToClip();
+  });
+}
+
+function syncThumbsToClip() {
+  var clip = document.getElementById('color-box-clip');
+  var trackTop = document.getElementById('scroll-track-top');
+  var thumbTop = document.getElementById('scroll-thumb-top');
+  var trackRight = document.getElementById('scroll-track-right');
+  var thumbRight = document.getElementById('scroll-thumb-right');
+  var PAD = 2;
+
+  var maxScrollX = clip.scrollWidth - clip.clientWidth;
+  var maxScrollY = clip.scrollHeight - clip.clientHeight;
+
+  // Horizontal
+  var innerW = trackTop.clientWidth;
+  var thumbW = thumbTop.offsetWidth;
+  var maxThumbX = innerW - PAD * 2 - thumbW;
+  thumbTop.style.left = (PAD + (maxScrollX > 0 ? (clip.scrollLeft / maxScrollX) * maxThumbX : 0)) + 'px';
+
+  // Vertical
+  var innerH = trackRight.clientHeight;
+  var thumbH = thumbRight.offsetHeight;
+  var maxThumbY = innerH - PAD * 2 - thumbH;
+  thumbRight.style.top = (PAD + (maxScrollY > 0 ? (clip.scrollTop / maxScrollY) * maxThumbY : 0)) + 'px';
 }
 
 initCustomScrollbars();
@@ -699,19 +736,20 @@ function updateScrollThumbs() {
   var thumbTop = document.getElementById('scroll-thumb-top');
   var trackRight = document.getElementById('scroll-track-right');
   var thumbRight = document.getElementById('scroll-thumb-right');
+  var PAD = 2;
 
   if (currentZoomLevel === 0) return;
 
   // Horizontal thumb
-  var trackW = trackTop.clientWidth - 4;
+  var innerW = trackTop.clientWidth;
   var ratio = clip.clientWidth / clip.scrollWidth;
-  var thumbW = Math.max(28, Math.round(trackW * ratio));
+  var thumbW = Math.max(28, Math.round((innerW - PAD * 2) * ratio));
   thumbTop.style.width = thumbW + 'px';
 
   // Vertical thumb
-  var trackH = trackRight.clientHeight - 4;
+  var innerH = trackRight.clientHeight;
   var ratioV = clip.clientHeight / clip.scrollHeight;
-  var thumbH = Math.max(28, Math.round(trackH * ratioV));
+  var thumbH = Math.max(28, Math.round((innerH - PAD * 2) * ratioV));
   thumbRight.style.height = thumbH + 'px';
 }
 
@@ -761,8 +799,8 @@ function zoomGrid(direction) {
     // Reset scroll positions and thumb positions
     clip.scrollLeft = 0;
     clip.scrollTop = 0;
-    thumbTop.style.left = '0px';
-    thumbRight.style.top = '0px';
+    thumbTop.style.left = '2px';
+    thumbRight.style.top = '2px';
 
     updateScrollThumbs();
   }

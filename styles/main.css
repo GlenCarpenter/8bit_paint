@@ -68,9 +68,9 @@ div.selected-color {
 }
 
 .scroll-track-h {
-	width: 100%;
+	width: calc(100% - 30px);
 	height: 22px;
-	margin-bottom: 6px;
+	margin: 0 0 6px 0;
 }
 
 .scroll-track-v {
@@ -81,7 +81,7 @@ div.selected-color {
 
 .scroll-thumb {
 	position: absolute;
-	background: #555;
+	background: dodgerblue;
 	border-radius: 10px;
 	min-width: 12px;
 	min-height: 12px;
@@ -90,12 +90,14 @@ div.selected-color {
 .scroll-track-h .scroll-thumb {
 	top: 2px;
 	bottom: 2px;
+	left: 2px;
 	height: auto;
 }
 
 .scroll-track-v .scroll-thumb {
 	left: 2px;
 	right: 2px;
+	top: 2px;
 	width: auto;
 }
 
