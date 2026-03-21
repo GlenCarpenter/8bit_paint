@@ -470,18 +470,15 @@ label {
 }
 
 .share-actions button {
+	display: inline-block;
 	height: 36px;
-	min-width: 120px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 6px;
+	min-width: 140px;
+	line-height: 1.2rem;
 }
 
 .share-actions button span {
-	font-size: 20px;
-	line-height: 1;
-	transform: translateY(-2px);
+	font-size: 22px;
+	padding-left: 6px;
 }
 
 #share-send {
