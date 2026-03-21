@@ -272,7 +272,7 @@ $(document).ready(function () {
     setTimeout(() => $(this).removeClass('blink'), 1000);
   });
 
-  $('input[type=checkbox]').on('change', function (e) {
+  $('#checkbox').on('change', function (e) {
     appStore.toggleGrid();
   });
 
@@ -321,7 +321,6 @@ $(document).ready(function () {
   });
 
   $("#share-reset").on("click", function () {
-    $("#filter-contrast").val(100);
     $("#filter-hue").val(0);
     $("#filter-invert").prop('checked', false);
     $("#filter-grayscale").prop('checked', false);
@@ -541,7 +540,6 @@ function saveAs(uri, filename) {
 
 function openShareDialog() {
   // Reset filters
-  $("#filter-contrast").val(100);
   $("#filter-hue").val(0);
   $("#filter-invert").prop('checked', false);
   $("#filter-grayscale").prop('checked', false);
@@ -556,14 +554,13 @@ function openShareDialog() {
 }
 
 function applyShareFilters() {
-  const contrast = $("#filter-contrast").val();
   const hue = $("#filter-hue").val();
   const invert = $("#filter-invert").is(':checked') ? 100 : 0;
   const grayscale = $("#filter-grayscale").is(':checked') ? 100 : 0;
   const saturate = $("#filter-saturate").val();
 
   document.getElementById('share-preview').style.filter =
-    `contrast(${contrast}%) hue-rotate(${hue}deg) invert(${invert}%) grayscale(${grayscale}%) saturate(${saturate}%)`;
+    `hue-rotate(${hue}deg) invert(${invert}%) grayscale(${grayscale}%) saturate(${saturate}%)`;
 }
 
 function sendShareImage() {
