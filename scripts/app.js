@@ -360,6 +360,7 @@ $(document).ready(function () {
 
   $("#share-reset").on("click", function () {
     $("#filter-hue").val(0);
+    $("#filter-blur").val(0);
     $("#filter-invert").prop('checked', false);
     $("#filter-grayscale").prop('checked', false);
     $("#filter-saturate").val(100);
@@ -579,6 +580,7 @@ function saveAs(uri, filename) {
 function openShareDialog() {
   // Reset filters
   $("#filter-hue").val(0);
+  $("#filter-blur").val(0);
   $("#filter-invert").prop('checked', false);
   $("#filter-grayscale").prop('checked', false);
   $("#filter-saturate").val(100);
@@ -593,12 +595,13 @@ function openShareDialog() {
 
 function applyShareFilters() {
   const hue = $("#filter-hue").val();
+  const blur = $("#filter-blur").val();
   const invert = $("#filter-invert").is(':checked') ? 100 : 0;
   const grayscale = $("#filter-grayscale").is(':checked') ? 100 : 0;
   const saturate = $("#filter-saturate").val();
 
   document.getElementById('share-preview').style.filter =
-    `hue-rotate(${hue}deg) invert(${invert}%) grayscale(${grayscale}%) saturate(${saturate}%)`;
+    `hue-rotate(${hue}deg) blur(${blur}px) invert(${invert}%) grayscale(${grayscale}%) saturate(${saturate}%)`;
 }
 
 function sendShareImage() {
